@@ -1,0 +1,9 @@
+#ignore built files
+*.aux
+*.log
+*.out
+*.bbl
+*.blg
+*.tdo
+*.toc
+*.synctex.gz
