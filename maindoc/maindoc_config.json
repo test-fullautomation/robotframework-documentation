@@ -1,0 +1,66 @@
+# **************************************************************************************************************
+#
+# Main doc configuration file
+#
+# 14.06.2022
+#
+# **************************************************************************************************************
+# Format: extended json format with the possibility to comment out lines (by '#' at the beginning of the line).
+# The reference for relative paths is the position of this file.
+# --------------------------------------------------------------------------------------------------------------
+
+{
+
+# Section "CONTROL":
+# ------------------
+# Contains parameter to control the application behavior in general.
+
+   "CONTROL" : {
+                # if 'STRICT' is true: missing LaTeX compiler causes an error; otherwise PDF generation is handled as option
+                # and a missing LaTeX compiler does not cause an error
+                "STRICT" : true
+               },
+
+
+# Section "IMPORTS":
+# ------------------
+# Within the folders listed below, the documentation rendering process (GenPackageDoc) is executed.
+# The generated PDF files will be part of the main documentation.
+
+   "IMPORTS" : ["../../python-extensions-collection",
+                "../../robotframework-extensions-collection",
+                "../../python-genpackagedoc"],
+
+
+# Section "OUTPUT":
+# -----------------
+# Defines the path to the output folder containing the generated PDF files and the tex file to import these PDF files
+# into the main documentation.
+
+   "OUTPUT" : "../book/include/libraries",
+
+# Section "MAINTEXFILE":
+# ----------------------
+# Defines the path and name of the main tex file, that has to be executed by the LaTeX compiler.
+
+   "MAINTEXFILE" : "../book/RobotFrameworkAIO_Reference.tex",
+
+# Section "CHAPTERHEADLINE":
+# ----------------------
+# Defines the headline of the chapter inside MAINTEXFILE that contains the library definitions
+
+   "CHAPTERHEADLINE" : "Additional libraries",
+
+# Section "TEX":
+# -----------------
+# Converting the generated text source files to a PDF document requires a LaTeX distribution.
+# GenPackageDoc needs to know where to find LaTeX. Because the path to the LaTeX interpreter depends
+# on the operating system, this path has to be defined separately for every supported operating system
+# (currently "WINDOWS" and "LINUX").
+# Example:
+
+   "TEX" : {
+            "WINDOWS" : "%ROBOTLATEXPATH%/miktex/bin/x64/pdflatex.exe",
+            "LINUX"   : "${ROBOTLATEXPATH}/miktex/bin/x64/pdflatex"
+           }
+}
