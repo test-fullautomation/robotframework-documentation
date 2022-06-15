@@ -20,7 +20,7 @@
 #
 # XC-CT/ECA3-Queckenstedt
 #
-# 14.06.2022
+# 15.06.2022
 #
 # --------------------------------------------------------------------------------------------------------------
 
@@ -226,7 +226,6 @@ Constructor of class ``CDocBuilder``.
       oLibraryDocImportTexFile.Write(r"% The split of the \includepdf for a single PDF file is a workaround to avoid a linebreak after the section heading")
       oLibraryDocImportTexFile.Write(r"% (one \newpage too much within pdfpages.sty).")
       oLibraryDocImportTexFile.Write("%")
-      oLibraryDocImportTexFile.Write(r"\chapter{" + self.__dictMainDocConfig['CHAPTERHEADLINE'] + "}")
       oLibraryDocImportTexFile.Write()
       for sPDFFile in listPDFFiles:
          sHeadline = os.path.basename(sPDFFile)[:-4] # name of pdf file without extension

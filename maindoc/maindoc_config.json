@@ -2,7 +2,7 @@
 #
 # Main doc configuration file
 #
-# 14.06.2022
+# 15.06.2022
 #
 # **************************************************************************************************************
 # Format: extended json format with the possibility to comment out lines (by '#' at the beginning of the line).
@@ -39,17 +39,13 @@
 
    "OUTPUT" : "../book/include/libraries",
 
+
 # Section "MAINTEXFILE":
 # ----------------------
 # Defines the path and name of the main tex file, that has to be executed by the LaTeX compiler.
 
    "MAINTEXFILE" : "../book/RobotFrameworkAIO_Reference.tex",
 
-# Section "CHAPTERHEADLINE":
-# ----------------------
-# Defines the headline of the chapter inside MAINTEXFILE that contains the library definitions
-
-   "CHAPTERHEADLINE" : "Additional libraries",
 
 # Section "TEX":
 # -----------------
