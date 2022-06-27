@@ -20,7 +20,7 @@
 #
 # XC-CT/ECA3-Queckenstedt
 #
-# 14.06.2022
+# 20.06.2022
 #
 # --------------------------------------------------------------------------------------------------------------
 
@@ -150,7 +150,7 @@ Responsible for:
          listImports.append(sImport)
       self.__dictMainDocConfig['IMPORTS'] = listImports
 
-      # normalize path in 'OUTPUT' and 'PDFDEST' section
+      # normalize path in 'OUTPUT' and 'MAINTEXFILE' section
       self.__dictMainDocConfig['OUTPUT'] = CString.NormalizePath(sPath=self.__dictMainDocConfig['OUTPUT'], sReferencePathAbs=sReferencePathAbs)
       self.__dictMainDocConfig['MAINTEXFILE'] = CString.NormalizePath(sPath=self.__dictMainDocConfig['MAINTEXFILE'], sReferencePathAbs=sReferencePathAbs)
 

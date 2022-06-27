@@ -20,7 +20,7 @@
 #
 # XC-CT/ECA3-Queckenstedt
 #
-# 15.06.2022
+# 20.06.2022
 #
 # --------------------------------------------------------------------------------------------------------------
 
@@ -114,6 +114,100 @@ Constructor of class ``CDocBuilder``.
    # --------------------------------------------------------------------------------------------------------------
    #TM***
 
+   def __GetConfig(self, listConfigFiles=[]):
+      """Returns a dictionary with some assorted configuration values taken out of the collected repository configurations
+      """
+
+      sMethod = "CDocBuilder.__GetConfig"
+
+      bSuccess = None
+      sResult  = "UNKNOWN"
+
+      listofdictConfig = []
+
+      if len(listConfigFiles) == 0:
+         bSuccess = True # empty list is not an error
+         sResult  = "No config files available"
+         return listofdictConfig, bSuccess, sResult
+
+      listSupportedKeys = []
+      listSupportedKeys.append('REPOSITORYNAME')
+      listSupportedKeys.append('PACKAGENAME')
+      listSupportedKeys.append('AUTHOR')
+      listSupportedKeys.append('AUTHOREMAIL')
+      listSupportedKeys.append('DESCRIPTION')
+      listSupportedKeys.append('URL')
+      listSupportedKeys.append('PACKAGEVERSION')
+      listSupportedKeys.append('PACKAGEDATE')
+
+      for sConfigFile in listConfigFiles:
+
+         dictConfig = {}
+         hConfigFile = open(sConfigFile)
+         dictRepositoryConfig = json.load(hConfigFile)
+         hConfigFile.close()
+         del hConfigFile
+         for sKey in listSupportedKeys:
+            dictConfig[sKey] = dictRepositoryConfig[sKey]
+         listofdictConfig.append(dictConfig)
+      # eof for sConfigFile in listConfigFiles:
+
+      nNrOfConfigs = len(listofdictConfig)
+
+      bSuccess = True
+      sResult  = f"Configuration values collected from {nNrOfConfigs} repositories."
+
+      return listofdictConfig, bSuccess, sResult
+
+   # eof def __GetConfig(self, listConfigFiles=[]):
+
+   # --------------------------------------------------------------------------------------------------------------
+   #TM***
+
+   def __PrepareOverviewFile(self, listofdictConfig=[]):
+      """Writes an overview file containing some assorted configuration values taken out of the collected repository configurations
+      """
+
+      sMethod = "CDocBuilder.__PrepareOverviewFile"
+
+      bSuccess = None
+      sResult  = "UNKNOWN"
+
+      sOutputFolder = self.__dictMainDocConfig['OUTPUT']
+      sOverviewFileName = "library_doc_overview.tex"
+      sOverviewFile = f"{sOutputFolder}/{sOverviewFileName}"
+      self.__dictMainDocConfig['OVERVIEWFILE'] = sOverviewFile
+      oOverviewFile = CFile(sOverviewFile)
+
+      oOverviewFile.Write(r"\begin{center}")
+
+      for listofdictConfig in listofdictConfig:
+         oOverviewFile.Write(r"\begin{tabular}{| m{44em} |}\hline")
+         oOverviewFile.Write(r"   \textbf{" + listofdictConfig['PACKAGENAME'] + r"}\\ \hline")
+         oOverviewFile.Write(r"   Version " + listofdictConfig['PACKAGEVERSION'] + " (from " + listofdictConfig['PACKAGEDATE'] + r")\\ \hline")
+         oOverviewFile.Write(r"   " + listofdictConfig['URL'] + r"\\ \hline")
+         oOverviewFile.Write(r"   \textit{" + listofdictConfig['DESCRIPTION'] + r"}\\ \hline")
+         oOverviewFile.Write(r"\end{tabular}")
+         oOverviewFile.Write()
+         oOverviewFile.Write(r"\vspace{2ex}")
+         oOverviewFile.Write()
+      # eof for listofdictConfig in listofdictConfig:
+
+      oOverviewFile.Write(r"\end{center}")
+      oOverviewFile.Write()
+
+      del oOverviewFile
+
+      bSuccess = True
+      sResult  = f"Overview file '{sOverviewFile}' written"
+
+      return bSuccess, sResult
+
+   # eof def __PrepareOverviewFile(self, listofdictConfig=[]):
+
+   # --------------------------------------------------------------------------------------------------------------
+   #TM***
+
    def Build(self):
       """
 **Arguments:**
@@ -156,6 +250,7 @@ Constructor of class ``CDocBuilder``.
       # iterate the list of repositories and call the package doc generator inside these repositories,
       # redirect the PDF destination to the output folders used to build the main documentation
       listPDFFiles = []
+      listConfigFiles = []
       sMainTexFile = self.__dictMainDocConfig['MAINTEXFILE']
       sMainTexFileFolder = os.path.dirname(sMainTexFile) # needed to compute relative import paths of PDF files
       bStrict = self.__dictMainDocConfig['CONTROL']['STRICT']
@@ -180,6 +275,7 @@ Constructor of class ``CDocBuilder``.
          listCmdLineParts.append(f"\"{sPython}\"")
          listCmdLineParts.append(f"\"{sDocumentationBuilder}\"")
          listCmdLineParts.append(f"--pdfdest=\"{sDestinationFolder}\"")
+         listCmdLineParts.append(f"--configdest=\"{sDestinationFolder}\"")
          listCmdLineParts.append(f"--strict {bStrict}")
          sCmdLine = " ".join(listCmdLineParts)
          del listCmdLineParts
@@ -201,20 +297,44 @@ Constructor of class ``CDocBuilder``.
             sResult  = f"Documentation builder returns error {nReturn}"
             return bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
 
-         # we need to identify the name of the PDF file inside sDestinationFolder
+         # We need to identify the name of some output files inside sDestinationFolder:
+         # - PDF file (documentation of package in current repository)
+         # - json file (configuration values of current repository and documantaion build process) 
          sPDFFile = None
+         sJsonFile = None
          listLocalEntries = os.listdir(sDestinationFolder)
          for sEntryName in listLocalEntries:
             if sEntryName.lower().endswith('.pdf'):
                sPDFFile = CString.NormalizePath(os.path.join(sDestinationFolder, sEntryName))
-               break
+            if sEntryName.lower().endswith('.json'):
+               sJsonFile = CString.NormalizePath(os.path.join(sDestinationFolder, sEntryName))
          if sPDFFile is None:
             bSuccess = False
             sResult  = f"PDF file not found within '{sDestinationFolder}'"
             return bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
+         if sJsonFile is None:
+            bSuccess = False
+            sResult  = f"Json configuration file not found within '{sDestinationFolder}'"
+            return bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
          listPDFFiles.append(sPDFFile)
-
+         listConfigFiles.append(sJsonFile)
       # eof for sRepository in listRepositories:
+
+      # get some assorted configuration values out of the configuration files collected from repositories
+      listofdictConfig, bSuccess, sResult = self.__GetConfig(listConfigFiles)
+      if bSuccess is not True:
+         return bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
+      else:
+         print(sResult)
+         print()
+
+      # prepare an overview file containing a summary of configuration values
+      bSuccess, sResult = self.__PrepareOverviewFile(listofdictConfig)
+      if bSuccess is not True:
+         return bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
+      else:
+         print(sResult)
+         print()
 
       # create the import tex file to import the library documentations into the main documentation
       sLibraryDocImportTexFile = f"{sOutputFolder}/library_doc_imports.tex"
