@@ -20,7 +20,7 @@
 #
 # XC-CT/ECA3-Queckenstedt
 #
-# 20.06.2022
+# 30.06.2022
 #
 # --------------------------------------------------------------------------------------------------------------
 
@@ -182,11 +182,13 @@ Constructor of class ``CDocBuilder``.
       oOverviewFile.Write(r"\begin{center}")
 
       for listofdictConfig in listofdictConfig:
+         PACKAGENAME = listofdictConfig['PACKAGENAME'].replace('_',r'\_') # LaTeX requires this masking
+         DESCRIPTION = listofdictConfig['DESCRIPTION'].replace('_',r'\_') # LaTeX requires this masking
          oOverviewFile.Write(r"\begin{tabular}{| m{44em} |}\hline")
-         oOverviewFile.Write(r"   \textbf{" + listofdictConfig['PACKAGENAME'] + r"}\\ \hline")
+         oOverviewFile.Write(r"   \textbf{" + PACKAGENAME + r"}\\ \hline")
          oOverviewFile.Write(r"   Version " + listofdictConfig['PACKAGEVERSION'] + " (from " + listofdictConfig['PACKAGEDATE'] + r")\\ \hline")
          oOverviewFile.Write(r"   " + listofdictConfig['URL'] + r"\\ \hline")
-         oOverviewFile.Write(r"   \textit{" + listofdictConfig['DESCRIPTION'] + r"}\\ \hline")
+         oOverviewFile.Write(r"   \textit{" + DESCRIPTION + r"}\\ \hline")
          oOverviewFile.Write(r"\end{tabular}")
          oOverviewFile.Write()
          oOverviewFile.Write(r"\vspace{2ex}")
@@ -254,7 +256,14 @@ Constructor of class ``CDocBuilder``.
       sMainTexFile = self.__dictMainDocConfig['MAINTEXFILE']
       sMainTexFileFolder = os.path.dirname(sMainTexFile) # needed to compute relative import paths of PDF files
       bStrict = self.__dictMainDocConfig['CONTROL']['STRICT']
+
       for sRepository in listRepositories:
+
+         if os.path.isdir(sRepository) is False:
+            bSuccess = False
+            sResult  = f"The repository folder '{sRepository}' does not exist"
+            return bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
+
          sRepositoryName = os.path.basename(sRepository)
          sDestinationFolder = f"{sOutputFolder}/{sRepositoryName}"
 
@@ -348,14 +357,15 @@ Constructor of class ``CDocBuilder``.
       oLibraryDocImportTexFile.Write("%")
       oLibraryDocImportTexFile.Write()
       for sPDFFile in listPDFFiles:
-         sHeadline = os.path.basename(sPDFFile)[:-4] # name of pdf file without extension
-         # the path to the PDF file to be imported, must be relative to the position of the main tex file,
-         # and this means also that the PDF must be created within a subfolder of the folder containing the main tex file
-
          if not sPDFFile.startswith(sMainTexFileFolder):
             bSuccess = False
             sResult  = f"The PDF file '{sPDFFile}' is not located within the folder structure of '{sMainTexFileFolder}'. It is not possible to compute a relative path to this PDF file."
             return bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
+
+         sHeadline = os.path.basename(sPDFFile)[:-4] # name of pdf file without extension
+         # the path to the PDF file to be imported, must be relative to the position of the main tex file,
+         # and this means also that the PDF must be created within a subfolder of the folder containing the main tex file
+         sHeadline = sHeadline.replace('_',r'\_') # LaTeX requires this masking
 
          sPDFRelPath = "." + sPDFFile[len(sMainTexFileFolder):]
          oLibraryDocImportTexFile.Write(r"\includepdf[pages=1,pagecommand=\section{" + sHeadline + "}]{" + sPDFRelPath + "}")
