@@ -29,7 +29,7 @@
 # 
 # --------------------------------------------------------------------------------------------------------------
 #
-# 14.06.2022
+# 30.06.2022
 #
 # --------------------------------------------------------------------------------------------------------------
 
@@ -77,8 +77,8 @@ class CRepositoryConfig():
         self.__dictRepositoryConfig['REPOSITORYCONFIGURATIONFILE'] = sRepositoryConfigurationFile
 
         # add version and date of the package this repository configuration belongs to
-        self.__dictRepositoryConfig['PACKAGEVERSION'] = self.__dictRepositoryConfig['VERSION']       # TODO: it still has to be clarified where to place this information (intermediately placed within json file)
-        self.__dictRepositoryConfig['PACKAGEDATE']    = self.__dictRepositoryConfig['VERSION_DATE']  # TODO: it still has to be clarified where to place this information (intermediately placed within json file)
+        self.__dictRepositoryConfig['PACKAGEVERSION'] = self.__dictRepositoryConfig['VERSION']
+        self.__dictRepositoryConfig['PACKAGEDATE']    = self.__dictRepositoryConfig['VERSION_DATE']
 
         # make absolute path to package documentation
         self.__dictRepositoryConfig['PACKAGEDOC'] = CString.NormalizePath(sPath=self.__dictRepositoryConfig['PACKAGEDOC'], sReferencePathAbs=self.__sReferencePath)
@@ -149,7 +149,8 @@ class CRepositoryConfig():
         self.__dictRepositoryConfig['SETUPBUILDLIBFOLDER']        = CString.NormalizePath(f"{self.__sReferencePath}/build/lib")
         self.__dictRepositoryConfig['SETUPBUILDLIBPACKAGEFOLDER'] = CString.NormalizePath(f"{self.__sReferencePath}/build/lib/{self.__dictRepositoryConfig['PACKAGENAME']}")
         self.__dictRepositoryConfig['SETUPDISTFOLDER']            = CString.NormalizePath(f"{self.__sReferencePath}/dist")
-        self.__dictRepositoryConfig['EGGINFOFOLDER']              = CString.NormalizePath(f"{self.__sReferencePath}/{self.__dictRepositoryConfig['PACKAGENAME']}.egg-info")
+        EGGINFOFOLDER = self.__dictRepositoryConfig['REPOSITORYNAME'].replace('-', '_')
+        self.__dictRepositoryConfig['EGGINFOFOLDER']              = CString.NormalizePath(f"{self.__sReferencePath}/{EGGINFOFOLDER}.egg-info")
 
         print()
         print(f"Running under {sPlatformSystem} ({sOSName})")

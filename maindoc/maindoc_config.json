@@ -2,7 +2,7 @@
 #
 # Main doc configuration file
 #
-# 15.06.2022
+# 30.06.2022
 #
 # **************************************************************************************************************
 # Format: extended json format with the possibility to comment out lines (by '#' at the beginning of the line).
@@ -27,9 +27,11 @@
 # Within the folders listed below, the documentation rendering process (GenPackageDoc) is executed.
 # The generated PDF files will be part of the main documentation.
 
-   "IMPORTS" : ["../../python-extensions-collection",
+   "IMPORTS" : ["../../python-genpackagedoc",
+                "../../python-extensions-collection",
                 "../../robotframework-extensions-collection",
-                "../../python-genpackagedoc"],
+                "../../python-jsonpreprocessor",
+                "../../robotframework-testsuitesmanagement"],
 
 
 # Section "OUTPUT":
