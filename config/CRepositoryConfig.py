@@ -29,7 +29,7 @@
 # 
 # --------------------------------------------------------------------------------------------------------------
 #
-# 30.06.2022
+# 05.07.2022
 #
 # --------------------------------------------------------------------------------------------------------------
 
@@ -65,7 +65,7 @@ class CRepositoryConfig():
 
         # load static configuration values (name of json file is fix)
         sRepositoryConfigurationFile = CString.NormalizePath(f"{self.__sReferencePath}/config/repository_config.json")
-        hRepositoryConfigurationFile = open(sRepositoryConfigurationFile)
+        hRepositoryConfigurationFile = open(sRepositoryConfigurationFile, encoding="utf-8")
         self.__dictRepositoryConfig = json.load(hRepositoryConfigurationFile)
         hRepositoryConfigurationFile.close()
 

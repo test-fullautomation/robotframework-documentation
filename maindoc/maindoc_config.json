@@ -2,7 +2,7 @@
 #
 # Main doc configuration file
 #
-# 30.06.2022
+# 05.07.2022
 #
 # **************************************************************************************************************
 # Format: extended json format with the possibility to comment out lines (by '#' at the beginning of the line).
@@ -18,7 +18,12 @@
    "CONTROL" : {
                 # if 'STRICT' is true: missing LaTeX compiler causes an error; otherwise PDF generation is handled as option
                 # and a missing LaTeX compiler does not cause an error
-                "STRICT" : true
+                "STRICT" : true,
+                # If 'UPDATE_EXTERNAL_DOC' is true then the documentations listed in next section "IMPORTS", will be rendered
+                # and imported, otherwise not.
+                # The reason is to save time when maintaining only the manual part of the main documentation - in this case
+                # an update of external documentations is not necessary.
+                "UPDATE_EXTERNAL_DOC" : true
                },
 
 
@@ -31,7 +36,11 @@
                 "../../python-extensions-collection",
                 "../../robotframework-extensions-collection",
                 "../../python-jsonpreprocessor",
-                "../../robotframework-testsuitesmanagement"],
+                "../../robotframework-testsuitesmanagement",
+                "../../robotframework-qconnect-base",
+                "../../robotframework-testresult2rqmtool",
+                "../../robotframework-testresultwebapptool",
+                "../../testresultwebapp"],
 
 
 # Section "OUTPUT":
