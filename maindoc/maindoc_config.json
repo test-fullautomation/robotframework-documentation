@@ -2,7 +2,7 @@
 #
 # Main doc configuration file
 #
-# 05.07.2022
+# 06.07.2022
 #
 # **************************************************************************************************************
 # Format: extended json format with the possibility to comment out lines (by '#' at the beginning of the line).
@@ -16,7 +16,7 @@
 # Contains parameter to control the application behavior in general.
 
    "CONTROL" : {
-                # if 'STRICT' is true: missing LaTeX compiler causes an error; otherwise PDF generation is handled as option
+                # If 'STRICT' is true: missing LaTeX compiler causes an error; otherwise PDF generation is handled as option
                 # and a missing LaTeX compiler does not cause an error
                 "STRICT" : true,
                 # If 'UPDATE_EXTERNAL_DOC' is true then the documentations listed in next section "IMPORTS", will be rendered
@@ -48,14 +48,23 @@
 # Defines the path to the output folder containing the generated PDF files and the tex file to import these PDF files
 # into the main documentation.
 
-   "OUTPUT" : "../book/include/libraries",
+   "OUTPUT" : "../docbuild",
 
 
-# Section "MAINTEXFILE":
+# Section "BOOKSOURCES":
 # ----------------------
-# Defines the path and name of the main tex file, that has to be executed by the LaTeX compiler.
+# Defines the path to the folder containing the manually maintained tex files if the RobotFrameworkAIO reference
+# It is expected that within this folder a file with name "MAINTEXFILENAME" is present.
 
-   "MAINTEXFILE" : "../book/RobotFrameworkAIO_Reference.tex",
+   "BOOKSOURCES" : "../book",
+
+
+# Section "MAINTEXFILENAME":
+# ----------------------
+# Defines the name of the main tex file, that has to be executed by the LaTeX compiler.
+# It is expected that this file is present within "BOOKSOURCES".
+
+   "MAINTEXFILENAME" : "RobotFrameworkAIO_Reference.tex",
 
 
 # Section "TEX":

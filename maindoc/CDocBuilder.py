@@ -20,7 +20,7 @@
 #
 # XC-CT/ECA3-Queckenstedt
 #
-# 05.07.2022
+# 06.07.2022
 #
 # --------------------------------------------------------------------------------------------------------------
 
@@ -38,6 +38,8 @@ from PythonExtensionsCollection.String.CString import CString
 from PythonExtensionsCollection.File.CFile import CFile
 from PythonExtensionsCollection.Folder.CFolder import CFolder
 from PythonExtensionsCollection.Utils.CUtils import *
+
+from GenPackageDoc.CInterface import CInterface
 
 col.init(autoreset=True)
 COLBR = col.Style.BRIGHT + col.Fore.RED
@@ -164,48 +166,79 @@ Constructor of class ``CDocBuilder``.
    # --------------------------------------------------------------------------------------------------------------
    #TM***
 
-   def __PrepareOverviewFile(self, listofdictConfig=[]):
-      """Writes an overview file containing some assorted configuration values taken out of the collected repository configurations
+   def __PrepareOverviewFiles(self, listofdictConfig=[]):
+      """Writes some overview files containing some assorted configuration values taken out of the collected repository configurations
       """
 
-      sMethod = "CDocBuilder.__PrepareOverviewFile"
+      sMethod = "CDocBuilder.__PrepareOverviewFiles"
 
       bSuccess = None
       sResult  = "UNKNOWN"
 
+      # -- 1. LaTeX version
+
       sOutputFolder = self.__dictMainDocConfig['OUTPUT']
-      sOverviewFileName = "library_doc_overview.tex"
-      sOverviewFile = f"{sOutputFolder}/{sOverviewFileName}"
-      self.__dictMainDocConfig['OVERVIEWFILE'] = sOverviewFile
-      oOverviewFile = CFile(sOverviewFile)
+      sExternalDocFolder = self.__dictMainDocConfig['EXTERNALDOCFOLDER']
+      sOverviewFileName_tex = "library_doc_overview.tex"
+      sOverviewFile_tex = f"{sExternalDocFolder}/{sOverviewFileName_tex}"
+      self.__dictMainDocConfig['OVERVIEWFILE_TEX'] = sOverviewFile_tex
+      oOverviewFile_tex = CFile(sOverviewFile_tex)
 
-      oOverviewFile.Write(r"\begin{center}")
+      oOverviewFile_tex.Write(r"\begin{center}")
 
-      for listofdictConfig in listofdictConfig:
-         PACKAGENAME = listofdictConfig['PACKAGENAME'].replace('_',r'\_') # LaTeX requires this masking
-         DESCRIPTION = listofdictConfig['DESCRIPTION'].replace('_',r'\_') # LaTeX requires this masking
-         oOverviewFile.Write(r"\begin{tabular}{| m{44em} |}\hline")
-         oOverviewFile.Write(r"   \textbf{" + PACKAGENAME + r"}\\ \hline")
-         oOverviewFile.Write(r"   Version " + listofdictConfig['PACKAGEVERSION'] + " (from " + listofdictConfig['PACKAGEDATE'] + r")\\ \hline")
-         oOverviewFile.Write(r"   " + listofdictConfig['URL'] + r"\\ \hline")
-         oOverviewFile.Write(r"   \textit{" + DESCRIPTION + r"}\\ \hline")
-         oOverviewFile.Write(r"\end{tabular}")
-         oOverviewFile.Write()
-         oOverviewFile.Write(r"\vspace{2ex}")
-         oOverviewFile.Write()
-      # eof for listofdictConfig in listofdictConfig:
+      for dictConfig in listofdictConfig:
+         PACKAGENAME = dictConfig['PACKAGENAME'].replace('_',r'\_') # LaTeX requires this masking
+         DESCRIPTION = dictConfig['DESCRIPTION'].replace('_',r'\_') # LaTeX requires this masking
+         oOverviewFile_tex.Write(r"\begin{tabular}{| m{44em} |}\hline")
+         oOverviewFile_tex.Write(r"   \textbf{" + PACKAGENAME + r"}\\ \hline")
+         oOverviewFile_tex.Write(r"   Version " + dictConfig['PACKAGEVERSION'] + " (from " + dictConfig['PACKAGEDATE'] + r")\\ \hline")
+         oOverviewFile_tex.Write(r"   " + dictConfig['URL'] + r"\\ \hline")
+         oOverviewFile_tex.Write(r"   \textit{" + DESCRIPTION + r"}\\ \hline")
+         oOverviewFile_tex.Write(r"\end{tabular}")
+         oOverviewFile_tex.Write()
+         oOverviewFile_tex.Write(r"\vspace{2ex}")
+         oOverviewFile_tex.Write()
+      # eof for dictConfig in listofdictConfig:
 
-      oOverviewFile.Write(r"\end{center}")
-      oOverviewFile.Write()
+      oOverviewFile_tex.Write(r"\end{center}")
+      oOverviewFile_tex.Write()
 
-      del oOverviewFile
+      del oOverviewFile_tex
+
+      # -- 2. rst version
+
+      sOutputFolder = self.__dictMainDocConfig['OUTPUT']
+      sExternalDocFolder = self.__dictMainDocConfig['EXTERNALDOCFOLDER']
+
+      sOverviewFileName_rst = "components.rst"
+      sOverviewFile_rst = f"{sExternalDocFolder}/{sOverviewFileName_rst}"
+      self.__dictMainDocConfig['OVERVIEWFILE_RST'] = sOverviewFile_rst
+      oOverviewFile_rst = CFile(sOverviewFile_rst)
+
+      oOverviewFile_rst.Write(r"**RobotFramework AIO components listing**")
+      oOverviewFile_rst.Write()
+
+      for dictConfig in listofdictConfig:
+         PACKAGENAME = dictConfig['PACKAGENAME'].replace('_',r'\_') # LaTeX requires this masking
+         DESCRIPTION = dictConfig['DESCRIPTION'].replace('_',r'\_') # LaTeX requires this masking
+         oOverviewFile_rst.Write(f"* ``{PACKAGENAME}``")
+         oOverviewFile_rst.Write()
+         oOverviewFile_rst.Write(f"  - Version: {dictConfig['PACKAGEVERSION']} (from {dictConfig['PACKAGEDATE']})")
+         oOverviewFile_rst.Write(f"  - URL: {dictConfig['URL']}")
+         oOverviewFile_rst.Write(f"  - *{dictConfig['DESCRIPTION']}*")
+         oOverviewFile_rst.Write()
+      # eof for dictConfig in listofdictConfig:
+
+      oOverviewFile_rst.Write()
+
+      del oOverviewFile_rst
 
       bSuccess = True
-      sResult  = f"Overview file '{sOverviewFile}' written"
+      sResult  = f"Overview files written:\n* '{sOverviewFile_tex}'\n* '{sOverviewFile_rst}'"
 
       return bSuccess, sResult
 
-   # eof def __PrepareOverviewFile(self, listofdictConfig=[]):
+   # eof def __PrepareOverviewFiles(self, listofdictConfig=[]):
 
    # --------------------------------------------------------------------------------------------------------------
    #TM***
@@ -239,7 +272,7 @@ Constructor of class ``CDocBuilder``.
       if bSuccess is not True:
          return bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
 
-      # recreate folder containing the generated repository documentations
+      # recreate the output folder (the temporary build folder containing all manually maintained and all automatically generated files)
       sOutputFolder = self.__dictMainDocConfig['OUTPUT']
       oOutputFolder = CFolder(sOutputFolder)
       bSuccess, sResult = oOutputFolder.Create(bOverwrite=True)
@@ -247,16 +280,49 @@ Constructor of class ``CDocBuilder``.
       if bSuccess is not True:
          return bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
 
-      sPython = self.__dictMainDocConfig['PYTHON']
+      # prepare content of output folder: copy the book sources
+      sBookSources = self.__dictMainDocConfig['BOOKSOURCES']
+      oBookSources = CFolder(sBookSources)
+      bSuccess, sResult = oBookSources.CopyTo(sOutputFolder)
+      del oBookSources
+      if bSuccess is not True:
+         return bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
+
+      # prepare content of output folder: get the LaTeX stylesheets from GenPackageDoc
+      oGenPackageDocInterface = CInterface()
+      bSuccess, sResult = oGenPackageDocInterface.GetLaTeXStyles(sOutputFolder)
+      if bSuccess is not True:
+         return bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
+
+      # compute files and subfolders
+      sBookSourcesFolderName = os.path.basename(sBookSources)
+      sMainTexFileFolder = f"{sOutputFolder}/{sBookSourcesFolderName}"
+      self.__dictMainDocConfig['MAINTEXFILEFOLDER'] = sMainTexFileFolder
+      sMainTexFileName = self.__dictMainDocConfig['MAINTEXFILENAME']
+      sMainTexFile     = f"{sMainTexFileFolder}/{sMainTexFileName}"
+      if os.path.isfile(sMainTexFile) is False:
+         bSuccess = False
+         sResult  = f"The main tex file '{sMainTexFile}' does not exist."
+         return bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
+
+      self.__dictMainDocConfig['MAINTEXFILE'] = sMainTexFile
+      sExternalDocFolder = f"{sOutputFolder}/{sBookSourcesFolderName}/externaldocs"
+      self.__dictMainDocConfig['EXTERNALDOCFOLDER'] = sExternalDocFolder
+
+      oExternalDocFolder = CFolder(sExternalDocFolder)
+      bSuccess, sResult = oExternalDocFolder.Create(bOverwrite=True)
+      del oExternalDocFolder
+      if bSuccess is not True:
+         return bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
+
+      sPython            = self.__dictMainDocConfig['PYTHON']
+      bStrict            = self.__dictMainDocConfig['CONTROL']['STRICT']
+      bUpdateExternalDoc = self.__dictMainDocConfig['CONTROL']['UPDATE_EXTERNAL_DOC']
 
       # iterate the list of repositories and call the package doc generator inside these repositories,
       # redirect the PDF destination to the output folders used to build the main documentation
       listPDFFiles = []
       listConfigFiles = []
-      sMainTexFile = self.__dictMainDocConfig['MAINTEXFILE']
-      sMainTexFileFolder = os.path.dirname(sMainTexFile) # needed to compute relative import paths of PDF files
-      bStrict = self.__dictMainDocConfig['CONTROL']['STRICT']
-      bUpdateExternalDoc = self.__dictMainDocConfig['CONTROL']['UPDATE_EXTERNAL_DOC']
 
       if bUpdateExternalDoc is True:
 
@@ -268,8 +334,7 @@ Constructor of class ``CDocBuilder``.
                return bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
 
             sRepositoryName = os.path.basename(sRepository)
-            sDestinationFolder = f"{sOutputFolder}/{sRepositoryName}"
-
+            sDestinationFolder = f"{sExternalDocFolder}/{sRepositoryName}"
             oDestinationFolder = CFolder(sDestinationFolder)
             bSuccess, sResult = oDestinationFolder.Create(bOverwrite=True)
             del oDestinationFolder
@@ -341,7 +406,7 @@ Constructor of class ``CDocBuilder``.
             print()
 
          # prepare an overview file containing a summary of configuration values
-         bSuccess, sResult = self.__PrepareOverviewFile(listofdictConfig)
+         bSuccess, sResult = self.__PrepareOverviewFiles(listofdictConfig)
          if bSuccess is not True:
             return bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
          else:
@@ -349,7 +414,7 @@ Constructor of class ``CDocBuilder``.
             print()
 
          # create the import tex file to import the library documentations into the main documentation
-         sLibraryDocImportTexFile = f"{sOutputFolder}/library_doc_imports.tex"
+         sLibraryDocImportTexFile = f"{sExternalDocFolder}/library_doc_imports.tex"
          oLibraryDocImportTexFile = CFile(sLibraryDocImportTexFile)
          oLibraryDocImportTexFile.Write(f"% Generated at {self.__dictMainDocConfig['NOW']}")
          oLibraryDocImportTexFile.Write("%")
@@ -385,7 +450,7 @@ Constructor of class ``CDocBuilder``.
 
          sOutputFolder = self.__dictMainDocConfig['OUTPUT']
 
-         sOverviewFile  = f"{sOutputFolder}/library_doc_overview.tex"
+         sOverviewFile  = f"{sExternalDocFolder}/library_doc_overview.tex"
          sOutputMessage = r"\textbf{\textit{Overview of external documentations deactivated}}"
 
          oOverviewFile = CFile(sOverviewFile)
@@ -394,7 +459,7 @@ Constructor of class ``CDocBuilder``.
          oOverviewFile.Write("")
          del oOverviewFile
 
-         sLibraryDocImportTexFile = f"{sOutputFolder}/library_doc_imports.tex"
+         sLibraryDocImportTexFile = f"{sExternalDocFolder}/library_doc_imports.tex"
          sOutputMessage           = r"\textbf{\textit{Import of external documentations deactivated}}"
 
          oLibraryDocImportTexFile = CFile(sLibraryDocImportTexFile)
@@ -471,19 +536,37 @@ Constructor of class ``CDocBuilder``.
       # eof for nDummy in range(2):
 
       # -- verify the outcome
-      if os.path.isfile(sPDFFileExpected) is True:
-         oPDFFile = CFile(sPDFFileExpected)
-         bSuccess, sResult = oPDFFile.CopyTo(sPDFFileDestination, bOverwrite=True)
-         del oPDFFile
-         if bSuccess is True:
-            # replacement for sResult without debug info
-            sResult = f"File '{sPDFFileExpected}'\ncopied to\n{sPDFFileDestination}"
-         else:
-            sResult  = CString.FormatResult(sMethod, bSuccess, sResult)
-      else:
+      if os.path.isfile(sPDFFileExpected) is False:
          bSuccess = False
          sResult  = f"Expected PDF file '{sPDFFileExpected}' not generated"
-         sResult  = CString.FormatResult(sMethod, bSuccess, sResult)
+         return bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
+
+      oPDFFile = CFile(sPDFFileExpected)
+      bSuccess, sResult = oPDFFile.CopyTo(sPDFFileDestination, bOverwrite=True)
+      del oPDFFile
+      if bSuccess is not True:
+         return bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
+      print(COLBY + f"* PDF file: {sPDFFileDestination}")
+      print()
+
+      OVERVIEWFILE_RST = self.__dictMainDocConfig['OVERVIEWFILE_RST']
+      if os.path.isfile(OVERVIEWFILE_RST) is False:
+         bSuccess = False
+         sResult  = f"Expected overview file '{OVERVIEWFILE_RST}' not generated"
+         return bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
+
+      sOverviewFileName = os.path.basename(OVERVIEWFILE_RST)
+      sOverviewFile_dest = f"{sPackageFolder}/{sOverviewFileName}"
+      oOverviewFile = CFile(OVERVIEWFILE_RST)
+      bSuccess, sResult = oOverviewFile.CopyTo(sOverviewFile_dest, bOverwrite=True)
+      del oOverviewFile
+      if bSuccess is not True:
+         return bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
+      print(COLBY + f"* Overview: {sOverviewFile_dest}")
+      print()
+
+      bSuccess = True
+      sResult  = "Main documentation generated"
 
       return bSuccess, sResult
 
