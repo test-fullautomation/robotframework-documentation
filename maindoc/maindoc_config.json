@@ -2,7 +2,7 @@
 #
 # Main doc configuration file
 #
-# 06.07.2022
+# 11.07.2022
 #
 # **************************************************************************************************************
 # Format: extended json format with the possibility to comment out lines (by '#' at the beginning of the line).
@@ -43,18 +43,11 @@
                 "../../testresultwebapp"],
 
 
-# Section "OUTPUT":
-# -----------------
-# Defines the path to the output folder containing the generated PDF files and the tex file to import these PDF files
-# into the main documentation.
-
-   "OUTPUT" : "../docbuild",
-
-
 # Section "BOOKSOURCES":
 # ----------------------
 # Defines the path to the folder containing the manually maintained tex files if the RobotFrameworkAIO reference
 # It is expected that within this folder a file with name "MAINTEXFILENAME" is present.
+# This folder is also used as output folder for the generated PDF files.
 
    "BOOKSOURCES" : "../book",
 

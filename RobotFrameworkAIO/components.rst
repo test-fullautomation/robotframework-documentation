@@ -8,7 +8,7 @@
 
 * ``PythonExtensionsCollection``
 
-  - Version: 0.8.3 (from 05.07.2022)
+  - Version: 0.8.3 (from 08.07.2022)
   - URL: https://github.com/test-fullautomation/python-extensions-collection
   - *Additional Python functions*
 
