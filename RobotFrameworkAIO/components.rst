@@ -36,6 +36,12 @@
   - URL: https://github.com/test-fullautomation/robotframework-qconnect-base
   - *Robot Framework test library for TCP, SSH, serial connection*
 
+* ``QConnectionDLTLibrary``
+
+  - Version: 1.1.0 (from 11.07.2022)
+  - URL: https://sourcecode.socialcoding.bosch.com/projects/ROBFW/repos/robotframework-qconnect-dlt/browse
+  - *Robot Framework test library for TCP, SSH, serial connection*
+
 * ``RobotResults2RQM``
 
   - Version: 1.1.1 (from 05.07.2022)
@@ -53,5 +59,11 @@
   - Version: 0.1.0 (from 04.07.2022)
   - URL: https://github.com/test-fullautomation/testresultwebapp
   - *Web based display of test results*
+
+* ``TMLLog2RobotLog``
+
+  - Version: 1.1.0 (from 12.07.2022)
+  - URL: https://sourcecode.socialcoding.bosch.com/projects/ROBFW/repos/robotframework-tmllog2robotlog/browse
+  - *Convert TML-Framework results to Robot Framework results*
 
 
