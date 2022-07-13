@@ -20,7 +20,7 @@
 #
 # XC-CT/ECA3-Queckenstedt
 #
-# 11.07.2022
+# 13.07.2022
 #
 # --------------------------------------------------------------------------------------------------------------
 
@@ -415,7 +415,7 @@ Constructor of class ``CDocBuilder``.
 
             sPDFRelPath = "." + sPDFFile[len(sBookSourcesFolder):]
             oLibraryDocImportTexFile.Write(r"\includepdf[pages=1,pagecommand=\section{" + sHeadline + "}]{" + sPDFRelPath + "}")
-            oLibraryDocImportTexFile.Write(r"\includepdf[pages=2-,pagecommand={}]{" + sPDFRelPath + "}")
+            oLibraryDocImportTexFile.Write(r"\includepdf[width=\textwidth,frame=true,pages=2-,pagecommand={}]{" + sPDFRelPath + "}")
          # eof for sPDFFile in listPDFFiles:
          del oLibraryDocImportTexFile
 
