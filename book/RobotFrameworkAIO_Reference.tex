@@ -1,4 +1,4 @@
-%  Copyright 2020-2022 Robert Bosch Car Multimedia GmbH
+%  Copyright 2020-2022 Robert Bosch GmbH
 %
 %  Licensed under the Apache License, Version 2.0 (the "License");
 %  you may not use this file except in compliance with the License.
@@ -11,33 +11,53 @@
 %  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 %  See the License for the specific language governing permissions and
 %  limitations under the License.
+%
 \documentclass[a4paper,10pt]{report}
 
-\input{../styles/include/styles}
+% --------------------------------------------------------------------------------------------------------------
+% common preamble
+% --------------------------------------------------------------------------------------------------------------
+
+\input{./styles/preamble}
+
+% --------------------------------------------------------------------------------------------------------------
+% document title
+% --------------------------------------------------------------------------------------------------------------
+
+\author{Thomas Pollerspöck \\ \\ Nguyen Huynh Tri Cuong \\ Tran Duy Ngoan \\ Mai Dinh Nam Son \\ Tran Hoang Nguyen \\ Holger Queckenstedt}
+\title{Specification of Robot Framework at Bosch}
+\date{July 2022}
+
+% --------------------------------------------------------------------------------------------------------------
+% document header
+% --------------------------------------------------------------------------------------------------------------
 
 \begin{document}
 
-\author{Thomas Pollerspöck \\ \\ Nguyen Huynh Tri Cuong \\ Tran Duy Ngoan \\ Mai Dinh Nam Son \\ Tran Hoang Nguyen}
-\title{Specification of Robot Framework at Bosch}
-\date{June 2022}
-
+\hypersetup{pageanchor=false}
 
 \maketitle
 
-\begin{boxinfo}{! Information !}{
-Dear reader, \\
-\\
-Information to users.
-}
-\end{boxinfo}
-
+\clearpage
+\pagenumbering{Alph}
 \tableofcontents
 
-\listoftodos
+\clearpage
+\pagenumbering{arabic}
 
-\include{./include/code_analysis}
-\include{./include/our_document}
+\hypersetup{pageanchor=true}
+
+% \listoftodos % ! to be clarified separately !
+
+% --------------------------------------------------------------------------------------------------------------
+% document content (manually maintained part)
+% --------------------------------------------------------------------------------------------------------------
+
+% \include{./include/code_analysis} % ! needs to be reworked !
+
 \include{./include/apertis}
+
+% --------------------------------------------------------------------------------------------------------------
 
 \chapter{Library documentation}
 
@@ -45,9 +65,21 @@ The following sections contain the documentation of additional libraries that ar
 
 Overview about the included libraries:
 
-\input{./include/libraries/library_doc_overview}
+% --------------------------------------------------------------------------------------------------------------
+% document content (automatically generated part)
+%
+% following input files require the execution of genmaindoc.py, otherwise they are not available
+% --------------------------------------------------------------------------------------------------------------
 
-\input{./include/libraries/library_doc_imports}
+\input{./externaldocs/library_doc_overview}
+
+\input{./externaldocs/library_doc_imports}
+
+\input{./externaldocs/final_summary}
+
+% --------------------------------------------------------------------------------------------------------------
+% appendix
+% --------------------------------------------------------------------------------------------------------------
 
 %\backmatter
 %glossary and index would go here.

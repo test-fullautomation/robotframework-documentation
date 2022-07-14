@@ -1,9 +1,9 @@
 {
    "REPOSITORYNAME" : "robotframework-documentation",
    "PACKAGENAME" : "RobotFrameworkAIO",
-   "VERSION" : "0.4.0",
-   "VERSION_DATE" : "30.06.2022",
-   "AUTHOR" : "Thomas Pollerspoeck",
+   "VERSION" : "0.10.0",
+   "VERSION_DATE" : "14.07.2022",
+   "AUTHOR" : "Thomas Pollerspöck",
    "AUTHOREMAIL" : "Thomas.Pollerspoeck@de.bosch.com",
    "DESCRIPTION" : "Documentation for RobotFramework AIO",
    "LONGDESCRIPTIONCONTENTTYPE" : "text/markdown",
@@ -16,6 +16,6 @@
    "INTENDEDAUDIENCE" : "Intended Audience :: Developers",
    "TOPIC" : "Topic :: Software Development",
    "INSTALLREQUIRES" : ["pypandoc","colorama","GenPackageDoc","PythonExtensionsCollection"],
-   "PACKAGEDATA" : ["*.pdf"],
+   "PACKAGEDATA" : ["*.pdf","*.rst"],
    "PACKAGEDOC" : "./maindoc"
 }

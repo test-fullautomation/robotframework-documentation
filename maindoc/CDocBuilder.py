@@ -20,7 +20,7 @@
 #
 # XC-CT/ECA3-Queckenstedt
 #
-# 30.06.2022
+# 14.07.2022
 #
 # --------------------------------------------------------------------------------------------------------------
 
@@ -164,48 +164,78 @@ Constructor of class ``CDocBuilder``.
    # --------------------------------------------------------------------------------------------------------------
    #TM***
 
-   def __PrepareOverviewFile(self, listofdictConfig=[]):
-      """Writes an overview file containing some assorted configuration values taken out of the collected repository configurations
+   def __PrepareOverviewFiles(self, listofdictConfig=[]):
+      """Writes some overview files containing some assorted configuration values taken out of the collected repository configurations
       """
 
-      sMethod = "CDocBuilder.__PrepareOverviewFile"
+      sMethod = "CDocBuilder.__PrepareOverviewFiles"
 
       bSuccess = None
       sResult  = "UNKNOWN"
 
-      sOutputFolder = self.__dictMainDocConfig['OUTPUT']
-      sOverviewFileName = "library_doc_overview.tex"
-      sOverviewFile = f"{sOutputFolder}/{sOverviewFileName}"
-      self.__dictMainDocConfig['OVERVIEWFILE'] = sOverviewFile
-      oOverviewFile = CFile(sOverviewFile)
+      # -- 1. LaTeX version
 
-      oOverviewFile.Write(r"\begin{center}")
+      sExternalDocFolder = self.__dictMainDocConfig['EXTERNALDOCFOLDER']
+      sOverviewFileName_tex = "library_doc_overview.tex"
+      sOverviewFile_tex = f"{sExternalDocFolder}/{sOverviewFileName_tex}"
+      self.__dictMainDocConfig['OVERVIEWFILE_TEX'] = sOverviewFile_tex
+      oOverviewFile_tex = CFile(sOverviewFile_tex)
+      oOverviewFile_tex.Write(f"% Generated at {self.__dictMainDocConfig['NOW']}")
+      oOverviewFile_tex.Write("")
 
-      for listofdictConfig in listofdictConfig:
-         PACKAGENAME = listofdictConfig['PACKAGENAME'].replace('_',r'\_') # LaTeX requires this masking
-         DESCRIPTION = listofdictConfig['DESCRIPTION'].replace('_',r'\_') # LaTeX requires this masking
-         oOverviewFile.Write(r"\begin{tabular}{| m{44em} |}\hline")
-         oOverviewFile.Write(r"   \textbf{" + PACKAGENAME + r"}\\ \hline")
-         oOverviewFile.Write(r"   Version " + listofdictConfig['PACKAGEVERSION'] + " (from " + listofdictConfig['PACKAGEDATE'] + r")\\ \hline")
-         oOverviewFile.Write(r"   " + listofdictConfig['URL'] + r"\\ \hline")
-         oOverviewFile.Write(r"   \textit{" + DESCRIPTION + r"}\\ \hline")
-         oOverviewFile.Write(r"\end{tabular}")
-         oOverviewFile.Write()
-         oOverviewFile.Write(r"\vspace{2ex}")
-         oOverviewFile.Write()
-      # eof for listofdictConfig in listofdictConfig:
+      oOverviewFile_tex.Write(r"\begin{center}")
 
-      oOverviewFile.Write(r"\end{center}")
-      oOverviewFile.Write()
+      for dictConfig in listofdictConfig:
+         PACKAGENAME = dictConfig['PACKAGENAME'].replace('_',r'\_') # LaTeX requires this masking
+         DESCRIPTION = dictConfig['DESCRIPTION'].replace('_',r'\_') # LaTeX requires this masking
+         oOverviewFile_tex.Write(r"\begin{tabular}{| m{44em} |}\hline")
+         oOverviewFile_tex.Write(r"   \textbf{" + PACKAGENAME + r"}\\ \hline")
+         oOverviewFile_tex.Write(r"   Version " + dictConfig['PACKAGEVERSION'] + " (from " + dictConfig['PACKAGEDATE'] + r")\\ \hline")
+         oOverviewFile_tex.Write(r"   " + dictConfig['URL'] + r"\\ \hline")
+         oOverviewFile_tex.Write(r"   \textit{" + DESCRIPTION + r"}\\ \hline")
+         oOverviewFile_tex.Write(r"\end{tabular}")
+         oOverviewFile_tex.Write()
+         oOverviewFile_tex.Write(r"\vspace{2ex}")
+         oOverviewFile_tex.Write()
+      # eof for dictConfig in listofdictConfig:
 
-      del oOverviewFile
+      oOverviewFile_tex.Write(r"\end{center}")
+      oOverviewFile_tex.Write()
+
+      del oOverviewFile_tex
+
+      # -- 2. rst version
+
+      sExternalDocFolder = self.__dictMainDocConfig['EXTERNALDOCFOLDER']
+      sOverviewFileName_rst = "components.rst"
+      sOverviewFile_rst = f"{sExternalDocFolder}/{sOverviewFileName_rst}"
+      self.__dictMainDocConfig['OVERVIEWFILE_RST'] = sOverviewFile_rst
+      oOverviewFile_rst = CFile(sOverviewFile_rst)
+
+      oOverviewFile_rst.Write(r"**RobotFramework AIO components listing**")
+      oOverviewFile_rst.Write()
+
+      for dictConfig in listofdictConfig:
+         PACKAGENAME = dictConfig['PACKAGENAME'].replace('_',r'\_') # LaTeX requires this masking
+         DESCRIPTION = dictConfig['DESCRIPTION'].replace('_',r'\_') # LaTeX requires this masking
+         oOverviewFile_rst.Write(f"* ``{PACKAGENAME}``")
+         oOverviewFile_rst.Write()
+         oOverviewFile_rst.Write(f"  - Version: {dictConfig['PACKAGEVERSION']} (from {dictConfig['PACKAGEDATE']})")
+         oOverviewFile_rst.Write(f"  - URL: {dictConfig['URL']}")
+         oOverviewFile_rst.Write(f"  - *{dictConfig['DESCRIPTION']}*")
+         oOverviewFile_rst.Write()
+      # eof for dictConfig in listofdictConfig:
+
+      oOverviewFile_rst.Write()
+
+      del oOverviewFile_rst
 
       bSuccess = True
-      sResult  = f"Overview file '{sOverviewFile}' written"
+      sResult  = f"Overview files written:\n* '{sOverviewFile_tex}'\n* '{sOverviewFile_rst}'"
 
       return bSuccess, sResult
 
-   # eof def __PrepareOverviewFile(self, listofdictConfig=[]):
+   # eof def __PrepareOverviewFiles(self, listofdictConfig=[]):
 
    # --------------------------------------------------------------------------------------------------------------
    #TM***
@@ -239,139 +269,219 @@ Constructor of class ``CDocBuilder``.
       if bSuccess is not True:
          return bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
 
-      # recreate folder containing the generated repository documentations
-      sOutputFolder = self.__dictMainDocConfig['OUTPUT']
-      oOutputFolder = CFolder(sOutputFolder)
-      bSuccess, sResult = oOutputFolder.Create(bOverwrite=True)
-      del oOutputFolder
+      sBookSourcesFolder = self.__dictMainDocConfig['BOOKSOURCES']
+      if not os.path.isdir(sBookSourcesFolder):
+         bSuccess = False
+         sResult  = f"The input folder '{sBookSourcesFolder}' does not exist."
+         return bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
+
+      # compute files and subfolders
+      sMainTexFileName = self.__dictMainDocConfig['MAINTEXFILENAME']
+      sMainTexFile     = f"{sBookSourcesFolder}/{sMainTexFileName}"
+      if os.path.isfile(sMainTexFile) is False:
+         bSuccess = False
+         sResult  = f"The main tex file '{sMainTexFile}' does not exist."
+         return bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
+
+      self.__dictMainDocConfig['MAINTEXFILE'] = sMainTexFile
+      sExternalDocFolder = f"{sBookSourcesFolder}/externaldocs"
+      self.__dictMainDocConfig['EXTERNALDOCFOLDER'] = sExternalDocFolder
+
+      oExternalDocFolder = CFolder(sExternalDocFolder)
+      bSuccess, sResult = oExternalDocFolder.Create(bOverwrite=True)
+      del oExternalDocFolder
       if bSuccess is not True:
          return bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
 
-      sPython = self.__dictMainDocConfig['PYTHON']
+      sPython            = self.__dictMainDocConfig['PYTHON']
+      bStrict            = self.__dictMainDocConfig['CONTROL']['STRICT']
+      bUpdateExternalDoc = self.__dictMainDocConfig['CONTROL']['UPDATE_EXTERNAL_DOC']
 
       # iterate the list of repositories and call the package doc generator inside these repositories,
       # redirect the PDF destination to the output folders used to build the main documentation
       listPDFFiles = []
       listConfigFiles = []
-      sMainTexFile = self.__dictMainDocConfig['MAINTEXFILE']
-      sMainTexFileFolder = os.path.dirname(sMainTexFile) # needed to compute relative import paths of PDF files
-      bStrict = self.__dictMainDocConfig['CONTROL']['STRICT']
 
-      for sRepository in listRepositories:
+      if bUpdateExternalDoc is True:
 
-         if os.path.isdir(sRepository) is False:
-            bSuccess = False
-            sResult  = f"The repository folder '{sRepository}' does not exist"
-            return bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
+         # In case of someone only wants to see the outcome of changes in the manually maintained part of the tex sources,
+         # the rendering of all external documents (the automatically generated part) can be suppressed
+         # (with "UPDATE_EXTERNAL_DOC" : false; see maindoc_config.json). This saves time.
 
-         sRepositoryName = os.path.basename(sRepository)
-         sDestinationFolder = f"{sOutputFolder}/{sRepositoryName}"
+         for sRepository in listRepositories:
 
-         oDestinationFolder = CFolder(sDestinationFolder)
-         bSuccess, sResult = oDestinationFolder.Create(bOverwrite=True)
-         del oDestinationFolder
+            if os.path.isdir(sRepository) is False:
+               bSuccess = False
+               sResult  = f"The repository folder '{sRepository}' does not exist"
+               return bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
+
+            sRepositoryName = os.path.basename(sRepository)
+            sDestinationFolder = f"{sExternalDocFolder}/{sRepositoryName}"
+            oDestinationFolder = CFolder(sDestinationFolder)
+            bSuccess, sResult = oDestinationFolder.Create(bOverwrite=True)
+            del oDestinationFolder
+            if bSuccess is not True:
+               return bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
+
+            sDocumentationBuilder = f"{sRepository}/GenPackageDoc.py"
+            if os.path.isfile(sDocumentationBuilder) is False:
+               bSuccess = False
+               sResult  = f"The package doc generator '{sDocumentationBuilder}' does not exist"
+               return bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
+
+            # create command line and execute the documentation builder
+            listCmdLineParts = []
+            listCmdLineParts.append(f"\"{sPython}\"")
+            listCmdLineParts.append(f"\"{sDocumentationBuilder}\"")
+            listCmdLineParts.append(f"--pdfdest=\"{sDestinationFolder}\"")
+            listCmdLineParts.append(f"--configdest=\"{sDestinationFolder}\"")
+            listCmdLineParts.append(f"--strict {bStrict}")
+            sCmdLine = " ".join(listCmdLineParts)
+            del listCmdLineParts
+            listCmdLineParts = shlex.split(sCmdLine)
+            # -- debug
+            sCmdLine = " ".join(listCmdLineParts)
+            print()
+            print("Now executing command line:\n" + sCmdLine)
+            print()
+            nReturn = ERROR
+            try:
+               nReturn = subprocess.call(listCmdLineParts)
+            except Exception as ex:
+               bSuccess = None
+               sResult  = str(ex)
+               return bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
+            if nReturn != SUCCESS:
+               bSuccess = False
+               sResult  = f"Documentation builder returns error {nReturn}"
+               return bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
+
+            # We need to identify the name of some output files inside sDestinationFolder:
+            # - PDF file (documentation of package in current repository)
+            # - json file (configuration values of current repository and documantaion build process) 
+            sPDFFile = None
+            sJsonFile = None
+            listLocalEntries = os.listdir(sDestinationFolder)
+            for sEntryName in listLocalEntries:
+               if sEntryName.lower().endswith('.pdf'):
+                  sPDFFile = CString.NormalizePath(os.path.join(sDestinationFolder, sEntryName))
+               if sEntryName.lower().endswith('.json'):
+                  sJsonFile = CString.NormalizePath(os.path.join(sDestinationFolder, sEntryName))
+            if sPDFFile is None:
+               bSuccess = False
+               sResult  = f"PDF file not found within '{sDestinationFolder}'"
+               return bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
+            if sJsonFile is None:
+               bSuccess = False
+               sResult  = f"Json configuration file not found within '{sDestinationFolder}'"
+               return bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
+            listPDFFiles.append(sPDFFile)
+            listConfigFiles.append(sJsonFile)
+         # eof for sRepository in listRepositories:
+
+         # get some assorted configuration values out of the configuration files collected from repositories
+         listofdictConfig, bSuccess, sResult = self.__GetConfig(listConfigFiles)
          if bSuccess is not True:
             return bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
+         else:
+            print(sResult)
+            print()
 
-         sDocumentationBuilder = f"{sRepository}/GenPackageDoc.py"
-         if os.path.isfile(sDocumentationBuilder) is False:
-            bSuccess = False
-            sResult  = f"The package doc generator '{sDocumentationBuilder}' does not exist"
+         # prepare an overview file containing a summary of configuration values
+         bSuccess, sResult = self.__PrepareOverviewFiles(listofdictConfig)
+         if bSuccess is not True:
             return bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
+         else:
+            print(sResult)
+            print()
 
-         # create command line and execute the documentation builder
-         listCmdLineParts = []
-         listCmdLineParts.append(f"\"{sPython}\"")
-         listCmdLineParts.append(f"\"{sDocumentationBuilder}\"")
-         listCmdLineParts.append(f"--pdfdest=\"{sDestinationFolder}\"")
-         listCmdLineParts.append(f"--configdest=\"{sDestinationFolder}\"")
-         listCmdLineParts.append(f"--strict {bStrict}")
-         sCmdLine = " ".join(listCmdLineParts)
-         del listCmdLineParts
-         listCmdLineParts = shlex.split(sCmdLine)
-         # -- debug
-         sCmdLine = " ".join(listCmdLineParts)
-         print()
-         print("Now executing command line:\n" + sCmdLine)
-         print()
-         nReturn = ERROR
-         try:
-            nReturn = subprocess.call(listCmdLineParts)
-         except Exception as ex:
-            bSuccess = None
-            sResult  = str(ex)
-            return bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
-         if nReturn != SUCCESS:
-            bSuccess = False
-            sResult  = f"Documentation builder returns error {nReturn}"
-            return bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
+         # create the import tex file to import the library documentations into the main documentation
+         sLibraryDocImportTexFile = f"{sExternalDocFolder}/library_doc_imports.tex"
+         oLibraryDocImportTexFile = CFile(sLibraryDocImportTexFile)
+         oLibraryDocImportTexFile.Write(f"% Generated at {self.__dictMainDocConfig['NOW']}")
+         oLibraryDocImportTexFile.Write("%")
+         oLibraryDocImportTexFile.Write("% This document imports the documentation of additional RobotFramework AIO libraries into the main documentation.")
+         oLibraryDocImportTexFile.Write("%")
+         oLibraryDocImportTexFile.Write(r"% The split of the \includepdf for a single PDF file is a workaround to avoid a linebreak after the section heading")
+         oLibraryDocImportTexFile.Write(r"% (one \newpage too much within pdfpages.sty).")
+         oLibraryDocImportTexFile.Write("%")
+         oLibraryDocImportTexFile.Write()
+         for sPDFFile in listPDFFiles:
+            if not sPDFFile.startswith(sBookSourcesFolder):
+               bSuccess = False
+               sResult  = f"The PDF file '{sPDFFile}' is not located within the folder structure of '{sBookSourcesFolder}'. It is not possible to compute a relative path to this PDF file."
+               return bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
 
-         # We need to identify the name of some output files inside sDestinationFolder:
-         # - PDF file (documentation of package in current repository)
-         # - json file (configuration values of current repository and documantaion build process) 
-         sPDFFile = None
-         sJsonFile = None
-         listLocalEntries = os.listdir(sDestinationFolder)
-         for sEntryName in listLocalEntries:
-            if sEntryName.lower().endswith('.pdf'):
-               sPDFFile = CString.NormalizePath(os.path.join(sDestinationFolder, sEntryName))
-            if sEntryName.lower().endswith('.json'):
-               sJsonFile = CString.NormalizePath(os.path.join(sDestinationFolder, sEntryName))
-         if sPDFFile is None:
-            bSuccess = False
-            sResult  = f"PDF file not found within '{sDestinationFolder}'"
-            return bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
-         if sJsonFile is None:
-            bSuccess = False
-            sResult  = f"Json configuration file not found within '{sDestinationFolder}'"
-            return bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
-         listPDFFiles.append(sPDFFile)
-         listConfigFiles.append(sJsonFile)
-      # eof for sRepository in listRepositories:
+            sHeadline = os.path.basename(sPDFFile)[:-4] # name of pdf file without extension
+            # the path to the PDF file to be imported, must be relative to the position of the main tex file,
+            # and this means also that the PDF must be created within a subfolder of the folder containing the main tex file
+            sHeadline = sHeadline.replace('_',r'\_') # LaTeX requires this masking
 
-      # get some assorted configuration values out of the configuration files collected from repositories
-      listofdictConfig, bSuccess, sResult = self.__GetConfig(listConfigFiles)
-      if bSuccess is not True:
-         return bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
+            sPDFRelPath = "." + sPDFFile[len(sBookSourcesFolder):]
+            oLibraryDocImportTexFile.Write(r"\includepdf[pages=1,pagecommand=\section{" + sHeadline + "}]{" + sPDFRelPath + "}")
+            oLibraryDocImportTexFile.Write(r"\includepdf[width=\textwidth,frame=true,pages=2-,pagecommand={}]{" + sPDFRelPath + "}")
+         # eof for sPDFFile in listPDFFiles:
+         del oLibraryDocImportTexFile
+
+      # eof if bUpdateExternalDoc is True:
+
       else:
-         print(sResult)
-         print()
 
-      # prepare an overview file containing a summary of configuration values
-      bSuccess, sResult = self.__PrepareOverviewFile(listofdictConfig)
-      if bSuccess is not True:
-         return bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
-      else:
-         print(sResult)
-         print()
+         # Import of external documentation not wanted. Therefore we create two dummy files to avoid LaTeX compilation errors
+         # of the main tex document.
 
-      # create the import tex file to import the library documentations into the main documentation
-      sLibraryDocImportTexFile = f"{sOutputFolder}/library_doc_imports.tex"
-      oLibraryDocImportTexFile = CFile(sLibraryDocImportTexFile)
-      oLibraryDocImportTexFile.Write(f"% Generated at {self.__dictMainDocConfig['NOW']}")
-      oLibraryDocImportTexFile.Write("%")
-      oLibraryDocImportTexFile.Write("% This document imports the documentation of additional RobotFramework AIO libraries into the main documentation.")
-      oLibraryDocImportTexFile.Write("%")
-      oLibraryDocImportTexFile.Write(r"% The split of the \includepdf for a single PDF file is a workaround to avoid a linebreak after the section heading")
-      oLibraryDocImportTexFile.Write(r"% (one \newpage too much within pdfpages.sty).")
-      oLibraryDocImportTexFile.Write("%")
-      oLibraryDocImportTexFile.Write()
-      for sPDFFile in listPDFFiles:
-         if not sPDFFile.startswith(sMainTexFileFolder):
-            bSuccess = False
-            sResult  = f"The PDF file '{sPDFFile}' is not located within the folder structure of '{sMainTexFileFolder}'. It is not possible to compute a relative path to this PDF file."
-            return bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
+         sOverviewFile  = f"{sExternalDocFolder}/library_doc_overview.tex"
+         sOutputMessage = r"\textbf{\textit{Overview of external documentations deactivated}}"
 
-         sHeadline = os.path.basename(sPDFFile)[:-4] # name of pdf file without extension
-         # the path to the PDF file to be imported, must be relative to the position of the main tex file,
-         # and this means also that the PDF must be created within a subfolder of the folder containing the main tex file
-         sHeadline = sHeadline.replace('_',r'\_') # LaTeX requires this masking
+         oOverviewFile = CFile(sOverviewFile)
+         oOverviewFile.Write(f"% Generated at {self.__dictMainDocConfig['NOW']}")
+         oOverviewFile.Write("")
+         oOverviewFile.Write(sOutputMessage)
+         oOverviewFile.Write("")
+         del oOverviewFile
 
-         sPDFRelPath = "." + sPDFFile[len(sMainTexFileFolder):]
-         oLibraryDocImportTexFile.Write(r"\includepdf[pages=1,pagecommand=\section{" + sHeadline + "}]{" + sPDFRelPath + "}")
-         oLibraryDocImportTexFile.Write(r"\includepdf[pages=2-,pagecommand={}]{" + sPDFRelPath + "}")
-      # eof for sPDFFile in listPDFFiles:
-      del oLibraryDocImportTexFile
+         sLibraryDocImportTexFile = f"{sExternalDocFolder}/library_doc_imports.tex"
+         sOutputMessage           = r"\textbf{\textit{Import of external documentations deactivated}}"
+
+         oLibraryDocImportTexFile = CFile(sLibraryDocImportTexFile)
+         oLibraryDocImportTexFile.Write(f"% Generated at {self.__dictMainDocConfig['NOW']}")
+         oLibraryDocImportTexFile.Write("")
+         oLibraryDocImportTexFile.Write(sOutputMessage)
+         oLibraryDocImportTexFile.Write("")
+         del oLibraryDocImportTexFile
+
+      # eof else - if bUpdateExternalDoc is True:
+
+      # derive name of expected PDF file out of the name of tex file
+      oMainTexFile = CFile(sMainTexFile)
+      dMainTexFileInfo = oMainTexFile.GetFileInfo()
+      del oMainTexFile
+      sMainTexFileNameOnly = dMainTexFileInfo['sFileNameOnly']
+      sPDFFileName = f"{sMainTexFileNameOnly}.pdf"
+      sPDFFileExpected = f"{sBookSourcesFolder}/{sPDFFileName}"
+      self.__dictMainDocConfig['PDFFILEEXPECTED'] = sPDFFileExpected
+
+      # PDF file will also be copied to the package folder, from there it will be installed to Python site-packages
+      sPackageFolder = f"{self.__dictMainDocConfig['REFERENCEPATH']}/{self.__dictMainDocConfig['PACKAGENAME']}"
+      sPDFFileDestination = f"{sPackageFolder}/{sPDFFileName}"
+      self.__dictMainDocConfig['PDFFILEDESTINATION'] = sPDFFileDestination
+
+      # create final summary about document creation
+      sPDFFileName_masked = sPDFFileName.replace('_', r'\_') # LaTeX requires this masking
+      sFinalSummaryFile = f"{sExternalDocFolder}/final_summary.tex"
+      oFinalSummaryFile = CFile(sFinalSummaryFile)
+      oFinalSummaryFile.Write(f"% Generated at {self.__dictMainDocConfig['NOW']}")
+      oFinalSummaryFile.Write("")
+      oFinalSummaryFile.Write(r"\vfill")
+      oFinalSummaryFile.Write(r"\begin{center}")
+      oFinalSummaryFile.Write(r"\begin{tabular}{m{16em}}\hline")
+      oFinalSummaryFile.Write(r"   \multicolumn{1}{c}{\textbf{" + f"{sPDFFileName_masked}" + r"}}\\")
+      oFinalSummaryFile.Write(r"   \multicolumn{1}{c}{\textit{Created at " + self.__dictMainDocConfig['NOW'] + r"}}\\")
+      oFinalSummaryFile.Write(r"   \multicolumn{1}{c}{\textit{by genmaindoc v. " + self.__dictMainDocConfig['VERSION'] + r"}}\\ \hline")
+      oFinalSummaryFile.Write(r"\end{tabular}")
+      oFinalSummaryFile.Write(r"\end{center}")
+      oFinalSummaryFile.Write("")
+      del oFinalSummaryFile
 
       # convert main tex file to PDF
       sLaTeXInterpreter = self.__dictMainDocConfig['LATEXINTERPRETER']
@@ -389,18 +499,6 @@ Constructor of class ``CDocBuilder``.
             bSuccess = True
             sResult  = f"Generating the documentation in PDF format not possible because of missing LaTeX compiler ('non strict' mode)!"
          return bSuccess, sResult
-
-      # derive name of expected PDF file out of the name of tex file
-      oMainTexFile = CFile(sMainTexFile)
-      dMainTexFileInfo = oMainTexFile.GetFileInfo()
-      del oMainTexFile
-      sMainTexFileNameOnly = dMainTexFileInfo['sFileNameOnly']
-      sPDFFileName = f"{sMainTexFileNameOnly}.pdf"
-      sPDFFileExpected = f"{sMainTexFileFolder}/{sPDFFileName}"
-
-      # PDF file will also be copied to the package folder, from there it will be installed to Python site-packages
-      sPackageFolder = f"{self.__dictMainDocConfig['REFERENCEPATH']}/{self.__dictMainDocConfig['PACKAGENAME']}"
-      sPDFFileDestination = f"{sPackageFolder}/{sPDFFileName}"
 
       # start the compiler
       listCmdLineParts = []
@@ -421,7 +519,7 @@ Constructor of class ``CDocBuilder``.
          cwd = os.getcwd() # we have to save cwd because later we have to change
          nReturn = ERROR
          try:
-            os.chdir(sMainTexFileFolder) # otherwise LaTeX compiler is not able to find files inside
+            os.chdir(sBookSourcesFolder) # otherwise LaTeX compiler is not able to find files inside
             nReturn = subprocess.call(listCmdLineParts)
             print()
             print(f"LaTeX compiler returned {nReturn}")
@@ -439,19 +537,40 @@ Constructor of class ``CDocBuilder``.
       # eof for nDummy in range(2):
 
       # -- verify the outcome
-      if os.path.isfile(sPDFFileExpected) is True:
-         oPDFFile = CFile(sPDFFileExpected)
-         bSuccess, sResult = oPDFFile.CopyTo(sPDFFileDestination, bOverwrite=True)
-         del oPDFFile
-         if bSuccess is True:
-            # replacement for sResult without debug info
-            sResult = f"File '{sPDFFileExpected}'\ncopied to\n{sPDFFileDestination}"
-         else:
-            sResult  = CString.FormatResult(sMethod, bSuccess, sResult)
-      else:
+      if os.path.isfile(sPDFFileExpected) is False:
          bSuccess = False
          sResult  = f"Expected PDF file '{sPDFFileExpected}' not generated"
-         sResult  = CString.FormatResult(sMethod, bSuccess, sResult)
+         return bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
+
+      oPDFFile = CFile(sPDFFileExpected)
+      bSuccess, sResult = oPDFFile.CopyTo(sPDFFileDestination, bOverwrite=True)
+      del oPDFFile
+      if bSuccess is not True:
+         return bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
+      print(COLBY + f"* PDF file: {sPDFFileDestination}")
+      print()
+
+      if "OVERVIEWFILE_RST" in self.__dictMainDocConfig:
+         # in case of "UPDATE_EXTERNAL_DOC" is false, "OVERVIEWFILE_RST" is not available; therefore nothing to copy to the package folder
+         OVERVIEWFILE_RST = self.__dictMainDocConfig['OVERVIEWFILE_RST']
+         if os.path.isfile(OVERVIEWFILE_RST) is False:
+            bSuccess = False
+            sResult  = f"Expected overview file '{OVERVIEWFILE_RST}' not generated"
+            return bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
+
+         sOverviewFileName = os.path.basename(OVERVIEWFILE_RST)
+         sOverviewFile_dest = f"{sPackageFolder}/{sOverviewFileName}"
+         oOverviewFile = CFile(OVERVIEWFILE_RST)
+         bSuccess, sResult = oOverviewFile.CopyTo(sOverviewFile_dest, bOverwrite=True)
+         del oOverviewFile
+         if bSuccess is not True:
+            return bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
+         print(COLBY + f"* Overview: {sOverviewFile_dest}")
+         print()
+      # eof if "OVERVIEWFILE_RST" in self.__dictMainDocConfig:
+
+      bSuccess = True
+      sResult  = "Main documentation generated"
 
       return bSuccess, sResult
 

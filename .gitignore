@@ -1,4 +1,8 @@
-#ignore built files
+__pycache__/
+build/
+dist/
+externaldocs/
+*.egg-info
 *.aux
 *.log
 *.out
@@ -7,3 +11,6 @@
 *.tdo
 *.toc
 *.synctex.gz
+*.Lnk
+*.exe
+*.bat

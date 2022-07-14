@@ -3,13 +3,18 @@
 # ---------------------------------------------------------------------------------------------------------
 
 # Set the default behavior, in case people don't have core.autocrlf set.
-* text=auto
-# Git will handle the files in whatever way it thinks is best. This is a good default option.
+* text=native
+# uses the platform’s native line ending
 
 # Explicitly declare text files you want to always be normalized and converted
 # to native line endings on checkout.
 *.c text
 *.h text
+*.py text
+*.ini text
+*.json text
+*.txt text
+*.rst text
 
 # Declare files that will always have CRLF line endings on checkout.
 # * text eol=crlf
