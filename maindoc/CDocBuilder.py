@@ -20,7 +20,7 @@
 #
 # XC-CT/ECA3-Queckenstedt
 #
-# 13.07.2022
+# 14.07.2022
 #
 # --------------------------------------------------------------------------------------------------------------
 
@@ -304,6 +304,10 @@ Constructor of class ``CDocBuilder``.
 
       if bUpdateExternalDoc is True:
 
+         # In case of someone only wants to see the outcome of changes in the manually maintained part of the tex sources,
+         # the rendering of all external documents (the automatically generated part) can be suppressed
+         # (with "UPDATE_EXTERNAL_DOC" : false; see maindoc_config.json). This saves time.
+
          for sRepository in listRepositories:
 
             if os.path.isdir(sRepository) is False:
@@ -448,6 +452,37 @@ Constructor of class ``CDocBuilder``.
 
       # eof else - if bUpdateExternalDoc is True:
 
+      # derive name of expected PDF file out of the name of tex file
+      oMainTexFile = CFile(sMainTexFile)
+      dMainTexFileInfo = oMainTexFile.GetFileInfo()
+      del oMainTexFile
+      sMainTexFileNameOnly = dMainTexFileInfo['sFileNameOnly']
+      sPDFFileName = f"{sMainTexFileNameOnly}.pdf"
+      sPDFFileExpected = f"{sBookSourcesFolder}/{sPDFFileName}"
+      self.__dictMainDocConfig['PDFFILEEXPECTED'] = sPDFFileExpected
+
+      # PDF file will also be copied to the package folder, from there it will be installed to Python site-packages
+      sPackageFolder = f"{self.__dictMainDocConfig['REFERENCEPATH']}/{self.__dictMainDocConfig['PACKAGENAME']}"
+      sPDFFileDestination = f"{sPackageFolder}/{sPDFFileName}"
+      self.__dictMainDocConfig['PDFFILEDESTINATION'] = sPDFFileDestination
+
+      # create final summary about document creation
+      sPDFFileName_masked = sPDFFileName.replace('_', r'\_') # LaTeX requires this masking
+      sFinalSummaryFile = f"{sExternalDocFolder}/final_summary.tex"
+      oFinalSummaryFile = CFile(sFinalSummaryFile)
+      oFinalSummaryFile.Write(f"% Generated at {self.__dictMainDocConfig['NOW']}")
+      oFinalSummaryFile.Write("")
+      oFinalSummaryFile.Write(r"\vfill")
+      oFinalSummaryFile.Write(r"\begin{center}")
+      oFinalSummaryFile.Write(r"\begin{tabular}{m{16em}}\hline")
+      oFinalSummaryFile.Write(r"   \multicolumn{1}{c}{\textbf{" + f"{sPDFFileName_masked}" + r"}}\\")
+      oFinalSummaryFile.Write(r"   \multicolumn{1}{c}{\textit{Created at " + self.__dictMainDocConfig['NOW'] + r"}}\\")
+      oFinalSummaryFile.Write(r"   \multicolumn{1}{c}{\textit{by genmaindoc v. " + self.__dictMainDocConfig['VERSION'] + r"}}\\ \hline")
+      oFinalSummaryFile.Write(r"\end{tabular}")
+      oFinalSummaryFile.Write(r"\end{center}")
+      oFinalSummaryFile.Write("")
+      del oFinalSummaryFile
+
       # convert main tex file to PDF
       sLaTeXInterpreter = self.__dictMainDocConfig['LATEXINTERPRETER']
       if os.path.isfile(sLaTeXInterpreter) is False:
@@ -464,20 +499,6 @@ Constructor of class ``CDocBuilder``.
             bSuccess = True
             sResult  = f"Generating the documentation in PDF format not possible because of missing LaTeX compiler ('non strict' mode)!"
          return bSuccess, sResult
-
-      # derive name of expected PDF file out of the name of tex file
-      oMainTexFile = CFile(sMainTexFile)
-      dMainTexFileInfo = oMainTexFile.GetFileInfo()
-      del oMainTexFile
-      sMainTexFileNameOnly = dMainTexFileInfo['sFileNameOnly']
-      sPDFFileName = f"{sMainTexFileNameOnly}.pdf"
-      sPDFFileExpected = f"{sBookSourcesFolder}/{sPDFFileName}"
-      self.__dictMainDocConfig['PDFFILEEXPECTED'] = sPDFFileExpected
-
-      # PDF file will also be copied to the package folder, from there it will be installed to Python site-packages
-      sPackageFolder = f"{self.__dictMainDocConfig['REFERENCEPATH']}/{self.__dictMainDocConfig['PACKAGENAME']}"
-      sPDFFileDestination = f"{sPackageFolder}/{sPDFFileName}"
-      self.__dictMainDocConfig['PDFFILEDESTINATION'] = sPDFFileDestination
 
       # start the compiler
       listCmdLineParts = []
