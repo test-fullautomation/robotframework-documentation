@@ -20,7 +20,7 @@
 #
 # XC-CT/ECA3-Queckenstedt
 #
-# 14.07.2022
+# 15.07.2022
 #
 # --------------------------------------------------------------------------------------------------------------
 
@@ -139,6 +139,9 @@ Constructor of class ``CDocBuilder``.
       listSupportedKeys.append('URL')
       listSupportedKeys.append('PACKAGEVERSION')
       listSupportedKeys.append('PACKAGEDATE')
+      listSupportedKeys.append('META_NAME')         # optional
+      listSupportedKeys.append('META_VERSION')      # optional
+      listSupportedKeys.append('META_VERSION_DATE') # optional
 
       for sConfigFile in listConfigFiles:
 
@@ -148,7 +151,8 @@ Constructor of class ``CDocBuilder``.
          hConfigFile.close()
          del hConfigFile
          for sKey in listSupportedKeys:
-            dictConfig[sKey] = dictRepositoryConfig[sKey]
+            if sKey in dictRepositoryConfig:
+               dictConfig[sKey] = dictRepositoryConfig[sKey]
          listofdictConfig.append(dictConfig)
       # eof for sConfigFile in listConfigFiles:
 
@@ -181,10 +185,58 @@ Constructor of class ``CDocBuilder``.
       self.__dictMainDocConfig['OVERVIEWFILE_TEX'] = sOverviewFile_tex
       oOverviewFile_tex = CFile(sOverviewFile_tex)
       oOverviewFile_tex.Write(f"% Generated at {self.__dictMainDocConfig['NOW']}")
-      oOverviewFile_tex.Write("")
+      oOverviewFile_tex.Write()
+      oOverviewFile_tex.Write(r"\chapter{Library documentation}")
+      oOverviewFile_tex.Write()
+      oOverviewFile_tex.Write(r"The following sections contain the documentation of additional libraries that are part of the RobotFramework AIO.")
+      oOverviewFile_tex.Write()
+      oOverviewFile_tex.Write(r"\vspace{2ex}")
+      oOverviewFile_tex.Write()
 
       oOverviewFile_tex.Write(r"\begin{center}")
 
+      oOverviewFile_tex.Write(r"{\Large\textbf{RobotFramework AIO bundle}}")
+      oOverviewFile_tex.Write()
+      oOverviewFile_tex.Write(r"\vspace{2ex}")
+      oOverviewFile_tex.Write()
+
+      # -- search for meta information, print meta information at the top of the list of package informations (if available)
+      bMetaVersionAvailable = False
+      for dictConfig in listofdictConfig:
+         META_NAME         = None
+         META_VERSION      = None
+         META_VERSION_DATE = None
+         if "META_NAME" in dictConfig:
+            META_NAME = dictConfig['META_NAME'].replace('_',r'\_') # LaTeX requires this masking
+         if "META_VERSION" in dictConfig:
+            META_VERSION = dictConfig['META_VERSION']
+         if "META_VERSION_DATE" in dictConfig:
+            META_VERSION_DATE = dictConfig['META_VERSION_DATE']
+
+         if ( (META_NAME is not None) and (META_VERSION is not None) and (META_VERSION_DATE is not None) ) :
+            # meta information available
+            bMetaVersionAvailable = True
+            oOverviewFile_tex.Write(r"\begin{tabular}{| m{44em} |}\hline")
+            oOverviewFile_tex.Write(r"   \textbf{" + META_NAME + r"}\\ \hline")
+            oOverviewFile_tex.Write(r"   Version " + dictConfig['META_VERSION'] + " (from " + dictConfig['META_VERSION_DATE'] + r")\\ \hline")
+            oOverviewFile_tex.Write(r"\end{tabular}")
+            oOverviewFile_tex.Write()
+            oOverviewFile_tex.Write(r"\vspace{2ex}")
+            oOverviewFile_tex.Write()
+      # eof for dictConfig in listofdictConfig:
+
+      if bMetaVersionAvailable is False:
+         # meta information not available
+         oOverviewFile_tex.Write(r"\textcolor{red}{\textbf{\textit{RobotFramework AIO bundle information not available!}}}")
+         oOverviewFile_tex.Write()
+         oOverviewFile_tex.Write(r"\vspace{2ex}")
+         oOverviewFile_tex.Write()
+
+      # -- print information about included packages
+      oOverviewFile_tex.Write(r"{\Large\textbf{Included libraries}}")
+      oOverviewFile_tex.Write()
+      oOverviewFile_tex.Write(r"\vspace{2ex}")
+      oOverviewFile_tex.Write()
       for dictConfig in listofdictConfig:
          PACKAGENAME = dictConfig['PACKAGENAME'].replace('_',r'\_') # LaTeX requires this masking
          DESCRIPTION = dictConfig['DESCRIPTION'].replace('_',r'\_') # LaTeX requires this masking
@@ -212,12 +264,41 @@ Constructor of class ``CDocBuilder``.
       self.__dictMainDocConfig['OVERVIEWFILE_RST'] = sOverviewFile_rst
       oOverviewFile_rst = CFile(sOverviewFile_rst)
 
+      oOverviewFile_rst.Write(r"**RobotFramework AIO bundle**")
+      oOverviewFile_rst.Write()
+
+      bMetaVersionAvailable = False
+      for dictConfig in listofdictConfig:
+         META_NAME         = None
+         META_VERSION      = None
+         META_VERSION_DATE = None
+         if "META_NAME" in dictConfig:
+            META_NAME = dictConfig['META_NAME']
+         if "META_VERSION" in dictConfig:
+            META_VERSION = dictConfig['META_VERSION']
+         if "META_VERSION_DATE" in dictConfig:
+            META_VERSION_DATE = dictConfig['META_VERSION_DATE']
+
+         if ( (META_NAME is not None) and (META_VERSION is not None) and (META_VERSION_DATE is not None) ) :
+            # meta information available
+            bMetaVersionAvailable = True
+            oOverviewFile_rst.Write(f"* ``{META_NAME}``")
+            oOverviewFile_rst.Write()
+            oOverviewFile_rst.Write(f"  Version: {dictConfig['META_VERSION']} (from {dictConfig['META_VERSION_DATE']})")
+            oOverviewFile_rst.Write()
+      # eof for dictConfig in listofdictConfig:
+
+      if bMetaVersionAvailable is False:
+         # meta information not available
+         oOverviewFile_rst.Write(r"RobotFramework AIO bundle information not available!")
+         oOverviewFile_rst.Write()
+
       oOverviewFile_rst.Write(r"**RobotFramework AIO components listing**")
       oOverviewFile_rst.Write()
 
       for dictConfig in listofdictConfig:
-         PACKAGENAME = dictConfig['PACKAGENAME'].replace('_',r'\_') # LaTeX requires this masking
-         DESCRIPTION = dictConfig['DESCRIPTION'].replace('_',r'\_') # LaTeX requires this masking
+         PACKAGENAME = dictConfig['PACKAGENAME']
+         DESCRIPTION = dictConfig['DESCRIPTION']
          oOverviewFile_rst.Write(f"* ``{PACKAGENAME}``")
          oOverviewFile_rst.Write()
          oOverviewFile_rst.Write(f"  - Version: {dictConfig['PACKAGEVERSION']} (from {dictConfig['PACKAGEDATE']})")
@@ -430,24 +511,26 @@ Constructor of class ``CDocBuilder``.
          # Import of external documentation not wanted. Therefore we create two dummy files to avoid LaTeX compilation errors
          # of the main tex document.
 
-         sOverviewFile  = f"{sExternalDocFolder}/library_doc_overview.tex"
-         sOutputMessage = r"\textbf{\textit{Overview of external documentations deactivated}}"
-
+         sOverviewFile = f"{sExternalDocFolder}/library_doc_overview.tex"
          oOverviewFile = CFile(sOverviewFile)
          oOverviewFile.Write(f"% Generated at {self.__dictMainDocConfig['NOW']}")
-         oOverviewFile.Write("")
+         oOverviewFile.Write()
+         oOverviewFile.Write("\chapter{Overview not available}")
+         oOverviewFile.Write()
+         sOutputMessage = r"{\Large\textcolor{red}{\textbf{\textit{Overview of external documentations is deactivated}}}}"
          oOverviewFile.Write(sOutputMessage)
-         oOverviewFile.Write("")
+         oOverviewFile.Write()
          del oOverviewFile
 
          sLibraryDocImportTexFile = f"{sExternalDocFolder}/library_doc_imports.tex"
-         sOutputMessage           = r"\textbf{\textit{Import of external documentations deactivated}}"
-
          oLibraryDocImportTexFile = CFile(sLibraryDocImportTexFile)
          oLibraryDocImportTexFile.Write(f"% Generated at {self.__dictMainDocConfig['NOW']}")
-         oLibraryDocImportTexFile.Write("")
+         oLibraryDocImportTexFile.Write()
+         oLibraryDocImportTexFile.Write("\chapter{Imports not available}")
+         oLibraryDocImportTexFile.Write()
+         sOutputMessage = r"{\Large\textcolor{red}{\textbf{\textit{Import of external documentations is deactivated}}}}"
          oLibraryDocImportTexFile.Write(sOutputMessage)
-         oLibraryDocImportTexFile.Write("")
+         oLibraryDocImportTexFile.Write()
          del oLibraryDocImportTexFile
 
       # eof else - if bUpdateExternalDoc is True:
@@ -471,7 +554,7 @@ Constructor of class ``CDocBuilder``.
       sFinalSummaryFile = f"{sExternalDocFolder}/final_summary.tex"
       oFinalSummaryFile = CFile(sFinalSummaryFile)
       oFinalSummaryFile.Write(f"% Generated at {self.__dictMainDocConfig['NOW']}")
-      oFinalSummaryFile.Write("")
+      oFinalSummaryFile.Write()
       oFinalSummaryFile.Write(r"\vfill")
       oFinalSummaryFile.Write(r"\begin{center}")
       oFinalSummaryFile.Write(r"\begin{tabular}{m{16em}}\hline")
@@ -480,7 +563,7 @@ Constructor of class ``CDocBuilder``.
       oFinalSummaryFile.Write(r"   \multicolumn{1}{c}{\textit{by genmaindoc v. " + self.__dictMainDocConfig['VERSION'] + r"}}\\ \hline")
       oFinalSummaryFile.Write(r"\end{tabular}")
       oFinalSummaryFile.Write(r"\end{center}")
-      oFinalSummaryFile.Write("")
+      oFinalSummaryFile.Write()
       del oFinalSummaryFile
 
       # convert main tex file to PDF
