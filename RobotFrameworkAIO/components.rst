@@ -1,3 +1,9 @@
+**RobotFramework AIO bundle**
+
+* ``RobotFramework AIO``
+
+  Version: 0.5.1 (from 07/2022)
+
 **RobotFramework AIO components listing**
 
 * ``GenPackageDoc``
@@ -24,9 +30,9 @@
   - URL: https://github.com/test-fullautomation/python-jsonpreprocessor
   - *Preprocessor for json files*
 
-* ``RobotFramework\_Testsuites``
+* ``RobotFramework_Testsuites``
 
-  - Version: 0.1.2 (from 05.07.2022)
+  - Version: 0.2.2 (from 18.07.2022)
   - URL: https://github.com/test-fullautomation/robotframework-testsuitesmanagement
   - *Functionality to manage RobotFramework testsuites*
 
