@@ -21,7 +21,7 @@
 % includes:
 % - Robot Framework code and listings
 %
-% 29.06.2022
+% 25.07.2022
 %
 % --------------------------------------------------------------------------------------------------------------
 %
@@ -292,7 +292,10 @@
       showstringspaces=false,
       frame=single,
       framesep=5pt,
-      breaklines=false,
+      breaklines=true,
+      breakatwhitespace=true,
+      prebreak=\mbox{\textcolor{red}{$\hookleftarrow$}\space},
+      postbreak=\mbox{\textcolor{green}{$\hookrightarrow$}\space},
       captionpos=b,
       keywords={
          Library,
@@ -374,8 +377,11 @@
       commentstyle=\color{gray}\upshape,
       frame=single,
       framesep=5pt,
-      breaklines=false,
-      captionpos=b 
+      breaklines=true,
+      breakatwhitespace=true,
+      prebreak=\mbox{\textcolor{red}{$\hookleftarrow$}\space},
+      postbreak=\mbox{\textcolor{green}{$\hookrightarrow$}\space},
+      captionpos=b,
       moredelim=[is][\bfseries]{[*}{*]},
       morestring=[m][\color{red}]{'},
       morestring=[m][\color{red}]{"},
