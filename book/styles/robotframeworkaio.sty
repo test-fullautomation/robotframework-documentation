@@ -19,99 +19,11 @@
 % robotframeworkaio.sty
 %
 % includes:
-% - Robot Framework code and listings
+% - RobotFramework AIO code and listings
 %
-% 25.07.2022
-%
-% --------------------------------------------------------------------------------------------------------------
-%
-% Current state: Much code commented out, much "TODO" markers.
-% But this file can be imported in tex files used for interface descriptions without syntax issue.
-%
-% !!! But the meaning of the code commented out and the impact of this commenting has to be clarified separately !!!
-%
-% This file needs to be reworked urgently! The goal is a clear separation between common document layout settings and
-% commands that are specific for the formatting of Robot Framework code and listings.
+% 27.07.2022
 %
 % --------------------------------------------------------------------------------------------------------------
-
-
-%%%%%% \usepackage[left=1.0 cm, right=1.0 cm, top=0.5in, bottom=0.5in]{geometry}  % TODO: document specific
-
-% % %makes larger/less than required for syntax descriptions working without
-% % %math mode
-% % \usepackage[T1]{fontenc}
-% % \usepackage{lmodern}
-
-% % \usepackage{color}
-
-% % \usepackage{fancyhdr}
- 
-% % %%%%%% \usepackage[table]{xcolor}  % TODO: document specific
-
-% % \usepackage{pifont}
-
-% % \usepackage{verbatim}
-
-% % \definecolor{heading}{rgb}{1,0,0} 
-% % \pagestyle{fancy}
-% % \fancyhf{} %clear all headers/footers
-% % \fancyhead[RO]{\textsl{\rightmark}}
-% % \fancyhead[LO]{\textsl{\leftmark}}
-% % \fancyfoot[C]{\thepage}
-
-% % \renewcommand{\headrulewidth}{0.7pt}
-% % \renewcommand{\footrulewidth}{0.4pt}
-
-% % \fancypagestyle{plain}{}
-
-% % \usepackage{titlesec}
-
-% % \titleformat{\chapter}
-  % % {\normalfont\bfseries\large}{\thechapter.}{5pt}{}
-% % \titleformat{\subparagraph}
-    % % {\normalfont\normalsize\bfseries}{\thesubparagraph}{5pt}{}
-
-% % \makeatletter
-   % % \renewcommand\paragraph{\@startsection{paragraph}{4}{\z@}%
-     % % {-3.25ex\@plus -1ex \@minus -.2ex}%
-     % % {1.5ex \@plus .2ex}%
-     % % {\normalfont\normalsize\bfseries}}
-% % \makeatother
-
-% % \titlespacing*{\chapter}
-% % {0pt}{1.0em}{0.0em}
-% % \titlespacing*{\section}
-% % {0pt}{1.0em}{0.0em}
-% % \titlespacing*{\subsection}
-% % {0pt}{1.0em}{0.0em}
-% % \titlespacing*{\subsubsection}
-% % {0pt}{1.0em}{0.0em}
-% % \titlespacing*{\paragraph}
-% % {0pt}{1.0em}{0.0em}
-% % \titlespacing*{\subparagraph}
-% % {0pt}{1.0em}{0.0em}
-
-% % %%%%% \parindent=0in % TODO: document specific
-% % %%%%% \parskip=5pt % TODO: document specific
-
-% % \setcounter{secnumdepth}{5}
-% % \setcounter{tocdepth}{5}
-
-% % %provide \includepdf and allow multidots in filenames
-% % \usepackage{grffile}
-% % \usepackage{pdfpages}
-
-
-% % \usepackage[utf8]{inputenc}
-% % \usepackage{graphicx}
-
-% % \renewcommand{\ttdefault}{pcr}
-
-% % \usepackage{efbox}
-
-% % \usepackage{scrextend}
-% % \usepackage{enumitem}
 
 \usepackage{listings}
 \usepackage{expl3,xparse}
@@ -138,62 +50,6 @@
     }{\PackageError{Listings}{Numbers #1 unknown}\@ehc}}
 \makeatother
 % ----------------------------------------------------------------------- %
-
-% % \usepackage{longtable}
-% % %align long-table to left side
-% % \setlength{\LTleft}{0pt}
-
-% % %configure description environment to use normal font for
-% % %description
-% % \setdescription{font=\normalfont\color{blue!60!black}}
-
-% % \usepackage[breakable,skins]{tcolorbox}
-% % \tcbuselibrary{skins}
-% % \tcbuselibrary{breakable}
-
-% % \usepackage{pgfplots}
-% % \pgfplotsset{compat=1.7}
-
-% % %\definecolor{infobackground}{RGB}{217,237,247}
-% % %\definecolor{infoforeground}{RGB}{58,135,173}
-% % %\definecolor{infoborder}{RGB}{188,232,241}
-
-% % \usepackage{environ}
-% % \usepackage{tikz}
-
-% % \usepackage{wasysym}
-% % \usepackage{amssymb}
-
-% % \usepackage[]{todonotes}
-
-% % \usepackage{makecell}
-% % \usepackage{tabularx}
-
-% % \usetikzlibrary{fit,backgrounds,calc}
-
-% % %%%%%%%%%%% \usepackage[bookmarksopen, bookmarksdepth=subchapter]{hyperref}   % TODO: document specific
-% % \hypersetup{
-    % % colorlinks,
-    % % citecolor=blue,
-    % % filecolor=blue,
-    % % linkcolor=blue,
-    % % urlcolor=blue,
-    % % final=true
-% % }
-% % %\fullref shows a full reference in format "page number, chapter number chapter name"
-% % \newcommand*{\fullref}[1]{\hyperref[{#1}]{page \pageref*{#1}, \autoref*{#1} \nameref*{#1}}}
-
-
-% % % TODO: check; colors should already be available with package color or xcolor; ist this redundant?
-% % \definecolor{lightgray}{rgb}{0.9,0.9,0.9}
-% % \definecolor{gray}{rgb}{0.4,0.4,0.4}
-% % \definecolor{darkblue}{rgb}{0.0,0.0,0.6}
-% % \definecolor{cyan}{rgb}{0.0,0.6,0.6}
-% % \definecolor{red}{rgb}{1,0,0}
-% % \definecolor{RED}{rgb}{1,0,0}
-% % \definecolor{green}{rgb}{0,0.5,0}
-% % \definecolor{lightgreen}{HTML}{C5F7C3}
-% % \definecolor{lightred}{HTML}{F7CAC3}
 
 %
 %  style definitions for Robot syntax description boxes
@@ -294,8 +150,8 @@
       framesep=5pt,
       breaklines=true,
       breakatwhitespace=true,
-      prebreak=\mbox{\textcolor{red}{$\hookleftarrow$}\space},
-      postbreak=\mbox{\textcolor{green}{$\hookrightarrow$}\space},
+      prebreak=\mbox{\textcolor{Red}{$\hookleftarrow$}\space},
+      postbreak=\mbox{\textcolor{ForestGreen}{$\hookrightarrow$}\space},
       captionpos=b,
       keywords={
          Library,
@@ -335,10 +191,11 @@
       comment=[l][\color{col_comment}]{\#},
       commentstyle=\color{col_comment}\upshape,
       moredelim=[s][\color{col_section}]{***}{***},
-      moredelim=[s][\color{green}]{$\{}{\}},
-      moredelim=[s][\color{green}]{@\{}{\}},
-      moredelim=[s][\color{green}]{\%\{}{\}},
-      morestring=[b]",
+      moredelim=[s][\color{ForestGreen}]{$\{}{\}},
+      moredelim=[s][\color{ForestGreen}]{@\{}{\}},
+      moredelim=[s][\color{ForestGreen}]{\%\{}{\}},
+      morestring=*[b]{"},
+      morestring=[s][\color{gray}]{<}{>},
       stringstyle=\color{red},
       identifierstyle=\color{blue},
       rulesepcolor=\color{color_code_frame},
@@ -348,6 +205,7 @@
       keepspaces=true,
       abovecaptionskip=15pt
 }
+
 
 \lstnewenvironment{robotlisting}[1][]{%
    \lstset{%
@@ -379,8 +237,8 @@
       framesep=5pt,
       breaklines=true,
       breakatwhitespace=true,
-      prebreak=\mbox{\textcolor{red}{$\hookleftarrow$}\space},
-      postbreak=\mbox{\textcolor{green}{$\hookrightarrow$}\space},
+      prebreak=\mbox{\textcolor{Red}{$\hookleftarrow$}\space},
+      postbreak=\mbox{\textcolor{ForestGreen}{$\hookrightarrow$}\space},
       captionpos=b,
       moredelim=[is][\bfseries]{[*}{*]},
       morestring=[m][\color{red}]{'},
