@@ -8,19 +8,19 @@
 
 * ``GenPackageDoc``
 
-  - Version: 0.25.0 (from 27.07.2022)
+  - Version: 0.26.0 (from 27.07.2022)
   - URL: https://github.com/test-fullautomation/python-genpackagedoc
   - *Documentation builder for Python packages*
 
 * ``PythonExtensionsCollection``
 
-  - Version: 0.8.3 (from 08.07.2022)
+  - Version: 0.9.0 (from 27.07.2022)
   - URL: https://github.com/test-fullautomation/python-extensions-collection
   - *Additional Python functions*
 
 * ``RobotframeworkExtensions``
 
-  - Version: 0.7.3 (from 05.07.2022)
+  - Version: 0.8.0 (from 27.07.2022)
   - URL: https://github.com/test-fullautomation/robotframework-extensions-collection
   - *Additional Robot Framework keywords*
 
