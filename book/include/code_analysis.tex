@@ -1,4 +1,4 @@
-%  Copyright 2020-2022 Robert Bosch Car Multimedia GmbH
+%  Copyright 2020-2022 Robert Bosch GmbH
 %
 %  Licensed under the Apache License, Version 2.0 (the "License");
 %  you may not use this file except in compliance with the License.
@@ -13,37 +13,88 @@
 %  limitations under the License.
 \chapter{Code analysis}
 
-The Robotframework AIO installation provides a static code analysis to detect potential errors and violations to coding conventions.
-The name of the analyser is \textquotedbl{}Robocop\textquotedbl{}.
+The RobotFramework AIO installation provides a static code analyser to detect potential errors and violations to coding conventions.
+The name of the analyser is \textbf{Robocop}.
 
-Start Eclipse and select a file or a folder in Project Explorer. A missing selection causes an error.
+Robocop is integrated in Visual Studio Code and and is triggered automatically in case of
+\begin{enumerate}
+   \item a file is opened in editor,
+   \item a file is changed and saved.
+\end{enumerate}
 
-The External Tools menu provides three preconfigured settings to start the analysis (the numbering within the context menu
-depends on the overall number of External Tools within your Eclipse configuration).
+The outcome will look like this:
 
-\includegraphics{./include/graphics/code_analysis/ExternalTools}
+\includegraphics{./include/graphics/code_analysis/Overview}
 
-\includegraphics{./include/graphics/code_analysis/ContextMenu}
+Further examples can be found in the RobotFramework AIO tutorial, chapter \rlog{901_static_code_analysis}.
 
-RF SCAn is the abbreviation for \textquotedbl{}\textbf{R}obot \textbf{F}ramework \textbf{S}tatic \textbf{C}ode \textbf{An}alysis\textquotedbl{}.
+\vspace{2ex}
 
-\textbf{1. RF SCAn (console)}
-\begin{quote}
-Output printed to console
-\end{quote}
+\textbf{How to configure?}
 
-\textbf{2. RF SCAn (log file)}
-\begin{quote}
-Output printed to log file: \texttt{\%ROBOTLOGPATH\%\textbackslash{}Robocop.log}
-\end{quote}
+Robocop contains a set of rules that are used to check the source files of the Robot Framework. Not all of them are really useful and some of them are also against
+our company internal development rules. Therefore we have the need to exclude rules from Robocop execution.
 
-\textbf{3. TODO list (console)}
-\begin{quote}
-It is possible to use the string \texttt{TODO} in code comments to indicate that still something is \emph{todo}. But before a release all todo's should be resolved
-(except there is a good and documented reason to keep the marker).
-The static code analyser can be used to provide a list of all positions within your code, at which still such a \texttt{TODO} marker is present.
-\end{quote}
+Some rules can be configured (e.g. the rule checking the maximum number of characters within a line of code). Also here we have the need for careful adaptions.
 
-\emph{Hint: The console displays a warning regarding rule '0906'. This warning can be ignored.}
+When Robocop is triggered automatically within Visual Studio Code, then the configuration is done with the help of a \rlog{.robocop} file. This file has to be placed 
+within the projects folder (see tutorial). To make Robocop results comparable this configuration file should not be modified - or at least should be kept aligned with
+the version all other project team members use.
 
+\newpage
+
+\textbf{Command line}
+
+In addition to the automated triggering within Visual Studio Code Robocop can also be called in command line. This is useful
+\begin{enumerate}
+   \item in case of a complete folder has to be checked in one step (to avoid the need to open every single source file inside separately),
+   \item in case of an alternative configuration is wanted (temporarily; to avoid to manipulate the standard configuration file),
+   \item in case of Robocop shall be triggered by automats like Jenkins,
+   \item in case of the Robocop results are needed within a log file (output to a log file needs to be configured separately).
+\end{enumerate}
+
+To give it a try make a copy of the configuration file \rlog{.robocop} available within the tutorial, and give this copy any other name (e.g. \rlog{robocop.arg}).
+
+Now Robocop can be called with command lines like this:
+
+\vspace{2ex}
+
+\textit{1.) Simple check of single file with default configuration:}
+
+\begin{robotlisting}
+"%RobotPythonPath%/python.exe" -m robocop "<path to test files folder>/mytestfile.robot"
+\end{robotlisting}
+
+\vspace{2ex}
+
+\textit{2.) Check of single file with individual configuration taken from argument file:}
+
+\begin{robotlisting}
+"%RobotPythonPath%/python.exe" -m robocop --argumentfile "<path to robocop.arg folder>/robocop.arg" "<path to test files folder>/mytestfile.robot"
+\end{robotlisting}
+
+\vspace{2ex}
+
+\textit{3.) Check of entire folder with individual configuration taken from argument file:}
+
+\begin{robotlisting}
+"%RobotPythonPath%/python.exe" -m robocop --argumentfile "<path to robocop.arg folder>/robocop.arg" "<path to test files folder>"
+\end{robotlisting}
+
+\vspace{2ex}
+
+\textbf{How to activate?}
+
+In Visual Studio Code the automated triggering of Robocop is activated per default within
+
+\begin{robotlog}
+RobotFramework\robotvscode\data\user-data\User\settings.json
+\end{robotlog}
+
+with the following switches set to \rcode{true}:
+
+\begin{robotlisting}
+"robot.lint.enabled": true,
+"robot.lint.robocop.enabled": true,
+\end{robotlisting}
 

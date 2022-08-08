@@ -25,8 +25,8 @@
 % document title
 % --------------------------------------------------------------------------------------------------------------
 
-\author{Thomas Pollerspöck \\ \\ Nguyen Huynh Tri Cuong \\ Tran Duy Ngoan \\ Mai Dinh Nam Son \\ Tran Hoang Nguyen \\ Holger Queckenstedt}
-\title{Specification of Robot Framework at Bosch}
+\author{Responsible person}
+\title{Test chapter}
 \date{July 2022}
 
 % --------------------------------------------------------------------------------------------------------------
@@ -48,35 +48,19 @@
 
 \hypersetup{pageanchor=true}
 
-% \listoftodos % ! to be clarified separately !
-
 % --------------------------------------------------------------------------------------------------------------
-% document content (manually maintained part)
+% document content
 % --------------------------------------------------------------------------------------------------------------
 
-\include{./include/apertis}
+% Use this test chapter file to write a documentation (at the level of a single chapter) outside any automated
+% documentation build process - but with the same preamble like all other tex files, to guarantee a unique
+% look&feel.
 
-\include{./include/code_analysis}
+% After this is done take over the following \include to the main tex document RobotFrameworkAIO_Reference.tex.
 
-
-% --------------------------------------------------------------------------------------------------------------
-% document content (automatically generated part)
-%
-% following input files require the execution of genmaindoc.py, otherwise they are not available
-% --------------------------------------------------------------------------------------------------------------
-
-\input{./externaldocs/library_doc_overview}
-
-\input{./externaldocs/library_doc_imports}
-
-\input{./externaldocs/final_summary}
+\include{./include/test_chapter}
 
 
 % --------------------------------------------------------------------------------------------------------------
-% appendix
-% --------------------------------------------------------------------------------------------------------------
-
-%\backmatter
-%glossary and index would go here.
 
 \end{document}
