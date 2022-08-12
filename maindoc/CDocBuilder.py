@@ -404,7 +404,7 @@ Constructor of class ``CDocBuilder``.
             if bSuccess is not True:
                return bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
 
-            sDocumentationBuilder = f"{sRepository}/GenPackageDoc.py"
+            sDocumentationBuilder = f"{sRepository}/genpackagedoc.py"
             if os.path.isfile(sDocumentationBuilder) is False:
                bSuccess = False
                sResult  = f"The package doc generator '{sDocumentationBuilder}' does not exist"
