@@ -20,7 +20,7 @@
 #
 # XC-CT/ECA3-Queckenstedt
 #
-# 15.07.2022
+# 17.08.2022
 #
 # --------------------------------------------------------------------------------------------------------------
 
@@ -154,7 +154,47 @@ Constructor of class ``CDocBuilder``.
             if sKey in dictRepositoryConfig:
                dictConfig[sKey] = dictRepositoryConfig[sKey]
          listofdictConfig.append(dictConfig)
+
+         # The meta information is also used in the title page of the resulting PDF document.
+         # For this purpose we separate the meta information here (additionally to this information also stored in listofdictConfig).
+         #
+         # To be considered: In every project the meta information should be defined only once. But within this code this is not a syntactical requirement.
+         # The user is responsible for keeping the meta information unique (= defined within only one single imported repository), but to make this code robust
+         # all identified meta informations (in case of more than one imported repository contains a meta information) will be handled as list - and this means
+         # all meta informations will be part of the resulting PDF documentation (even in case of this makes no sense).
+         #
+         # In the context of genmaindoc the desired intension behind the meta information handling is:
+         # - The name of the RobotFramework AIO bundle together with the version number and the release date of this bundle is defined in the meta information of
+         #   the testsuites management repository. Therefore it is required to import this repository in the maindoc_config.json.
+         # - This meta information is printed to the title page of the resulting PDF document.
+
+         if 'META_NAME' in dictRepositoryConfig:
+            META_NAME = dictRepositoryConfig['META_NAME'].replace('_',r'\_') # LaTeX requires this masking
+            if 'META_NAME' in self.__dictMainDocConfig:
+               self.__dictMainDocConfig['META_NAME'] = self.__dictMainDocConfig['META_NAME'] + ";" + META_NAME
+            else:
+               self.__dictMainDocConfig['META_NAME'] = META_NAME
+         if 'META_VERSION' in dictRepositoryConfig:
+            META_VERSION = dictRepositoryConfig['META_VERSION']
+            if 'META_VERSION' in self.__dictMainDocConfig:
+               self.__dictMainDocConfig['META_VERSION'] = self.__dictMainDocConfig['META_VERSION'] + ";" + META_VERSION
+            else:
+               self.__dictMainDocConfig['META_VERSION'] = META_VERSION
+         if 'META_VERSION_DATE' in dictRepositoryConfig:
+            META_VERSION_DATE = dictRepositoryConfig['META_VERSION_DATE']
+            if 'META_VERSION_DATE' in self.__dictMainDocConfig:
+               self.__dictMainDocConfig['META_VERSION_DATE'] = self.__dictMainDocConfig['META_VERSION_DATE'] + ";" + META_VERSION_DATE
+            else:
+               self.__dictMainDocConfig['META_VERSION_DATE'] = META_VERSION_DATE
       # eof for sConfigFile in listConfigFiles:
+
+      # error handling
+      if 'META_NAME' not in self.__dictMainDocConfig:
+         self.__dictMainDocConfig['META_NAME'] = "!!! Name unknown !!!"
+      if 'META_VERSION' not in self.__dictMainDocConfig:
+         self.__dictMainDocConfig['META_VERSION'] = "!!! Version unknown !!!"
+      if 'META_VERSION_DATE' not in self.__dictMainDocConfig:
+         self.__dictMainDocConfig['META_VERSION_DATE'] = "!!! Date unknown !!!"
 
       nNrOfConfigs = len(listofdictConfig)
 
@@ -534,6 +574,40 @@ Constructor of class ``CDocBuilder``.
          del oLibraryDocImportTexFile
 
       # eof else - if bUpdateExternalDoc is True:
+
+      # -- Create another tex file containing the version and the date of the RobotFramework AIO bundle.
+      #    The values are part of the meta information (currently defined within the testsuites management).
+      #    This new tex file is imported in the main tex file (RobotFramework AIO reference) and makes it sure
+      #    that the main documentation contains in the title page a version number and a date that is up to date.
+
+      # PrettyPrint(self.__dictMainDocConfig)
+
+      META_NAME = "!!! Name unknown !!!"
+      if 'META_NAME' in self.__dictMainDocConfig:
+         META_NAME = self.__dictMainDocConfig['META_NAME']
+      META_VERSION = "!!! Version unknown !!!"
+      if 'META_VERSION' in self.__dictMainDocConfig:
+         META_VERSION = self.__dictMainDocConfig['META_VERSION']
+      META_VERSION_DATE = "!!! Date unknown !!!"
+      if 'META_VERSION_DATE' in self.__dictMainDocConfig:
+         META_VERSION_DATE = self.__dictMainDocConfig['META_VERSION_DATE']
+
+      BOOKSOURCES = self.__dictMainDocConfig['BOOKSOURCES']
+      sBundleVersionDateTeXFile = f"{BOOKSOURCES}/BundleVersionDate.tex"
+      self.__dictMainDocConfig['BUNDLEVERSIONDATETEXFILE'] = sBundleVersionDateTeXFile
+
+      oBundleVersionDateTeXFile = CFile(sBundleVersionDateTeXFile)
+      oBundleVersionDateTeXFile.Write(f"% Generated at {self.__dictMainDocConfig['NOW']}")
+      oBundleVersionDateTeXFile.Write()
+      oBundleVersionDateTeXFile.Write(r"\title{\textbf{Specification of \\")
+      oBundleVersionDateTeXFile.Write(r"\vspace{2ex}")
+      oBundleVersionDateTeXFile.Write(f"{META_NAME} \\\\")
+      oBundleVersionDateTeXFile.Write(r"\vspace{2ex}")
+      oBundleVersionDateTeXFile.Write(f"v. {META_VERSION}" + "}}")
+      oBundleVersionDateTeXFile.Write()
+      oBundleVersionDateTeXFile.Write(r"\date{\vspace{4ex}\textbf{" + META_VERSION_DATE + "}}")
+      oBundleVersionDateTeXFile.Write()
+      del oBundleVersionDateTeXFile
 
       # derive name of expected PDF file out of the name of tex file
       oMainTexFile = CFile(sMainTexFile)

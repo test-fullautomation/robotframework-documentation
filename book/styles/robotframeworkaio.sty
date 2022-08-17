@@ -20,13 +20,23 @@
 %
 % includes:
 % - RobotFramework AIO code and listings
+% - Python for RobotFramework AIO code
 %
-% 27.07.2022
+% 16.08.2022
 %
 % --------------------------------------------------------------------------------------------------------------
 
 \usepackage{listings}
 \usepackage{expl3,xparse}
+
+% ----------------------------------------------------------------------- %
+%
+% framework names
+%
+\newcommand{\rfwcore}{Robot Framework}
+\newcommand{\rfw}{RobotFramework AIO}
+% ----------------------------------------------------------------------- %
+
 
 % ----------------------------------------------------------------------- %
 %lstlinebgrd needs this fix to run with current listings version provided by MiKTeX
@@ -138,6 +148,13 @@
 }
 \ExplSyntaxOff
 
+
+%
+% inline comment layout for code listings
+%
+\newcommand{\inlinecomment}[1]{\color{col_comment}\normalfont$\langle$\textit{#1}$\rangle$}
+
+
 %
 % environment for robot code listings
 %
@@ -152,6 +169,7 @@
       breakatwhitespace=true,
       prebreak=\mbox{\textcolor{Red}{$\hookleftarrow$}\space},
       postbreak=\mbox{\textcolor{ForestGreen}{$\hookrightarrow$}\space},
+      escapeinside={<}{>},
       captionpos=b,
       keywords={
          Library,
@@ -207,7 +225,7 @@
 }
 
 
-\lstnewenvironment{robotlisting}[1][]{%
+\lstnewenvironment{robotcode}[1][]{%
    \lstset{%
       xleftmargin=5pt,
       xrightmargin=5pt,
@@ -239,6 +257,7 @@
       breakatwhitespace=true,
       prebreak=\mbox{\textcolor{Red}{$\hookleftarrow$}\space},
       postbreak=\mbox{\textcolor{ForestGreen}{$\hookrightarrow$}\space},
+      escapeinside={<}{>},
       captionpos=b,
       moredelim=[is][\bfseries]{[*}{*]},
       morestring=[m][\color{red}]{'},
@@ -293,3 +312,61 @@
 \tikzstyle{process} = [rectangle, minimum width=3cm, minimum height=0.8cm, text centered, draw=black, fill=orange!30, text width=4cm]
 \tikzstyle{decision} = [diamond, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=green!30, text width=5cm, inner sep=-5pt, aspect=4]
 \tikzstyle{arrow} = [thick,->,>=stealth]
+
+
+%
+% environment for Python code listings
+%
+\lstdefinelanguage{Python_code}{
+      basicstyle=\ttfamily\small,
+      columns=fixed,
+      showstringspaces=false,
+      frame=single,
+      framesep=5pt,
+      breaklines=true,
+      breakatwhitespace=true,
+      keepspaces=true,
+      abovecaptionskip=15pt,
+      captionpos=b,
+      prebreak=\mbox{\textcolor{Red}{$\hookleftarrow$}\space},
+      postbreak=\mbox{\textcolor{ForestGreen}{$\hookrightarrow$}\space},
+      escapeinside={<}{>},
+      alsoletter={@},
+      keywords={
+                  and, as, assert, async, await, break, class, continue, def, del, elif, else, except, False, finally,
+                  for, from, global, if, import, in, is, lambda, None, nonlocal, not, or, pass, raise, return, self,
+                  True, try, while, with, yield,
+                  __init__, __del__,
+                  @library, @keyword
+               },%keywords with spaces can not be defined in keywords
+      keywordstyle=\color{ForestGreen},
+      comment=[l][\color{col_comment}]{\#},
+      commentstyle=\color{col_comment}\upshape,
+      morestring=[b][\color{red}]{"},
+      morestring=[b][\color{red}]{'},
+      stringstyle=\color{red},
+      identifierstyle=\color{blue},
+      rulesepcolor=\color{color_code_frame},
+      rulecolor=\color{color_code_frame},
+      backgroundcolor=\color{color_code_background}
+}
+
+\lstnewenvironment{pythoncode}[1][]{%
+   \lstset{%
+      xleftmargin=5pt,
+      xrightmargin=5pt,
+      alsolanguage=Python_code,
+      #1
+   }
+}{}
+
+\newcommand{\pcode}[1]{
+   \efbox[margin=2pt,
+         linewidth=1pt,
+         linecolor=color_code_frame,
+         backgroundcolor=color_code_background,
+         font=\ttfamily\small]{\lstinline[language=Python_code]!#1!}
+}
+
+
+

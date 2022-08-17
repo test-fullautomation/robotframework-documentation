@@ -13,7 +13,7 @@
 %  limitations under the License.
 \chapter{Code analysis}
 
-The RobotFramework AIO installation provides a static code analyser to detect potential errors and violations to coding conventions.
+The \rfw\ installation provides a static code analyser to detect potential errors and violations to coding conventions.
 The name of the analyser is \textbf{Robocop}.
 
 Robocop is integrated in Visual Studio Code and and is triggered automatically in case of
@@ -26,13 +26,13 @@ The outcome will look like this:
 
 \includegraphics{./include/graphics/code_analysis/Overview}
 
-Further examples can be found in the RobotFramework AIO tutorial, chapter \rlog{901_static_code_analysis}.
+Further examples can be found in the \rfw\ tutorial, chapter \rlog{901_static_code_analysis}.
 
 \vspace{2ex}
 
 \textbf{How to configure?}
 
-Robocop contains a set of rules that are used to check the source files of the Robot Framework. Not all of them are really useful and some of them are also against
+Robocop contains a set of rules that are used to check the source files of the \rfw. Not all of them are really useful and some of them are also against
 our company internal development rules. Therefore we have the need to exclude rules from Robocop execution.
 
 Some rules can be configured (e.g. the rule checking the maximum number of characters within a line of code). Also here we have the need for careful adaptions.
@@ -61,25 +61,25 @@ Now Robocop can be called with command lines like this:
 
 \textit{1.) Simple check of single file with default configuration:}
 
-\begin{robotlisting}
-"%RobotPythonPath%/python.exe" -m robocop "<path to test files folder>/mytestfile.robot"
-\end{robotlisting}
+\begin{pythoncode}
+"%RobotPythonPath%/python.exe" -m robocop "<\inlinecomment{path}>/mytestfile.robot"
+\end{pythoncode}
 
 \vspace{2ex}
 
 \textit{2.) Check of single file with individual configuration taken from argument file:}
 
-\begin{robotlisting}
-"%RobotPythonPath%/python.exe" -m robocop --argumentfile "<path to robocop.arg folder>/robocop.arg" "<path to test files folder>/mytestfile.robot"
-\end{robotlisting}
+\begin{pythoncode}
+"%RobotPythonPath%/python.exe" -m robocop --argumentfile "<\inlinecomment{path}>/robocop.arg" "<\inlinecomment{path}>/mytestfile.robot"
+\end{pythoncode}
 
 \vspace{2ex}
 
 \textit{3.) Check of entire folder with individual configuration taken from argument file:}
 
-\begin{robotlisting}
-"%RobotPythonPath%/python.exe" -m robocop --argumentfile "<path to robocop.arg folder>/robocop.arg" "<path to test files folder>"
-\end{robotlisting}
+\begin{pythoncode}
+"%RobotPythonPath%/python.exe" -m robocop --argumentfile "<\inlinecomment{path}>/robocop.arg" "<\inlinecomment{folder}>"
+\end{pythoncode}
 
 \vspace{2ex}
 
@@ -93,8 +93,8 @@ RobotFramework\robotvscode\data\user-data\User\settings.json
 
 with the following switches set to \rcode{true}:
 
-\begin{robotlisting}
+\begin{pythoncode}
 "robot.lint.enabled": true,
 "robot.lint.robocop.enabled": true,
-\end{robotlisting}
+\end{pythoncode}
 
