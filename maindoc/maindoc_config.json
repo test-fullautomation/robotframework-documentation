@@ -2,7 +2,7 @@
 #
 # Main doc configuration file
 #
-# 12.07.2022
+# 22.08.2022
 #
 # **************************************************************************************************************
 # Format: extended json format with the possibility to comment out lines (by '#' at the beginning of the line).
@@ -71,7 +71,7 @@
 # Example:
 
    "TEX" : {
-            "WINDOWS" : "%ROBOTLATEXPATH%/miktex/bin/x64/pdflatex.exe",
-            "LINUX"   : "${ROBOTLATEXPATH}/miktex/bin/x64/pdflatex"
+            "WINDOWS" : "%GENDOC_LATEXPATH%/pdflatex.exe",
+            "LINUX"   : "${GENDOC_LATEXPATH}/pdflatex"
            }
 }
