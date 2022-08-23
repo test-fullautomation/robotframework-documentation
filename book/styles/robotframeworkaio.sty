@@ -19,10 +19,10 @@
 % robotframeworkaio.sty
 %
 % includes:
-% - RobotFramework AIO code and listings
+% - RobotFramework AIO code and console listings
 % - Python for RobotFramework AIO code
 %
-% 16.08.2022
+% 22.08.2022
 %
 % --------------------------------------------------------------------------------------------------------------
 
@@ -39,6 +39,9 @@
 
 
 % ----------------------------------------------------------------------- %
+
+% !!! TODO: After switching von MiKTeX to Texlive it should be checked if the following fix is still needed !!!
+
 %lstlinebgrd needs this fix to run with current listings version provided by MiKTeX
 \makeatletter
 \let\old@lstKV@SwitchCases\lstKV@SwitchCases
@@ -267,7 +270,7 @@
       keywordstyle=\color{darkblue},   
       morekeywords=[1]{PASS, passed},
       morekeywords=[2]{FAIL, failed},
-      keywordstyle=[1]\color{green},
+      keywordstyle=[1]\color{ForestGreen},
       keywordstyle=[2]\color{red},
       rulesepcolor=\color{color_log_frame},
       rulecolor=\color{color_log_frame},
@@ -300,7 +303,7 @@
 \newcommand{\iftab}{\phantom{x}\hspace{3ex}}
 \newcommand{\ifunknown}[1]{\textcolor{blue}{#1}}
 \newcommand{\ifaborted}[1]{\textcolor{gray}{#1}}
-\newcommand{\ifpassed}[1]{\textcolor{green}{#1}}
+\newcommand{\ifpassed}[1]{\textcolor{ForestGreen}{#1}}
 \newcommand{\iffailed}[1]{\textcolor{red}{#1}}
 \newcommand{\ifnotice}[1]{\textbf{\textcolor{red}{#1}}}
 \usepackage{multirow}
@@ -337,7 +340,7 @@
                   for, from, global, if, import, in, is, lambda, None, nonlocal, not, or, pass, raise, return, self,
                   True, try, while, with, yield,
                   __init__, __del__,
-                  @library, @keyword
+                  @library, @keyword, @not_keyword
                },%keywords with spaces can not be defined in keywords
       keywordstyle=\color{ForestGreen},
       comment=[l][\color{col_comment}]{\#},
