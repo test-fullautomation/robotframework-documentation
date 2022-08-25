@@ -8,19 +8,19 @@
 
 * ``GenPackageDoc``
 
-  - Version: 0.27.0 (from 17.08.2022)
+  - Version: 0.29.0 (from 24.08.2022)
   - URL: https://github.com/test-fullautomation/python-genpackagedoc
   - *Documentation builder for Python packages*
 
 * ``PythonExtensionsCollection``
 
-  - Version: 0.9.0 (from 27.07.2022)
+  - Version: 0.9.1 (from 23.08.2022)
   - URL: https://github.com/test-fullautomation/python-extensions-collection
   - *Additional Python functions*
 
 * ``RobotframeworkExtensions``
 
-  - Version: 0.8.0 (from 27.07.2022)
+  - Version: 0.8.1 (from 23.08.2022)
   - URL: https://github.com/test-fullautomation/robotframework-extensions-collection
   - *Additional Robot Framework keywords*
 
@@ -50,7 +50,7 @@
 
 * ``RobotResults2RQM``
 
-  - Version: 1.1.1 (from 05.07.2022)
+  - Version: 1.1.1 (from 01.08.2022)
   - URL: https://github.com/test-fullautomation/robotframework-testresult2rqmtool
   - *Imports robot result(s) to IBM Rational Quality Manager (RQM)*
 
