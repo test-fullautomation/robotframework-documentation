@@ -22,7 +22,7 @@
 % - RobotFramework AIO code and console listings
 % - Python for RobotFramework AIO code
 %
-% 22.08.2022
+% 26.08.2022
 %
 % --------------------------------------------------------------------------------------------------------------
 
@@ -37,6 +37,16 @@
 \newcommand{\rfw}{RobotFramework AIO}
 % ----------------------------------------------------------------------- %
 
+% ----------------------------------------------------------------------- %
+%
+% tabulator and test results
+%
+\newcommand{\tab}{\phantom{x}\hspace{3ex}}
+
+\newcommand{\unknown}{\textcolor{blue}{unknown}}
+\newcommand{\aborted}{\textcolor{gray}{aborted}}
+\newcommand{\passed}{\textcolor{ForestGreen}{passed}}
+\newcommand{\failed}{\textcolor{red}{failed}}
 
 % ----------------------------------------------------------------------- %
 
@@ -297,15 +307,6 @@
          font=\ttfamily\small]{\lstinline[language=Robot_log]!#1!}
 }
 
-
-
-\newcommand{\ifalignrcode}{\hspace{2pt}}
-\newcommand{\iftab}{\phantom{x}\hspace{3ex}}
-\newcommand{\ifunknown}[1]{\textcolor{blue}{#1}}
-\newcommand{\ifaborted}[1]{\textcolor{gray}{#1}}
-\newcommand{\ifpassed}[1]{\textcolor{ForestGreen}{#1}}
-\newcommand{\iffailed}[1]{\textcolor{red}{#1}}
-\newcommand{\ifnotice}[1]{\textbf{\textcolor{red}{#1}}}
 \usepackage{multirow}
 
 % use for flowchart drawing

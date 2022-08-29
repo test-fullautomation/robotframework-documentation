@@ -41,7 +41,7 @@ Use the following command to build the documentation:
 Package Documentation
 ---------------------
 
-The RobotFramework AIO documentation can be found also here: `RobotFrameworkAIO_Reference.pdf <https://github.com/test-fullautomation/robotframework-documentation/blob/develop/RobotFrameworkAIO/RobotFrameworkAIO_Reference.pdf.pdf>`_
+The RobotFramework AIO documentation can be found also here: `RobotFrameworkAIO_Reference.pdf <https://github.com/test-fullautomation/robotframework-documentation/blob/develop/RobotFrameworkAIO/RobotFrameworkAIO_Reference.pdf>`_
 
 Feedback
 --------

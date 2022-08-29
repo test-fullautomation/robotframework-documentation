@@ -27,7 +27,7 @@
 
 \author{RobotFramework AIO team}
 \title{Documentation style guide}
-\date{22.08.2022}
+\date{29.08.2022}
 
 % --------------------------------------------------------------------------------------------------------------
 % document header
@@ -233,6 +233,8 @@ The main difference between code listings and console listings is the background
 
 \section{Abbreviations}
 
+\textbf{Framework names}
+
 To ease a unique typing of the frameworks the following LaTeX commands are available: \texttt{rfw} and \texttt{rfwcode}:
 
 \begin{verbatim}
@@ -240,6 +242,40 @@ The \rfw\ is derived out of the \rfwcore.
 \end{verbatim}
 
 The \rfw\ is derived out of the \rfwcore.
+
+\vspace{2ex}
+
+\textbf{Tabulators}
+
+The usage of tabulators should be avoided but it is possible to use the \texttt{tab} command to realize indentations (3 blanks):
+
+\begin{verbatim}
+\texttt{line 1}\\
+\tab \texttt{line 2}\\
+\tab \texttt{line 3}\\
+\tab \texttt{line 4}\\
+\end{verbatim}
+
+\texttt{line 1}\\
+\tab \texttt{line 2}\\
+\tab \texttt{line 3}\\
+\tab \texttt{line 4}\\
+
+\vspace{2ex}
+
+\textbf{Test results}
+
+The following commands can be used to type test results; it's not necessary to take care about the corresponding colors manually:
+
+\begin{verbatim}
+The result of the first test is \passed, the result of the second test is \failed.
+We also have one test with result \unknown\ and the last test is \aborted.
+\end{verbatim}
+
+The result of the first test is \passed, the result of the second test is \failed.
+We also have one test with result \unknown\ and the last test is \aborted.
+
+\newpage
 
 \section{Code listings}
 
@@ -262,7 +298,7 @@ Hello World
    END
 \end{robotcode}
 
-\newpage
+\vspace{2ex}
 
 \textbf{\rfw\ code block (extended)}
 
@@ -291,7 +327,7 @@ Hello World
    END
 \end{robotcode}
 
-\vspace{2ex}
+\newpage
 
 \textbf{\rfw\ inline code}
 \begin{verbatim}
@@ -321,7 +357,7 @@ def print_pattern():
         print(f"value : {value}")
 \end{pythoncode}
 
-\newpage
+\vspace{2ex}
 
 \textbf{Python code block (extended)}
 
@@ -357,6 +393,8 @@ The variable is set in this way: \pcode{values = ("A", "B", "C")}
 
 The variable is set in this way: \pcode{values = ("A", "B", "C")}
 
+\newpage
+
 \section{Console listings}
 
 Because of the console output of \rfw\ test executions contains a lot of \rfw\ specific keywords, the console listing layout is adapted to \rfw.
@@ -386,7 +424,7 @@ Report:  C:\RobotTest\testcases\report.html
 \end{robotlog}
 \end{verbatim}
 
-\newpage
+\vspace{2ex}
 
 \begin{robotlog}
 ==============================================================================
@@ -428,6 +466,8 @@ Report:  C:\RobotTest\testcases\report.html
 \end{robotlog}
 \end{verbatim}
 
+\newpage
+
 \begin{robotlog}[caption=Robot log example, 
                  linebackgroundcolor=\hllog{7,11}]
 ==============================================================================
@@ -462,8 +502,6 @@ C:\RobotTest\testcases\log.html
 C:\RobotTest\testcases\report.html
 \end{robotlog}
 \end{verbatim}
-
-\newpage
 
 The results of the test execution can be found in the following files:
 \begin{robotlog}
