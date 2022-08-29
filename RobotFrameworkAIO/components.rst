@@ -56,7 +56,7 @@
 
 * ``RobotResults2DB``
 
-  - Version: 1.2.1 (from 05.07.2022)
+  - Version: 1.2.1 (from 22.08.2022)
   - URL: https://github.com/test-fullautomation/robotframework-testresultwebapptool
   - *Imports robot result(s) to TestResultWebApp database*
 
