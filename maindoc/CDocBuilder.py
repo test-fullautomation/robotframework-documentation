@@ -20,7 +20,7 @@
 #
 # XC-CT/ECA3-Queckenstedt
 #
-# 17.08.2022
+# 30.08.2022
 #
 # --------------------------------------------------------------------------------------------------------------
 
@@ -70,6 +70,8 @@ Constructor of class ``CDocBuilder``.
       """
 
       sMethod = "CDocBuilder.__init__"
+
+      self.__bPDFIsComplete = True
 
       if oMainDocConfig is None:
          bSuccess = None
@@ -191,10 +193,13 @@ Constructor of class ``CDocBuilder``.
       # error handling
       if 'META_NAME' not in self.__dictMainDocConfig:
          self.__dictMainDocConfig['META_NAME'] = "!!! Name unknown !!!"
+         self.__bPDFIsComplete = False
       if 'META_VERSION' not in self.__dictMainDocConfig:
          self.__dictMainDocConfig['META_VERSION'] = "!!! Version unknown !!!"
+         self.__bPDFIsComplete = False
       if 'META_VERSION_DATE' not in self.__dictMainDocConfig:
          self.__dictMainDocConfig['META_VERSION_DATE'] = "!!! Date unknown !!!"
+         self.__bPDFIsComplete = False
 
       nNrOfConfigs = len(listofdictConfig)
 
@@ -266,6 +271,7 @@ Constructor of class ``CDocBuilder``.
       # eof for dictConfig in listofdictConfig:
 
       if bMetaVersionAvailable is False:
+         self.__bPDFIsComplete = False
          # meta information not available
          oOverviewFile_tex.Write(r"\textcolor{red}{\textbf{\textit{RobotFramework AIO bundle information not available!}}}")
          oOverviewFile_tex.Write()
@@ -329,6 +335,7 @@ Constructor of class ``CDocBuilder``.
       # eof for dictConfig in listofdictConfig:
 
       if bMetaVersionAvailable is False:
+         self.__bPDFIsComplete = False
          # meta information not available
          oOverviewFile_rst.Write(r"RobotFramework AIO bundle information not available!")
          oOverviewFile_rst.Write()
@@ -388,13 +395,13 @@ Constructor of class ``CDocBuilder``.
 
       listRepositories, bSuccess, sResult = self.__GetRepositoryList()
       if bSuccess is not True:
-         return bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
+         return self.__bPDFIsComplete, bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
 
       sBookSourcesFolder = self.__dictMainDocConfig['BOOKSOURCES']
       if not os.path.isdir(sBookSourcesFolder):
          bSuccess = False
          sResult  = f"The input folder '{sBookSourcesFolder}' does not exist."
-         return bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
+         return self.__bPDFIsComplete, bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
 
       # compute files and subfolders
       sMainTexFileName = self.__dictMainDocConfig['MAINTEXFILENAME']
@@ -402,7 +409,7 @@ Constructor of class ``CDocBuilder``.
       if os.path.isfile(sMainTexFile) is False:
          bSuccess = False
          sResult  = f"The main tex file '{sMainTexFile}' does not exist."
-         return bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
+         return self.__bPDFIsComplete, bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
 
       self.__dictMainDocConfig['MAINTEXFILE'] = sMainTexFile
       sExternalDocFolder = f"{sBookSourcesFolder}/externaldocs"
@@ -412,7 +419,7 @@ Constructor of class ``CDocBuilder``.
       bSuccess, sResult = oExternalDocFolder.Create(bOverwrite=True)
       del oExternalDocFolder
       if bSuccess is not True:
-         return bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
+         return self.__bPDFIsComplete, bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
 
       sPython            = self.__dictMainDocConfig['PYTHON']
       bStrict            = self.__dictMainDocConfig['CONTROL']['STRICT']
@@ -434,7 +441,7 @@ Constructor of class ``CDocBuilder``.
             if os.path.isdir(sRepository) is False:
                bSuccess = False
                sResult  = f"The repository folder '{sRepository}' does not exist"
-               return bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
+               return self.__bPDFIsComplete, bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
 
             sRepositoryName = os.path.basename(sRepository)
             sDestinationFolder = f"{sExternalDocFolder}/{sRepositoryName}"
@@ -442,13 +449,13 @@ Constructor of class ``CDocBuilder``.
             bSuccess, sResult = oDestinationFolder.Create(bOverwrite=True)
             del oDestinationFolder
             if bSuccess is not True:
-               return bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
+               return self.__bPDFIsComplete, bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
 
             sDocumentationBuilder = f"{sRepository}/genpackagedoc.py"
             if os.path.isfile(sDocumentationBuilder) is False:
                bSuccess = False
                sResult  = f"The package doc generator '{sDocumentationBuilder}' does not exist"
-               return bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
+               return self.__bPDFIsComplete, bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
 
             # create command line and execute the documentation builder
             listCmdLineParts = []
@@ -471,11 +478,11 @@ Constructor of class ``CDocBuilder``.
             except Exception as ex:
                bSuccess = None
                sResult  = str(ex)
-               return bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
+               return self.__bPDFIsComplete, bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
             if nReturn != SUCCESS:
                bSuccess = False
                sResult  = f"Documentation builder returns error {nReturn}"
-               return bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
+               return self.__bPDFIsComplete, bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
 
             # We need to identify the name of some output files inside sDestinationFolder:
             # - PDF file (documentation of package in current repository)
@@ -491,11 +498,11 @@ Constructor of class ``CDocBuilder``.
             if sPDFFile is None:
                bSuccess = False
                sResult  = f"PDF file not found within '{sDestinationFolder}'"
-               return bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
+               return self.__bPDFIsComplete, bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
             if sJsonFile is None:
                bSuccess = False
                sResult  = f"Json configuration file not found within '{sDestinationFolder}'"
-               return bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
+               return self.__bPDFIsComplete, bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
             listPDFFiles.append(sPDFFile)
             listConfigFiles.append(sJsonFile)
          # eof for sRepository in listRepositories:
@@ -503,7 +510,7 @@ Constructor of class ``CDocBuilder``.
          # get some assorted configuration values out of the configuration files collected from repositories
          listofdictConfig, bSuccess, sResult = self.__GetConfig(listConfigFiles)
          if bSuccess is not True:
-            return bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
+            return self.__bPDFIsComplete, bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
          else:
             print(sResult)
             print()
@@ -511,7 +518,7 @@ Constructor of class ``CDocBuilder``.
          # prepare an overview file containing a summary of configuration values
          bSuccess, sResult = self.__PrepareOverviewFiles(listofdictConfig)
          if bSuccess is not True:
-            return bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
+            return self.__bPDFIsComplete, bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
          else:
             print(sResult)
             print()
@@ -531,7 +538,7 @@ Constructor of class ``CDocBuilder``.
             if not sPDFFile.startswith(sBookSourcesFolder):
                bSuccess = False
                sResult  = f"The PDF file '{sPDFFile}' is not located within the folder structure of '{sBookSourcesFolder}'. It is not possible to compute a relative path to this PDF file."
-               return bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
+               return self.__bPDFIsComplete, bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
 
             sHeadline = os.path.basename(sPDFFile)[:-4] # name of pdf file without extension
             # the path to the PDF file to be imported, must be relative to the position of the main tex file,
@@ -550,6 +557,8 @@ Constructor of class ``CDocBuilder``.
 
          # Import of external documentation not wanted. Therefore we create two dummy files to avoid LaTeX compilation errors
          # of the main tex document.
+
+         self.__bPDFIsComplete = False
 
          sOverviewFile = f"{sExternalDocFolder}/library_doc_overview.tex"
          oOverviewFile = CFile(sOverviewFile)
@@ -585,12 +594,18 @@ Constructor of class ``CDocBuilder``.
       META_NAME = "!!! Name unknown !!!"
       if 'META_NAME' in self.__dictMainDocConfig:
          META_NAME = self.__dictMainDocConfig['META_NAME']
+      else:
+         self.__bPDFIsComplete = False
       META_VERSION = "!!! Version unknown !!!"
       if 'META_VERSION' in self.__dictMainDocConfig:
          META_VERSION = self.__dictMainDocConfig['META_VERSION']
+      else:
+         self.__bPDFIsComplete = False
       META_VERSION_DATE = "!!! Date unknown !!!"
       if 'META_VERSION_DATE' in self.__dictMainDocConfig:
          META_VERSION_DATE = self.__dictMainDocConfig['META_VERSION_DATE']
+      else:
+         self.__bPDFIsComplete = False
 
       BOOKSOURCES = self.__dictMainDocConfig['BOOKSOURCES']
       sBundleVersionDateTeXFile = f"{BOOKSOURCES}/BundleVersionDate.tex"
@@ -655,7 +670,7 @@ Constructor of class ``CDocBuilder``.
          else:
             bSuccess = True
             sResult  = f"Generating the documentation in PDF format not possible because of missing LaTeX compiler ('non strict' mode)!"
-         return bSuccess, sResult
+         return self.__bPDFIsComplete, bSuccess, sResult
 
       # start the compiler
       listCmdLineParts = []
@@ -686,24 +701,24 @@ Constructor of class ``CDocBuilder``.
             os.chdir(cwd) # restore original value
             bSuccess = None
             sResult  = str(ex)
-            return bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
+            return self.__bPDFIsComplete, bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
          if nReturn != SUCCESS:
             bSuccess = False
             sResult  = f"LaTeX compiler not returned expected value {SUCCESS}"
-            return bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
+            return self.__bPDFIsComplete, bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
       # eof for nDummy in range(2):
 
       # -- verify the outcome
       if os.path.isfile(sPDFFileExpected) is False:
          bSuccess = False
          sResult  = f"Expected PDF file '{sPDFFileExpected}' not generated"
-         return bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
+         return self.__bPDFIsComplete, bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
 
       oPDFFile = CFile(sPDFFileExpected)
       bSuccess, sResult = oPDFFile.CopyTo(sPDFFileDestination, bOverwrite=True)
       del oPDFFile
       if bSuccess is not True:
-         return bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
+         return self.__bPDFIsComplete, bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
       print(COLBY + f"* PDF file: {sPDFFileDestination}")
       print()
 
@@ -713,7 +728,7 @@ Constructor of class ``CDocBuilder``.
          if os.path.isfile(OVERVIEWFILE_RST) is False:
             bSuccess = False
             sResult  = f"Expected overview file '{OVERVIEWFILE_RST}' not generated"
-            return bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
+            return self.__bPDFIsComplete, bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
 
          sOverviewFileName = os.path.basename(OVERVIEWFILE_RST)
          sOverviewFile_dest = f"{sPackageFolder}/{sOverviewFileName}"
@@ -721,15 +736,19 @@ Constructor of class ``CDocBuilder``.
          bSuccess, sResult = oOverviewFile.CopyTo(sOverviewFile_dest, bOverwrite=True)
          del oOverviewFile
          if bSuccess is not True:
-            return bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
+            return self.__bPDFIsComplete, bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
          print(COLBY + f"* Overview: {sOverviewFile_dest}")
          print()
       # eof if "OVERVIEWFILE_RST" in self.__dictMainDocConfig:
 
       bSuccess = True
-      sResult  = "Main documentation generated"
 
-      return bSuccess, sResult
+      if self.__bPDFIsComplete is True:
+         sResult  = "Main documentation generated"
+      else:
+         sResult  = "Main documentation generated - but PDF file is incomplete"
+
+      return self.__bPDFIsComplete, bSuccess, sResult
 
    # eof def Build(self):
 

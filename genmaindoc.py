@@ -22,16 +22,13 @@
 #
 # --------------------------------------------------------------------------------------------------------------
 #
-# 14.06.2022
+# 30.08.2022
 #
 # --------------------------------------------------------------------------------------------------------------
 
 import os, sys
 
 import colorama as col
-
-# prefer the repository local version of all additional libraries (instead of the installed version under site-packages)
-# not yet # sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "./additions")))
 
 from config.CRepositoryConfig import CRepositoryConfig # providing repository and environment specific information
 from maindoc.CMainDocConfig import CMainDocConfig      # providing main documentation specific information
@@ -45,6 +42,7 @@ COLBG = col.Style.BRIGHT + col.Fore.GREEN
 
 SUCCESS = 0
 ERROR   = 1
+WARNING_PDF_NOT_COMPLETE = 2
 
 # --------------------------------------------------------------------------------------------------------------
 
@@ -85,7 +83,7 @@ except Exception as ex:
     print()
     sys.exit(ERROR)
 
-bSuccess, sResult = oDocBuilder.Build()
+bPDFIsComplete, bSuccess, sResult = oDocBuilder.Build()
 if bSuccess is None:
     print()
     printexception(sResult)
@@ -96,12 +94,26 @@ elif bSuccess is False:
     printerror(sResult)
     print()
     sys.exit(ERROR)
+elif bSuccess is True:
+   # bSuccess is True means: PDF has been generated; but even so the PDF can be incomplete (e.g. meta information is missing)
+   if bPDFIsComplete is True:
+      print(COLBY + sResult)
+      print()
+      print(COLBG + "genmaindoc done")
+      print()
+      sys.exit(SUCCESS)
+   else:
+      print(COLBY + sResult)
+      print()
+      print(COLBY + "genmaindoc done - but with warnings")
+      print()
+      sys.exit(WARNING_PDF_NOT_COMPLETE)
+else:
+    print()
+    printerror("Internal genmaindoc error")
+    print()
+    sys.exit(ERROR)
 
-print(COLBY + sResult)
-print()
-print(COLBG + "genmaindoc done")
-print()
-sys.exit(SUCCESS)
 
 # --------------------------------------------------------------------------------------------------------------
 
