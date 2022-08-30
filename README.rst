@@ -15,33 +15,58 @@
 RobotFramework AIO documentation
 ================================
 
-**UNDER CONSTRUCTION**
+The RobotFramework AIO documentation is available as PDF file and can be found here:
+`RobotFrameworkAIO_Reference.pdf <https://github.com/test-fullautomation/robotframework-documentation/blob/develop/RobotFrameworkAIO/RobotFrameworkAIO_Reference.pdf>`_
 
-Getting Started
----------------
+The documentation consists of two parts:
 
-T.B.C
+1. Common description
+2. Description of the interfaces of RobotFramework AIO components
 
-How to install
---------------
+With the ``setup.py`` within this repository the documentation can be build also.
 
-Firstly clone the **robotframework-documentation** repository to your machine.
+The following preconditions have to be fulfilled before ``setup.py`` is executed:
 
-.. code::
+1. Clone the `robotframework-documentation <https://github.com/test-fullautomation/robotframework-documentation>`_ repository to your computer.
 
-   git clone https://github.com/test-fullautomation/robotframework-documentation.git
+   .. code::
 
-Use the following command to build the documentation:
-
-.. code::
-
-    setup.py install
+      git clone https://github.com/test-fullautomation/robotframework-documentation.git
 
 
-Package Documentation
----------------------
+1. Clone all repositories containing components that shall be part of the documentation, to your computer.
 
-The RobotFramework AIO documentation can be found also here: `RobotFrameworkAIO_Reference.pdf <https://github.com/test-fullautomation/robotframework-documentation/blob/develop/RobotFrameworkAIO/RobotFrameworkAIO_Reference.pdf>`_
+2. Add relative paths to these repositories to the ``maindoc`` configuration: ``maindoc\maindoc_config.json``, section "``IMPORTS``":
+
+   .. code::
+
+      "IMPORTS" : ["../../python-genpackagedoc",
+                   "../../python-extensions-collection",
+                   ...
+
+3. Install a LaTeX compiler (full installation of Texlive recommended)
+
+4. Introduce an environment variable "``GENDOC_LATEXPATH``" containing the path to the LaTeX interpreter ``pdflatex.exe`` (Windows) / ``pdflatex`` (Linux).
+
+   This is also configured in the ``maindoc`` configuration: ``maindoc\maindoc_config.json``, section "``TEX``":
+
+   .. code::
+
+      "TEX" : {
+               "WINDOWS" : "%GENDOC_LATEXPATH%/pdflatex.exe",
+               "LINUX"   : "${GENDOC_LATEXPATH}/pdflatex"
+              }
+
+5. Use the following command to build the documentation:
+
+   .. code::
+
+      setup.py install
+
+   The output can be found here:
+
+   ``RobotFrameworkAIO\RobotFrameworkAIO_Reference.pdf``
+
 
 Feedback
 --------
