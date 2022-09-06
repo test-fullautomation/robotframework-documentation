@@ -20,7 +20,7 @@
 #
 # XC-CT/ECA3-Queckenstedt
 #
-# 30.08.2022
+# 31.08.2022
 #
 # --------------------------------------------------------------------------------------------------------------
 
@@ -464,6 +464,8 @@ Constructor of class ``CDocBuilder``.
             listCmdLineParts.append(f"--pdfdest=\"{sDestinationFolder}\"")
             listCmdLineParts.append(f"--configdest=\"{sDestinationFolder}\"")
             listCmdLineParts.append(f"--strict {bStrict}")
+            if self.__dictMainDocConfig['bSimulateOnly'] is True:
+               listCmdLineParts.append(f"--simulateonly")
             sCmdLine = " ".join(listCmdLineParts)
             del listCmdLineParts
             listCmdLineParts = shlex.split(sCmdLine)
@@ -486,7 +488,7 @@ Constructor of class ``CDocBuilder``.
 
             # We need to identify the name of some output files inside sDestinationFolder:
             # - PDF file (documentation of package in current repository)
-            # - json file (configuration values of current repository and documantaion build process) 
+            # - json file (configuration values of current repository and documentation build process) 
             sPDFFile = None
             sJsonFile = None
             listLocalEntries = os.listdir(sDestinationFolder)
@@ -495,15 +497,19 @@ Constructor of class ``CDocBuilder``.
                   sPDFFile = CString.NormalizePath(os.path.join(sDestinationFolder, sEntryName))
                if sEntryName.lower().endswith('.json'):
                   sJsonFile = CString.NormalizePath(os.path.join(sDestinationFolder, sEntryName))
-            if sPDFFile is None:
-               bSuccess = False
-               sResult  = f"PDF file not found within '{sDestinationFolder}'"
-               return self.__bPDFIsComplete, bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
+
+            # not available in simulation mode
+            if self.__dictMainDocConfig['bSimulateOnly'] is False:
+               if sPDFFile is None:
+                  bSuccess = False
+                  sResult  = f"PDF file not found within '{sDestinationFolder}'"
+                  return self.__bPDFIsComplete, bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
+               listPDFFiles.append(sPDFFile)
+
             if sJsonFile is None:
                bSuccess = False
                sResult  = f"Json configuration file not found within '{sDestinationFolder}'"
                return self.__bPDFIsComplete, bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
-            listPDFFiles.append(sPDFFile)
             listConfigFiles.append(sJsonFile)
          # eof for sRepository in listRepositories:
 
@@ -654,6 +660,23 @@ Constructor of class ``CDocBuilder``.
       oFinalSummaryFile.Write(r"\end{center}")
       oFinalSummaryFile.Write()
       del oFinalSummaryFile
+
+      # --------------------------------------------------------------------------------------------------------------
+      # The code after the following if statement only belongs to the LaTeX compiler building the PDF.
+      # In simulation mode we skip this part completely.
+      # --------------------------------------------------------------------------------------------------------------
+      if self.__dictMainDocConfig['bSimulateOnly'] is True:
+         print()
+         print(COLBY + "GenMainDoc is running in simulation mode.")
+         print(COLBY + "Skipping call of LaTeX compiler. No new PDF output will be generated, already existing output will not be updated!")
+         print(COLBY + "! This is not handled as error and also not handled as warning !")
+         print()
+         bSuccess = True
+         sResult  = f"Generation of PDF output skipped because of simulation mode!"
+         self.__bPDFIsComplete = True # not nice, but otherwise a warning will be thrown in main function; in simulation mode we do not want to have a statement about the PDF output
+         return self.__bPDFIsComplete, bSuccess, sResult
+
+      # --------------------------------------------------------------------------------------------------------------
 
       # convert main tex file to PDF
       sLaTeXInterpreter = self.__dictMainDocConfig['LATEXINTERPRETER']

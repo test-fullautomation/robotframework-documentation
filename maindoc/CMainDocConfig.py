@@ -20,7 +20,7 @@
 #
 # XC-CT/ECA3-Queckenstedt
 #
-# 11.07.2022
+# 31.08.2022
 #
 # --------------------------------------------------------------------------------------------------------------
 
@@ -159,6 +159,15 @@ Responsible for:
       if sKey in self.__dictMainDocConfig['TEX']:
          sLaTeXInterpreter = CString.NormalizePath(sPath=self.__dictMainDocConfig['TEX'][sKey], sReferencePathAbs=sReferencePathAbs)
       self.__dictMainDocConfig['LATEXINTERPRETER'] = sLaTeXInterpreter
+
+      # -- get command line
+      oCmdLineParser = argparse.ArgumentParser()
+      oCmdLineParser.add_argument('--simulateonly', action='store_true', help='If True, the LaTeX compiler is switched off; a syntax check only remains in this case. Default: False')
+      oCmdLineArgs = oCmdLineParser.parse_args()
+      bSimulateOnly = False
+      if oCmdLineArgs.simulateonly is not None:
+         bSimulateOnly = oCmdLineArgs.simulateonly
+      self.__dictMainDocConfig['bSimulateOnly'] = bSimulateOnly
 
       PrettyPrint(self.__dictMainDocConfig, sPrefix="Config")
 
