@@ -20,7 +20,7 @@
 #
 # XC-CT/ECA3-Queckenstedt
 #
-# 31.08.2022
+# 29.09.2022
 #
 # --------------------------------------------------------------------------------------------------------------
 
@@ -169,7 +169,8 @@ Responsible for:
          bSimulateOnly = oCmdLineArgs.simulateonly
       self.__dictMainDocConfig['bSimulateOnly'] = bSimulateOnly
 
-      PrettyPrint(self.__dictMainDocConfig, sPrefix="Config")
+      # debug only
+      # PrettyPrint(self.__dictMainDocConfig, sPrefix="Config")
 
    # eof def __init__(self, oRepositoryConfig=None):
 
@@ -179,7 +180,7 @@ Responsible for:
 
    def PrintConfig(self):
       """
-Prints all cofiguration values to console.
+Prints all configuration values to console.
       """
       # -- printing configuration to console
       print()
@@ -190,7 +191,7 @@ Prints all cofiguration values to console.
 
    def PrintConfigKeys(self):
       """
-Prints all cofiguration key names to console.
+Prints all configuration key names to console.
       """
       # -- printing configuration keys to console
       print()
