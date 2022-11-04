@@ -20,7 +20,7 @@
 #
 # XC-CT/ECA3-Queckenstedt
 #
-# 29.09.2022
+# 03.11.2022
 #
 # --------------------------------------------------------------------------------------------------------------
 
@@ -112,18 +112,22 @@ Responsible for:
       listLines, bSuccess, sResult = oJsonFileSource.ReadLines(bSkipBlankLines=True, sComment='#')
       del oJsonFileSource
       if bSuccess is not True:
-         return bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
+         raise Exception(CString.FormatResult(sMethod, bSuccess, sResult))
       oJsonFileCleaned = CFile(sJsonFileCleaned)
       bSuccess, sResult = oJsonFileCleaned.Write(listLines)
       del oJsonFileCleaned
       if bSuccess is not True:
-         return bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
+         raise Exception(CString.FormatResult(sMethod, bSuccess, sResult))
 
-      # TODO: try/except
-      dictJsonValues = None # dictDocConfig
-      hDocumentationProjectConfigFile = open(sJsonFileCleaned)
-      dictJsonValues = json.load(hDocumentationProjectConfigFile)
-      hDocumentationProjectConfigFile.close()
+      dictJsonValues = None
+      try:
+         hDocumentationProjectConfigFile = open(sJsonFileCleaned)
+         dictJsonValues = json.load(hDocumentationProjectConfigFile)
+         hDocumentationProjectConfigFile.close()
+      except Exception as reason:
+         bSuccess = None
+         sResult  = str(reason) + "\nwhile loading the json configuration file"
+         raise Exception(CString.FormatResult(sMethod, bSuccess, sResult))
 
       # initialize the documentation build configuration including the repository configuration (with placeholders resolved)
       # ( not yet: together with command line parameters. Command overwrites all other values.)
