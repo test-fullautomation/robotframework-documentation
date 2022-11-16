@@ -2,7 +2,7 @@
 #
 # Main doc configuration file
 #
-# 09.11.2022
+# 16.11.2022
 #
 # **************************************************************************************************************
 # Format: extended json format with the possibility to comment out lines (by '#' at the beginning of the line).
@@ -39,11 +39,9 @@
                 "../../robotframework-testsuitesmanagement",
                 "../../robotframework-qconnect-base",
                 "../../robotframework-qconnect-dlt",
-                "../../robotframework-testresult2rqmtool",
-                # successor coming soon: "../../robotframework-robotlog2rqm",
+                "../../robotframework-robotlog2rqm",
                 "../../robotframework-tmllog2robotlog",
-                "../../robotframework-testresultwebapptool",
-                # successor coming soon: "../../robotframework-robotlog2db",
+                "../../robotframework-robotlog2db",
                 "../../python-pytestlog2db",
                 "../../testresultwebapp"],
 

@@ -8,19 +8,19 @@
 
 * ``GenPackageDoc``
 
-  - Version: 0.34.0 (from 07.11.2022)
+  - Version: 0.35.0 (from 16.11.2022)
   - URL: https://github.com/test-fullautomation/python-genpackagedoc
   - *Documentation builder for Python packages*
 
 * ``PythonExtensionsCollection``
 
-  - Version: 0.10.1 (from 08.11.2022)
+  - Version: 0.11.1 (from 16.11.2022)
   - URL: https://github.com/test-fullautomation/python-extensions-collection
   - *Additional Python functions*
 
 * ``RobotframeworkExtensions``
 
-  - Version: 0.8.2 (from 26.09.2022)
+  - Version: 0.8.3 (from 09.11.2022)
   - URL: https://github.com/test-fullautomation/robotframework-extensions-collection
   - *Additional Robot Framework keywords*
 
@@ -48,10 +48,10 @@
   - URL: https://sourcecode.socialcoding.bosch.com/projects/ROBFW/repos/robotframework-qconnect-dlt/browse
   - *Robot Framework test library for TCP, SSH, serial connection*
 
-* ``RobotResults2RQM``
+* ``RobotLog2RQM``
 
-  - Version: 1.1.3 (from 13.10.2022)
-  - URL: https://github.com/test-fullautomation/robotframework-testresult2rqmtool
+  - Version: 1.1.4 (from 10.11.2022)
+  - URL: https://github.com/test-fullautomation/robotframework-robotlog2rqm
   - *Imports robot result(s) to IBM Rational Quality Manager (RQM)*
 
 * ``TMLLog2RobotLog``
@@ -60,10 +60,10 @@
   - URL: https://sourcecode.socialcoding.bosch.com/projects/ROBFW/repos/robotframework-tmllog2robotlog/browse
   - *Convert TML-Framework results to Robot Framework results*
 
-* ``RobotResults2DB``
+* ``RobotLog2DB``
 
-  - Version: 1.2.2 (from 13.10.2022)
-  - URL: https://github.com/test-fullautomation/robotframework-testresultwebapptool
+  - Version: 1.2.3 (from 10.11.2022)
+  - URL: https://github.com/test-fullautomation/robotframework-robotlog2db
   - *Imports robot result(s) to TestResultWebApp database*
 
 * ``PyTestLog2DB``
