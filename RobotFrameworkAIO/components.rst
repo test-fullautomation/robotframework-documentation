@@ -8,7 +8,7 @@
 
 * ``GenPackageDoc``
 
-  - Version: 0.35.0 (from 16.11.2022)
+  - Version: 0.36.0 (from 17.11.2022)
   - URL: https://github.com/test-fullautomation/python-genpackagedoc
   - *Documentation builder for Python packages*
 

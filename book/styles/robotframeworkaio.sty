@@ -22,7 +22,7 @@
 % - RobotFramework AIO code and console listings
 % - Python for RobotFramework AIO code
 %
-% 16.11.2022
+% 17.11.2022
 %
 % --------------------------------------------------------------------------------------------------------------
 
@@ -47,6 +47,15 @@
 \newcommand{\aborted}{\textcolor{gray}{aborted}}
 \newcommand{\passed}{\textcolor{ForestGreen}{passed}}
 \newcommand{\failed}{\textcolor{red}{failed}}
+
+% deprecated (but still in use)
+\newcommand{\ifalignrcode}{\hspace{2pt}}
+\newcommand{\iftab}{\phantom{x}\hspace{3ex}}
+\newcommand{\ifunknown}[1]{\textcolor{blue}{#1}}
+\newcommand{\ifaborted}[1]{\textcolor{gray}{#1}}
+\newcommand{\ifpassed}[1]{\textcolor{ForestGreen}{#1}}
+\newcommand{\iffailed}[1]{\textcolor{red}{#1}}
+\newcommand{\ifnotice}[1]{\textbf{\textcolor{red}{#1}}}
 
 % ----------------------------------------------------------------------- %
 
@@ -133,24 +142,25 @@
 }
 
 %
-%  style definitions for Robot code listings and log listings
+%  style definitions for Robot and Python code listings and log listings
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\definecolor{color_code_background}{RGB}{255, 239, 222}
-\definecolor{color_code_frame}{RGB}{255, 222, 189}
-\definecolor{color_code_highlight}{RGB}{255, 222, 189}
-% light versions for inline code listings
-\colorlet{color_code_background_light}{color_code_background!45!white}
-\colorlet{color_code_frame_light}{color_code_frame!45!white}
+% color definitions
+\definecolor{color_def_code_background}{RGB}{255, 239, 222}
+\definecolor{color_def_code_frame}{RGB}{255, 222, 189}
+\definecolor{color_def_code_highlight}{RGB}{255, 222, 189}
+\definecolor{color_def_log_background}{RGB}{222, 231, 247}
+\definecolor{color_def_log_frame}{RGB}{189, 206, 231}
+\definecolor{color_def_log_highlight}{RGB}{189, 206, 231}
 
-\definecolor{color_log_background}{RGB}{222, 231, 247}
-\definecolor{color_log_frame}{RGB}{189, 206, 231}
-\definecolor{color_log_highlight}{RGB}{189, 206, 231}
-% light versions for inline log listings
-\colorlet{color_log_background_light}{color_log_background!45!white}
-\colorlet{color_log_frame_light}{color_log_frame!45!white}
-
+% brightness
+\colorlet{color_code_background}{color_def_code_background!45!white}
+\colorlet{color_code_frame}{color_def_code_frame!45!white}
+\colorlet{color_code_highlight}{color_def_code_highlight!45!white}
+\colorlet{color_log_background}{color_def_log_background!45!white}
+\colorlet{color_log_frame}{color_def_log_frame!45!white}
+\colorlet{color_log_highlight}{color_def_log_highlight!45!white}
 
 %
 %  \hlcode command and \hllog command
@@ -254,17 +264,7 @@
    }
 }{}
 
-% light version (standard)
 \newcommand{\rcode}[1]{
-   \efbox[margin=2pt,
-         linewidth=1pt,
-         linecolor=color_code_frame_light,
-         backgroundcolor=color_code_background_light,
-         font=\ttfamily\small]{\lstinline[language=Robot_code]!#1!}
-}
-
-% version in same layout as robotcode ('f' = full)
-\newcommand{\rfcode}[1]{
    \efbox[margin=2pt,
          linewidth=1pt,
          linecolor=color_code_frame,
@@ -317,17 +317,7 @@
    }
 }{}
 
-% light version (standard)
 \newcommand{\rlog}[1]{
-   \efbox[margin=2pt,
-         linewidth=1pt,
-         linecolor=color_log_frame_light,
-         backgroundcolor=color_log_background_light,
-         font=\ttfamily\small]{\lstinline[language=Robot_log]!#1!}
-}
-
-% version in same layout as robotlog ('f' = full)
-\newcommand{\rflog}[1]{
    \efbox[margin=2pt,
          linewidth=1pt,
          linecolor=color_log_frame,
@@ -392,22 +382,11 @@
    }
 }{}
 
-% light version (standard)
 \newcommand{\pcode}[1]{
-   \efbox[margin=2pt,
-         linewidth=1pt,
-         linecolor=color_code_frame_light,
-         backgroundcolor=color_code_background_light,
-         font=\ttfamily\small]{\lstinline[language=Python_code]!#1!}
-}
-
-% version in same layout as pythoncode ('f' = full)
-\newcommand{\pfcode}[1]{
    \efbox[margin=2pt,
          linewidth=1pt,
          linecolor=color_code_frame,
          backgroundcolor=color_code_background,
          font=\ttfamily\small]{\lstinline[language=Python_code]!#1!}
 }
-
 
