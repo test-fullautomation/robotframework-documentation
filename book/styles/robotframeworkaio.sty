@@ -20,9 +20,9 @@
 %
 % includes:
 % - RobotFramework AIO code and console listings
-% - Python for RobotFramework AIO code
+% - Python code and console listings
 %
-% 17.11.2022
+% 21.11.2022
 %
 % --------------------------------------------------------------------------------------------------------------
 
@@ -189,7 +189,7 @@
 % environment for robot code listings
 %
 \lstdefinelanguage{Robot_code}{
-      alsoletter={-,[,],{,},$,@,\%},
+      alsoletter={-,[,],{,},$,@,\%,\&},
       basicstyle=\ttfamily\small,
       columns=fixed,
       showstringspaces=false,
@@ -242,6 +242,7 @@
       moredelim=[s][\color{ForestGreen}]{$\{}{\}},
       moredelim=[s][\color{ForestGreen}]{@\{}{\}},
       moredelim=[s][\color{ForestGreen}]{\%\{}{\}},
+      moredelim=[s][\color{ForestGreen}]{\&\{}{\}},
       morestring=*[b]{"},
       morestring=[s][\color{gray}]{<}{>},
       stringstyle=\color{red},
@@ -295,11 +296,13 @@
       morestring=[m][\color{red}]{"},
       stringstyle=\color{red},
       identifierstyle=\color{black},
-      keywordstyle=\color{darkblue},   
+      keywordstyle=\color{blue},   
       morekeywords=[1]{PASS, passed},
       morekeywords=[2]{FAIL, failed},
+      morekeywords=[3]{UNKNOWN, unknown},
       keywordstyle=[1]\color{ForestGreen},
       keywordstyle=[2]\color{red},
+      keywordstyle=[3]\color{blue},
       rulesepcolor=\color{color_log_frame},
       rulecolor=\color{color_log_frame},
       backgroundcolor=\color{color_log_background},
@@ -390,3 +393,56 @@
          font=\ttfamily\small]{\lstinline[language=Python_code]!#1!}
 }
 
+%
+% environment for Python log listings
+%
+\lstdefinelanguage{Python_log}{
+      alsoletter=-,
+      basicstyle=\ttfamily\small,
+      columns=fixed,
+      showstringspaces=false,
+      commentstyle=\color{gray}\upshape,
+      frame=single,
+      framesep=5pt,
+      breaklines=true,
+      breakatwhitespace=true,
+      prebreak=\mbox{\textcolor{Red}{$\hookleftarrow$}\space},
+      postbreak=\mbox{\textcolor{ForestGreen}{$\hookrightarrow$}\space},
+      escapeinside={<}{>},
+      captionpos=b,
+      moredelim=[is][\bfseries]{[*}{*]},
+      morestring=[m][\color{red}]{'},
+      morestring=[m][\color{red}]{"},
+      stringstyle=\color{red},
+      identifierstyle=\color{black},
+      keywordstyle=\color{blue},   
+      morekeywords=[1]{PASS, passed},
+      morekeywords=[2]{FAIL, failed},
+      morekeywords=[3]{UNKNOWN, unknown},
+      keywordstyle=[1]\color{ForestGreen},
+      keywordstyle=[2]\color{red},
+      keywordstyle=[3]\color{blue},
+      rulesepcolor=\color{color_log_frame},
+      rulecolor=\color{color_log_frame},
+      backgroundcolor=\color{color_log_background},
+      columns=fixed,
+      keepspaces=true,
+      abovecaptionskip=15pt
+}
+
+\lstnewenvironment{pythonlog}[1][]{%
+   \lstset{%
+      xleftmargin=5pt,
+      xrightmargin=5pt,
+      alsolanguage=Python_log,
+      #1
+   }
+}{}
+
+\newcommand{\plog}[1]{
+   \efbox[margin=2pt,
+         linewidth=1pt,
+         linecolor=color_log_frame,
+         backgroundcolor=color_log_background,
+         font=\ttfamily\small]{\lstinline[language=Python_log]!#1!}
+}
