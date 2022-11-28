@@ -27,7 +27,7 @@
 
 \author{RobotFramework AIO team}
 \title{Documentation style guide}
-\date{29.08.2022}
+\date{21.11.2022}
 
 % --------------------------------------------------------------------------------------------------------------
 % document header
@@ -338,6 +338,8 @@ The variable is set in this way: \rcode{$\{prev\}\ \ \ \ Set Variable\ \ \ \ $\{
 
 Consider that inside \texttt{rcode} the brackets \texttt{\{} and \texttt{\}} and also the blanks have to be masked!
 
+% --------------------------------------------------------------------------------------------------------------
+
 \vspace{2ex}
 
 \textbf{Python code block}
@@ -397,16 +399,15 @@ The variable is set in this way: \pcode{values = ("A", "B", "C")}
 
 \section{Console listings}
 
-Because of the console output of \rfw\ test executions contains a lot of \rfw\ specific keywords, the console listing layout is adapted to \rfw.
-An own individual layout for console listings of pure Python scripts is not available (and also not really required in the context of \rfw).
-
-Therefore for console listings of both \rfw\ and Python the corresponding \rfw\ commands can be used.
+Console listings are also available for both \rfw\ and Python.
 
 To keep this layout stuff simple, the console listings layout is also used for all informations related to the file system (e.g. paths and file names).
 
+% --------------------------------------------------------------------------------------------------------------
+
 \vspace{2ex}
 
-\textbf{Console listing}
+\textbf{\rfw\ console listing}
 
 \begin{verbatim}
 \begin{robotlog}
@@ -442,7 +443,7 @@ Report:  C:\RobotTest\testcases\report.html
 
 \vspace{2ex}
 
-\textbf{Console listing (extended)}
+\textbf{\rfw\ console listing (extended)}
 
 It is possible to give the listing a caption. It is also possible to highlight certain lines within the listing. The highlighting can be realized by a list
 of numbers of all lines, that shall be highlighted (\texttt{hllog}):
@@ -485,7 +486,7 @@ Report:  C:\RobotTest\testcases\report.html
 
 \vspace{2ex}
 
-\textbf{Inline console output}
+\textbf{\rfw\ inline console output}
 \begin{verbatim}
 The test results are shown like this: \rlog{1 test, 1 passed, 0 failed, 0 unknown}
 \end{verbatim}
@@ -517,6 +518,122 @@ The file \rlog{log.html} contains the log file in html format.
 \end{verbatim}
 
 The file \rlog{log.html} contains the log file in html format.
+
+% --------------------------------------------------------------------------------------------------------------
+
+\newpage
+
+\textbf{Python console listing}
+
+\begin{verbatim}
+\begin{pythonlog}
+==============================================================================
+HelloWorld
+==============================================================================
+Hello World                                                           | PASS |
+------------------------------------------------------------------------------
+HelloWorld                                                            | PASS |
+1 test, 1 passed, 0 failed, 0 unknown
+==============================================================================
+Output:  C:\RobotTest\testcases\output.xml
+Log:     C:\RobotTest\testcases\log.html
+Report:  C:\RobotTest\testcases\report.html
+\end{pythonlog}
+\end{verbatim}
+
+\vspace{2ex}
+
+\begin{pythonlog}
+==============================================================================
+HelloWorld
+==============================================================================
+Hello World                                                           | PASS |
+------------------------------------------------------------------------------
+HelloWorld                                                            | PASS |
+1 test, 1 passed, 0 failed, 0 unknown
+==============================================================================
+Output:  C:\RobotTest\testcases\output.xml
+Log:     C:\RobotTest\testcases\log.html
+Report:  C:\RobotTest\testcases\report.html
+\end{pythonlog}
+
+\vspace{2ex}
+
+\textbf{Python console listing (extended)}
+
+It is possible to give the listing a caption. It is also possible to highlight certain lines within the listing. The highlighting can be realized by a list
+of numbers of all lines, that shall be highlighted (\texttt{hllog}):
+
+\vspace{2ex}
+
+\begin{verbatim}
+\begin{pythonlog}[caption=Python log example, 
+                 linebackgroundcolor=\hllog{7,11}]
+==============================================================================
+HelloWorld
+==============================================================================
+Hello World                                                           | PASS |
+------------------------------------------------------------------------------
+HelloWorld                                                            | PASS |
+1 test, 1 passed, 0 failed, 0 unknown
+==============================================================================
+Output:  C:\RobotTest\testcases\output.xml
+Log:     C:\RobotTest\testcases\log.html
+Report:  C:\RobotTest\testcases\report.html
+\end{pythonlog}
+\end{verbatim}
+
+\newpage
+
+\begin{pythonlog}[caption=Python log example, 
+                 linebackgroundcolor=\hllog{7,11}]
+==============================================================================
+HelloWorld
+==============================================================================
+Hello World                                                           | PASS |
+------------------------------------------------------------------------------
+HelloWorld                                                            | PASS |
+1 test, 1 passed, 0 failed, 0 unknown
+==============================================================================
+Output:  C:\RobotTest\testcases\output.xml
+Log:     C:\RobotTest\testcases\log.html
+Report:  C:\RobotTest\testcases\report.html
+\end{pythonlog}
+
+\vspace{2ex}
+
+\textbf{Python inline console output}
+\begin{verbatim}
+The test results are shown like this: \plog{1 test, 1 passed, 0 failed, 0 unknown}
+\end{verbatim}
+
+The test results are shown like this: \plog{1 test, 1 passed, 0 failed, 0 unknown}
+
+\vspace{2ex}
+
+\begin{verbatim}
+The results of the test execution can be found in the following files:
+\begin{pythonlog}
+C:\RobotTest\testcases\output.xml
+C:\RobotTest\testcases\log.html
+C:\RobotTest\testcases\report.html
+\end{pythonlog}
+\end{verbatim}
+
+The results of the test execution can be found in the following files:
+\begin{pythonlog}
+C:\RobotTest\testcases\output.xml
+C:\RobotTest\testcases\log.html
+C:\RobotTest\testcases\report.html
+\end{pythonlog}
+
+\vspace{2ex}
+
+\begin{verbatim}
+The file \plog{log.html} contains the log file in html format.
+\end{verbatim}
+
+The file \plog{log.html} contains the log file in html format.
 
 % --------------------------------------------------------------------------------------------------------------
 
