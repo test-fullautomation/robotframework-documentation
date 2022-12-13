@@ -8,7 +8,7 @@
 
 * ``GenPackageDoc``
 
-  - Version: 0.37.1 (from 21.11.2022)
+  - Version: 0.38.0 (from 30.11.2022)
   - URL: https://github.com/test-fullautomation/python-genpackagedoc
   - *Documentation builder for Python packages*
 
@@ -42,12 +42,6 @@
   - URL: https://github.com/test-fullautomation/robotframework-qconnect-base
   - *Robot Framework test library for TCP, SSH, serial connection*
 
-* ``QConnectionDLTLibrary``
-
-  - Version: 1.1.0 (from 11.07.2022)
-  - URL: https://sourcecode.socialcoding.bosch.com/projects/ROBFW/repos/robotframework-qconnect-dlt/browse
-  - *Robot Framework test library for TCP, SSH, serial connection*
-
 * ``RobotLog2RQM``
 
   - Version: 1.1.4 (from 10.11.2022)
@@ -62,15 +56,15 @@
 
 * ``RobotLog2DB``
 
-  - Version: 1.2.3 (from 10.11.2022)
+  - Version: 1.2.4 (from 18.11.2022)
   - URL: https://github.com/test-fullautomation/robotframework-robotlog2db
   - *Imports robot result(s) to TestResultWebApp database*
 
 * ``PyTestLog2DB``
 
-  - Version: 0.1.0 (from 08.11.2022)
+  - Version: 0.1.1 (from 22.11.2022)
   - URL: https://github.com/test-fullautomation/python-pytestlog2db
-  - *description*
+  - *Imports pytest result(s) to TestResultWebApp database*
 
 * ``TestResultWebApp``
 
