@@ -20,12 +20,12 @@
 #
 # XC-CT/ECA3-Queckenstedt
 #
-# 03.11.2022
+# 13.12.2022
 #
 # --------------------------------------------------------------------------------------------------------------
 
 """
-Python module containing the configuration for the RobotFramework AIO configuration.
+Python module containing the configuration for the RobotFramework AIO documentation.
 This includes the repository configuration and command line values.
 """
 
@@ -80,15 +80,47 @@ Responsible for:
          sResult  = "oRepositoryConfig is None"
          raise Exception(CString.FormatResult(sMethod, bSuccess, sResult))
 
+      # initialize the documentation build configuration (later containing also the repository configuration (with placeholders resolved)
+      # and the command line parameters)
+      self.__dictMainDocConfig = {}
+
       # get repository configuration
       dictRepositoryConfig = oRepositoryConfig.GetConfig()
 
-      # read the documentation build configuration from separate json file
-      #    - the path to the folder containing this json file is taken out of the repository configuration
-      #    - the name of the json file is fix
-      sJsonFileName = "maindoc_config.json"
-      sDocumentationProjectConfigFile = f"{dictRepositoryConfig['PACKAGEDOC']}/{sJsonFileName}"
-      # print(f"========== sDocumentationProjectConfigFile : '{sDocumentationProjectConfigFile}'")
+      # take over keys and values from repository configuration
+      for key, value in dictRepositoryConfig.items():
+         self.__dictMainDocConfig[key] = value
+
+      # -- the absolute path that is reference for all relative paths
+      sReferencePathAbs = self.__dictMainDocConfig['PACKAGEDOC'] # set initially in repository config and already normalized
+
+      # get command line
+      self.GetCmdLine()
+
+      # read the documentation build configuration from separate json file,
+      # either provided in command line or (default):
+      # - the path to the folder containing this json file is taken out of the repository configuration
+      # - the name of the json file is fix
+
+      sMainDocConfigFile = self.__dictMainDocConfig['sMainDocConfigFile']
+      if sMainDocConfigFile is None:
+         # default
+         sJsonFileName = "maindoc_config.json"
+         sMainDocConfigFile = f"{dictRepositoryConfig['PACKAGEDOC']}/{sJsonFileName}"
+      else:
+         sJsonFileName = "maindoc_config_tmp.json" # any name of this file in tmp folder
+
+      # if taken from command line, 'sMainDocConfigFile' may be relative, therefore we have to normalize
+      sMainDocConfigFile = CString.NormalizePath(sPath=sMainDocConfigFile, sReferencePathAbs=sReferencePathAbs)
+      self.__dictMainDocConfig['sMainDocConfigFile'] = sMainDocConfigFile # update config
+      # and we have to check if this file is existing
+      if os.path.isfile(sMainDocConfigFile) is False:
+         bSuccess = None
+         sResult  = f"Maindoc configuration file '{sMainDocConfigFile}' does not exist"
+         raise Exception(CString.FormatResult(sMethod, bSuccess, sResult))
+
+      print(COLNY + f"Maindoc configuration: '{sMainDocConfigFile}'")
+      print()
 
       # The json file may contain lines that are commented out by a '#' at the beginning of the line.
       # Therefore we read in this file in text format, remove the comments and save the cleaned file within the temp folder.
@@ -108,7 +140,7 @@ Responsible for:
       sJsonFileCleaned = f"{sTmpPath}/{sJsonFileName}"
       # print(f"========== sJsonFileCleaned : '{sJsonFileCleaned}'")
 
-      oJsonFileSource = CFile(sDocumentationProjectConfigFile)
+      oJsonFileSource = CFile(sMainDocConfigFile)
       listLines, bSuccess, sResult = oJsonFileSource.ReadLines(bSkipBlankLines=True, sComment='#')
       del oJsonFileSource
       if bSuccess is not True:
@@ -129,23 +161,12 @@ Responsible for:
          sResult  = str(reason) + "\nwhile loading the json configuration file"
          raise Exception(CString.FormatResult(sMethod, bSuccess, sResult))
 
-      # initialize the documentation build configuration including the repository configuration (with placeholders resolved)
-      # ( not yet: together with command line parameters. Command overwrites all other values.)
-      self.__dictMainDocConfig = {}
-
-      # take over keys and values from repository configuration
-      for key, value in dictRepositoryConfig.items():
-         self.__dictMainDocConfig[key] = value
-
       # take over keys and values from maindocumentation build configuration
       for key, value in dictJsonValues.items():
          self.__dictMainDocConfig[key] = value
 
       # add current timestamp
       self.__dictMainDocConfig['NOW'] = time.strftime('%d.%m.%Y - %H:%M:%S')
-
-      # -- the absolute path that is reference for all relative paths
-      sReferencePathAbs = self.__dictMainDocConfig['PACKAGEDOC'] # set initially in repository config and already normalized
 
       # normalize paths in 'IMPORTS' section
       listImports = []
@@ -164,15 +185,6 @@ Responsible for:
          sLaTeXInterpreter = CString.NormalizePath(sPath=self.__dictMainDocConfig['TEX'][sKey], sReferencePathAbs=sReferencePathAbs)
       self.__dictMainDocConfig['LATEXINTERPRETER'] = sLaTeXInterpreter
 
-      # -- get command line
-      oCmdLineParser = argparse.ArgumentParser()
-      oCmdLineParser.add_argument('--simulateonly', action='store_true', help='If True, the LaTeX compiler is switched off; a syntax check only remains in this case. Default: False')
-      oCmdLineArgs = oCmdLineParser.parse_args()
-      bSimulateOnly = False
-      if oCmdLineArgs.simulateonly is not None:
-         bSimulateOnly = oCmdLineArgs.simulateonly
-      self.__dictMainDocConfig['bSimulateOnly'] = bSimulateOnly
-
       # debug only
       # PrettyPrint(self.__dictMainDocConfig, sPrefix="Config")
 
@@ -181,6 +193,27 @@ Responsible for:
    def __del__(self):
       del self.__dictMainDocConfig
 
+   def GetCmdLine(self):
+      """
+Gets command line parameter.
+      """
+      oCmdLineParser = argparse.ArgumentParser()
+      oCmdLineParser.add_argument('--configfile', type=str, help='Path and name of maindoc configuration file')
+      oCmdLineParser.add_argument('--simulateonly', action='store_true', help='If True, the LaTeX compiler is switched off; a syntax check only remains in this case. Default: False')
+
+      oCmdLineArgs = oCmdLineParser.parse_args()
+
+      sMainDocConfigFile = None
+      if oCmdLineArgs.configfile is not None:
+         sMainDocConfigFile = oCmdLineArgs.configfile
+      self.__dictMainDocConfig['sMainDocConfigFile'] = sMainDocConfigFile # here not yet normalized and checked
+
+      bSimulateOnly = False
+      if oCmdLineArgs.simulateonly is not None:
+         bSimulateOnly = oCmdLineArgs.simulateonly
+      self.__dictMainDocConfig['bSimulateOnly'] = bSimulateOnly
+
+   # eof def GetCmdLine(self):
 
    def PrintConfig(self):
       """
