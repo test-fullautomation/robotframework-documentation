@@ -39,7 +39,6 @@
                 "../../robotframework-testsuitesmanagement",
                 "../../robotframework-qconnect-base",
                 "../../robotframework-robotlog2rqm",
-                "../../robotframework-tmllog2robotlog",
                 "../../robotframework-robotlog2db",
                 "../../python-pytestlog2db",
                 "../../testresultwebapp"],
