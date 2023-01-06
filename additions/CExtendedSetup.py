@@ -73,6 +73,8 @@ class CExtendedSetup():
         listCmdLineParts = []
         listCmdLineParts.append(f"\"{sPython}\"")
         listCmdLineParts.append(f"\"{sDocumentationBuilder}\"")
+        if "DOCBUILDER_ARGUMENTS" in os.environ:
+            listCmdLineParts.append(os.environ["DOCBUILDER_ARGUMENTS"])
         sCmdLine = " ".join(listCmdLineParts)
         del listCmdLineParts
         listCmdLineParts = shlex.split(sCmdLine)

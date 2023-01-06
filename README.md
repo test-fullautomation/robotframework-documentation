@@ -51,7 +51,22 @@ executed:
             }
     ```
 
-6.  Use the following command to build the documentation:
+6.  Introduce an environment variable \"`DOCBUILDER_ARGUMENTS`\" containing
+    the additional argurment(s) when calling `genmaindoc.py` to generate the
+    document. 
+    
+    It allows to specify another configuration file (contains your specific 
+    configurations for the document) than the default one
+    (located at `maindoc\maindoc_config.json`)
+
+    Example to use \"`DOCBUILDER_ARGUMENTS`\" for using other than default 
+    configuration for building document:
+
+    ``` 
+    export DOCBUILDER_ARGUMENTS="--configfile path/to/other/maindoc_config.json"
+    ```
+
+7.  Use the following command to build the documentation:
 
     ``` 
     setup.py install
