@@ -20,7 +20,7 @@
 #
 # XC-CT/ECA3-Queckenstedt
 #
-# 31.08.2022
+# 30.01.2023
 #
 # --------------------------------------------------------------------------------------------------------------
 
@@ -100,7 +100,7 @@ Constructor of class ``CDocBuilder``.
       listRepositories = []
       nNrOfRepositories = 0
 
-      # Intermediate solution: simply take the list from json file.
+      # Intermediate solution: simply take the list from JSON file.
       # Later we have to parse a configuration file within the build repository.
 
       listRepositories = self.__dictMainDocConfig['IMPORTS']
@@ -488,7 +488,7 @@ Constructor of class ``CDocBuilder``.
 
             # We need to identify the name of some output files inside sDestinationFolder:
             # - PDF file (documentation of package in current repository)
-            # - json file (configuration values of current repository and documentation build process) 
+            # - JSON file (configuration values of current repository and documentation build process) 
             sPDFFile = None
             sJsonFile = None
             listLocalEntries = os.listdir(sDestinationFolder)
@@ -617,6 +617,13 @@ Constructor of class ``CDocBuilder``.
       sBundleVersionDateTeXFile = f"{BOOKSOURCES}/BundleVersionDate.tex"
       self.__dictMainDocConfig['BUNDLEVERSIONDATETEXFILE'] = sBundleVersionDateTeXFile
 
+      COVERSHEETSUFFIX = None
+      if "COVERSHEETSUFFIX" in self.__dictMainDocConfig:
+         COVERSHEETSUFFIX = self.__dictMainDocConfig['COVERSHEETSUFFIX']
+         COVERSHEETSUFFIX = COVERSHEETSUFFIX.strip()
+         if COVERSHEETSUFFIX == "":
+            COVERSHEETSUFFIX = None
+
       oBundleVersionDateTeXFile = CFile(sBundleVersionDateTeXFile)
       oBundleVersionDateTeXFile.Write(f"% Generated at {self.__dictMainDocConfig['NOW']}")
       oBundleVersionDateTeXFile.Write()
@@ -624,18 +631,22 @@ Constructor of class ``CDocBuilder``.
       oBundleVersionDateTeXFile.Write(r"\vspace{2ex}")
       oBundleVersionDateTeXFile.Write(f"{META_NAME} \\\\")
       oBundleVersionDateTeXFile.Write(r"\vspace{2ex}")
-      oBundleVersionDateTeXFile.Write(f"v. {META_VERSION}" + "}}")
-      oBundleVersionDateTeXFile.Write()
+
+      if COVERSHEETSUFFIX is None:
+         oBundleVersionDateTeXFile.Write(f"v. {META_VERSION}" + "}}")
+      else:
+         oBundleVersionDateTeXFile.Write(f"v. {META_VERSION} \\\\")
+         oBundleVersionDateTeXFile.Write(r"\vspace{2ex}")
+         oBundleVersionDateTeXFile.Write(f"{COVERSHEETSUFFIX}" + "}}")
+         oBundleVersionDateTeXFile.Write()
+
       oBundleVersionDateTeXFile.Write(r"\date{\vspace{4ex}\textbf{" + META_VERSION_DATE + "}}")
       oBundleVersionDateTeXFile.Write()
       del oBundleVersionDateTeXFile
 
-      # derive name of expected PDF file out of the name of tex file
-      oMainTexFile = CFile(sMainTexFile)
-      dMainTexFileInfo = oMainTexFile.GetFileInfo()
-      del oMainTexFile
-      sMainTexFileNameOnly = dMainTexFileInfo['sFileNameOnly']
-      sPDFFileName = f"{sMainTexFileNameOnly}.pdf"
+      # derive name of expected PDF file out of the job name
+      JOBNAME = self.__dictMainDocConfig['JOBNAME']
+      sPDFFileName = f"{JOBNAME}.pdf"
       sPDFFileExpected = f"{sBookSourcesFolder}/{sPDFFileName}"
       self.__dictMainDocConfig['PDFFILEEXPECTED'] = sPDFFileExpected
 
@@ -698,6 +709,9 @@ Constructor of class ``CDocBuilder``.
       # start the compiler
       listCmdLineParts = []
       listCmdLineParts.append(f"\"{sLaTeXInterpreter}\"")
+
+      JOBNAME = self.__dictMainDocConfig['JOBNAME']
+      listCmdLineParts.append(f"-jobname=\"{JOBNAME}\"")
       listCmdLineParts.append(f"\"{sMainTexFile}\"")
 
       sCmdLine = " ".join(listCmdLineParts)

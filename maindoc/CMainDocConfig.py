@@ -20,7 +20,7 @@
 #
 # XC-CT/ECA3-Queckenstedt
 #
-# 13.12.2022
+# 30.01.2023
 #
 # --------------------------------------------------------------------------------------------------------------
 
@@ -95,29 +95,21 @@ Responsible for:
       for key, value in dictRepositoryConfig.items():
          self.__dictMainDocConfig[key] = value
 
-      # -- the absolute path that is reference for all relative paths
-      sReferencePathAbs = self.__dictMainDocConfig['PACKAGEDOC'] # set initially in repository config and already normalized
-
       # get command line
       self.GetCmdLine()
 
-      # read the documentation build configuration from separate json file,
-      # either provided in command line or (default):
-      # - the path to the folder containing this json file is taken out of the repository configuration
-      # - the name of the json file is fix
-
+      # read the documentation build configuration from separate json file, provided in command line
       sMainDocConfigFile = self.__dictMainDocConfig['sMainDocConfigFile']
       if sMainDocConfigFile is None:
-         # default
-         sJsonFileName = "maindoc_config.json"
-         sMainDocConfigFile = f"{dictRepositoryConfig['PACKAGEDOC']}/{sJsonFileName}"
-      else:
-         sJsonFileName = "maindoc_config_tmp.json" # any name of this file in tmp folder
+         # --configfile missed in command line
+         bSuccess = None
+         sResult  = f"Maindoc configuration file not defined. Use '--configfile' in command line."
+         raise Exception(CString.FormatResult(sMethod, bSuccess, sResult))
 
-      # if taken from command line, 'sMainDocConfigFile' may be relative, therefore we have to normalize
-      sMainDocConfigFile = CString.NormalizePath(sPath=sMainDocConfigFile, sReferencePathAbs=sReferencePathAbs)
+      # -- the absolute path that is reference for relative paths to configuration files in command line of genmaindoc.py
+      sReferencePathAbs_configfile = self.__dictMainDocConfig['PACKAGEDOC'] # set initially in repository config and already normalized
+      sMainDocConfigFile = CString.NormalizePath(sPath=sMainDocConfigFile, sReferencePathAbs=sReferencePathAbs_configfile)
       self.__dictMainDocConfig['sMainDocConfigFile'] = sMainDocConfigFile # update config
-      # and we have to check if this file is existing
       if os.path.isfile(sMainDocConfigFile) is False:
          bSuccess = None
          sResult  = f"Maindoc configuration file '{sMainDocConfigFile}' does not exist"
@@ -141,7 +133,8 @@ Responsible for:
          sResult  = f"Platform system '{sPlatformSystem}' is not supported"
          raise Exception(CString.FormatResult(sMethod, bSuccess, sResult))
 
-      sJsonFileCleaned = f"{sTmpPath}/{sJsonFileName}"
+      sJsonFileNameTmp = "maindoc_config_tmp.json" # any name of this file in tmp folder (the cleaned version)
+      sJsonFileCleaned = f"{sTmpPath}/{sJsonFileNameTmp}"
       # print(f"========== sJsonFileCleaned : '{sJsonFileCleaned}'")
 
       oJsonFileSource = CFile(sMainDocConfigFile)
@@ -171,6 +164,10 @@ Responsible for:
 
       # add current timestamp
       self.__dictMainDocConfig['NOW'] = time.strftime('%d.%m.%Y - %H:%M:%S')
+
+      # For normalization of all relative paths inside JSON configuration files we need an absolute reference path.
+      # The reference for all relative paths inside JSON configuration files is the position of the selected configuration file.
+      sReferencePathAbs = os.path.dirname(sMainDocConfigFile)
 
       # normalize paths in 'IMPORTS' section
       listImports = []
