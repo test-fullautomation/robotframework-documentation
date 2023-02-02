@@ -44,13 +44,13 @@
 
 * ``RobotLog2RQM``
 
-  - Version: 1.1.4 (from 10.11.2022)
+  - Version: 1.2.0 (from 09.01.2023)
   - URL: https://github.com/test-fullautomation/robotframework-robotlog2rqm
   - *Imports robot result(s) to IBM Rational Quality Manager (RQM)*
 
 * ``RobotLog2DB``
 
-  - Version: 1.2.4 (from 18.11.2022)
+  - Version: 1.3.1 (from 09.01.2023)
   - URL: https://github.com/test-fullautomation/robotframework-robotlog2db
   - *Imports robot result(s) to TestResultWebApp database*
 
@@ -65,5 +65,17 @@
   - Version: 0.1.3 (from 18.10.2022)
   - URL: https://github.com/test-fullautomation/testresultwebapp
   - *Web based display of test results*
+
+* ``MicroserviceBase``
+
+  - Version: 0.1.0 (from 02.02.2023)
+  - URL: https://github.com/test-fullautomation/python-microservice-base
+  - *TODO*
+
+* ``MicroserviceClewareSwitch``
+
+  - Version: 0.1.0 (from 02.02.2023)
+  - URL: https://github.com/test-fullautomation/python-microservice-cleware-switch
+  - *TODO*
 
 

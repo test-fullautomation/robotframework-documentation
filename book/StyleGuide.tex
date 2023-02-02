@@ -27,7 +27,7 @@
 
 \author{RobotFramework AIO team}
 \title{Documentation style guide}
-\date{21.11.2022}
+\date{01.02.2023}
 
 % --------------------------------------------------------------------------------------------------------------
 % document header
@@ -209,7 +209,7 @@ A table containing the package history, can be written in the following way:
 \chapter{Pandoc}
 
 In the context of \rfw\ the converter tool Pandoc is used to convert the interface definitions (that are the content of the docstrings of the corresponding
-Pythom modules) to LaTeX format. For this purpose Pandoc introduced some LaTeX commands that needs to be defined. A user writing documentation has no direct
+Python modules) to LaTeX format. For this purpose Pandoc introduced some LaTeX commands that need to be defined. A user writing documentation has no direct
 contact to this and can ignore the content of \rlog{pandoc.sty}.
 
 % --------------------------------------------------------------------------------------------------------------
@@ -634,6 +634,71 @@ The file \plog{log.html} contains the log file in html format.
 \end{verbatim}
 
 The file \plog{log.html} contains the log file in html format.
+
+% --------------------------------------------------------------------------------------------------------------
+
+\newpage
+
+\chapter{Documentation style guide}
+
+This chapter contains some common guidelines about how to write a good documentation.
+
+\section{Think didactically}
+
+We can assume: During the hurry of daily work no one is in the mood to read documentations.
+The only reason for any audience to read a documentation is: They have a problem! They have to solve the problem urgently.
+To solve the problem, they need information. And their hope is to find the required information within the documentation.
+If they find, they will be happy. If not, they will not trust the documentation any more and most probably they never will take a lock at the documentation again.
+
+Writing a good documentation means: Anticipate what might be the problems of the audience. And then think about in which way informations have to be given,
+to solve these problems. Think about how to structure the documentation to make it as easy as possible for the audience to find inside the documentation exactly the position
+at which the needed information is given.
+
+Do not jump too fast into technical details. Spend some preliminaries to tell about the scope of the following. In this context it is also important to define new technical terms
+before they are used in following parts of the documentation.
+
+Think in usecases. A listing of functions is helpful also - but should be placed at the end of the document in the appendix (like already realized in the interface
+description part).
+The common part of a documentation should focus on the hardships of the audience. Already by using good headlines you help the audience to find required informations faster.
+For example it is a usecase to import parameters. In this case a headline like "How to import parameters" is much easier to capture than the shorter "Import parameters".
+
+\section{Check dependencies to \rfw}
+
+In case of a component is designed to be stand alone, you should not use the term "\rfw" any where in the documentation. 
+Use the term "\rfwcore" instead. Additionally you should avoid to use the abbreviation "AIO" anywhere in the component code.
+
+In case of a component is used as part of the \rfw\ and in case of this circumstance does change anything, then the documentation
+of these things should be handled as add-on and should be placed in a separate follow up chapter of the documentation.
+In this case both possible worlds (with and without \rfw) are clearly separated from each other. This will make it easier for the audience, to understand
+how to work with the component.
+
+\newpage
+
+\section{Avoid filler words}
+
+Try to avoid filler words like "\textbf{tool}" or "\textbf{will}" or "\textbf{helps}" or "\textbf{supports}".
+
+Not: "\textit{PackageX} tool helps to import ..."\\
+Better: "\textit{PackageX} imports ..."
+
+Not: "\textit{PackageX} tool will import ..."\\
+Better: "\textit{PackageX} imports ..."
+
+With \textit{PackageX} is e.g. the package name of one of the components of the \rfw\ (e.g.
+\textbf{RobotFramework\_TestsuitesManagement})
+
+\section{Typing}
+
+Please consider also, that too much typing mistakes within a document are really annoying for the audience and disturb the concentration on the content.
+
+\section{Release}
+
+Before you think about to release a new or maintained documentation, you should read the entire documentation once again.\\
+And after this once again.\\
+And after this once again.\\
+And after this once again.
+
+This will definitely decrease the number of errors in the documentation dramatically!
 
 % --------------------------------------------------------------------------------------------------------------
 
