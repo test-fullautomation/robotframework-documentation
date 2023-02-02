@@ -1,8 +1,8 @@
 {
    "REPOSITORYNAME" : "robotframework-documentation",
    "PACKAGENAME" : "RobotFrameworkAIO",
-   "VERSION" : "0.27.0",
-   "VERSION_DATE" : "30.12.2022",
+   "VERSION" : "0.29.0",
+   "VERSION_DATE" : "30.01.2023",
    "AUTHOR" : "Thomas Pollerspöck",
    "AUTHOREMAIL" : "Thomas.Pollerspoeck@de.bosch.com",
    "DESCRIPTION" : "Documentation for RobotFramework AIO",

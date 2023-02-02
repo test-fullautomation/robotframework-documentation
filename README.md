@@ -9,13 +9,23 @@ The documentation consists of two parts:
 1.  Common description
 2.  Description of the interfaces of RobotFramework AIO components
 
-With the `setup.py` within this repository the documentation can be
-build also.
+The RobotFramework AIO documentation can be build either with
+`genmaindoc.py` immediately or with `setup.py` indirectly. The
+difference is that `genmaindoc.py` only builds the documentation,
+whereas `setup.py` additionally installs the documentation in
 
-The following preconditions have to be fulfilled before `setup.py` is
-executed:
+> ``` 
+> python39\Lib\site-packages\RobotFrameworkAIO
+> ```
 
-1.  Clone the
+The execution of `setup.py` includes the execution of `genmaindoc.py`.
+
+Some preparations are necessary before `genmaindoc.py` or `setup.py` can
+be executed:
+
+1.  Install a LaTeX compiler (full installation of Texlive recommended)
+
+2.  Clone the
     [robotframework-documentation](https://github.com/test-fullautomation/robotframework-documentation)
     repository to your computer.
 
@@ -23,26 +33,61 @@ executed:
     git clone https://github.com/test-fullautomation/robotframework-documentation.git
     ```
 
-2.  Clone all repositories containing components that shall be part of
+3.  Clone all repositories containing components that shall be part of
     the documentation, to your computer.
 
-3.  Add relative paths to these repositories to the `maindoc`
-    configuration: `maindoc\maindoc_config.json`, section \"`IMPORTS`\":
+    The code inside the repository `robotframework-testsuitesmanagement`
+    contains a \"meta information\", that are the name, the version and
+    the date of the entire bundle that we call \"RobotFramework AIO\".
+    This information is taken over to the title page of the resulting
+    PDF. Therefore including the repository
+    `robotframework-testsuitesmanagement` is mandatory. The include of
+    all other repositories is optional and may depend on the audience or
+    depend on the localization (e.g. if the document shall be released
+    Bosch internal only or in the open source community outside Bosch.
+
+4.  Add relative paths to these repositories to the `genmaindoc`
+    configuration files inside: `maindoc/maindoc_configs`, section
+    `"IMPORTS"`:
 
     ``` 
-    "IMPORTS" : ["../../python-genpackagedoc",
-                 "../../python-extensions-collection",
+    "IMPORTS" : ["../../../python-genpackagedoc",
+                 "../../../python-extensions-collection",
                  ...
     ```
 
-4.  Install a LaTeX compiler (full installation of Texlive recommended)
+    Currently two configuration files are available: a Bosch internal
+    version (`maindoc_config_BIOS.json`) and an open source version
+    (`maindoc_config_OSS.json`).
 
-5.  Introduce an environment variable \"`GENDOC_LATEXPATH`\" containing
+    `genmaindoc.py` requires such a configuration file in command line,
+    e.g. the BIOS version:
+
+    ``` 
+    "%RobotPythonPath%/python.exe" ./genmaindoc.py --configfile "./maindoc_configs/maindoc_config_BIOS.json"
+    ```
+
+5.  Introduce an environment variable `DOCBUILDER_ARGUMENTS` containing
+    the command line parameters for `genmaindoc.py`.
+
+    `setup.py` is not prepared to provide any command line parameter to
+    `genmaindoc.py`. In case of the documentation build shall be
+    triggered by `setup.py`, another possibility is required to provide
+    mandatory command line parameters to `genmaindoc.py`.
+
+    With the help of the environment variable `DOCBUILDER_ARGUMENTS`
+    this can be done, e.g. like this:
+
+    ``` 
+    set DOCBUILDER_ARGUMENTS=--configfile "./maindoc_configs/maindoc_config_BIOS.json"
+    ```
+
+6.  Introduce an environment variable \"`GENDOC_LATEXPATH`\" containing
     the path to the LaTeX interpreter `pdflatex.exe` (Windows) /
     `pdflatex` (Linux).
 
-    This is also configured in the `maindoc` configuration:
-    `maindoc\maindoc_config.json`, section \"`TEX`\":
+    This has to be configured in the `genmaindoc` configuration, section
+    `"TEX"`:
 
     ``` 
     "TEX" : {
@@ -51,22 +96,7 @@ executed:
             }
     ```
 
-6.  Introduce an environment variable \"`DOCBUILDER_ARGUMENTS`\" containing
-    the additional argurment(s) when calling `genmaindoc.py` to generate the
-    document. 
-    
-    It allows to specify another configuration file (contains your specific 
-    configurations for the document) than the default one
-    (located at `maindoc\maindoc_config.json`)
-
-    Example to use \"`DOCBUILDER_ARGUMENTS`\" for using other than default 
-    configuration for building document:
-
-    ``` 
-    export DOCBUILDER_ARGUMENTS="--configfile path/to/other/maindoc_config.json"
-    ```
-
-7.  Use the following command to build the documentation:
+7.  Use the following command to build and install the documentation:
 
     ``` 
     setup.py install
@@ -74,7 +104,9 @@ executed:
 
     The output can be found here:
 
-    `RobotFrameworkAIO\RobotFrameworkAIO_Reference.pdf`
+    ``` 
+    RobotFrameworkAIO\RobotFrameworkAIO_Reference.pdf
+    ```
 
 ## Feedback
 
