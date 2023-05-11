@@ -24,7 +24,7 @@
 #
 # --------------------------------------------------------------------------------------------------------------
 #
-# 14.06.2022
+# 11.05.2023
 #
 # --------------------------------------------------------------------------------------------------------------
 
@@ -73,16 +73,20 @@ class CExtendedSetup():
         listCmdLineParts = []
         listCmdLineParts.append(f"\"{sPython}\"")
         listCmdLineParts.append(f"\"{sDocumentationBuilder}\"")
-        if "DOCBUILDER_ARGUMENTS" in os.environ:
-            listCmdLineParts.append(os.environ["DOCBUILDER_ARGUMENTS"])
+        if "MAINDOC_CONFIGFILE" in os.environ:
+            listCmdLineParts.append(os.environ["MAINDOC_CONFIGFILE"])
+        if "BUNDLE_NAME" in os.environ:
+            listCmdLineParts.append(os.environ["BUNDLE_NAME"])
+        if "BUNDLE_VERSION" in os.environ:
+            listCmdLineParts.append(os.environ["BUNDLE_VERSION"])
+        if "BUNDLE_VERSION_DATE" in os.environ:
+            listCmdLineParts.append(os.environ["BUNDLE_VERSION_DATE"])
         sCmdLine = " ".join(listCmdLineParts)
         del listCmdLineParts
-        listCmdLineParts = shlex.split(sCmdLine)
-        # -- debug
-        sCmdLine = " ".join(listCmdLineParts)
         print()
         print("Now executing command line:\n" + sCmdLine)
         print()
+        listCmdLineParts = shlex.split(sCmdLine)
         nReturn = ERROR
         try:
             nReturn = subprocess.call(listCmdLineParts)

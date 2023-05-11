@@ -8,13 +8,13 @@
 
 * ``GenPackageDoc``
 
-  - Version: 0.40.0 (from 04.05.2023)
+  - Version: 0.40.0 (from 09.05.2023)
   - URL: https://github.com/test-fullautomation/python-genpackagedoc
   - *Documentation builder for Python packages*
 
 * ``PythonExtensionsCollection``
 
-  - Version: 0.13.0 (from 03.04.2023)
+  - Version: 0.14.0 (from 05.05.2023)
   - URL: https://github.com/test-fullautomation/python-extensions-collection
   - *Additional Python functions*
 
@@ -26,7 +26,7 @@
 
 * ``JsonPreprocessor``
 
-  - Version: 0.2.2 (from 27.04.2023)
+  - Version: 0.2.3 (from 04.05.2023)
   - URL: https://github.com/test-fullautomation/python-jsonpreprocessor
   - *Preprocessor for json files*
 

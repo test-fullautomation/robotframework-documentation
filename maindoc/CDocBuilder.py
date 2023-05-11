@@ -20,7 +20,7 @@
 #
 # XC-CT/ECA3-Queckenstedt
 #
-# 30.01.2023
+# 11.05.2023
 #
 # --------------------------------------------------------------------------------------------------------------
 
@@ -141,9 +141,6 @@ Constructor of class ``CDocBuilder``.
       listSupportedKeys.append('URL')
       listSupportedKeys.append('PACKAGEVERSION')
       listSupportedKeys.append('PACKAGEDATE')
-      listSupportedKeys.append('META_NAME')         # optional
-      listSupportedKeys.append('META_VERSION')      # optional
-      listSupportedKeys.append('META_VERSION_DATE') # optional
 
       for sConfigFile in listConfigFiles:
 
@@ -157,49 +154,7 @@ Constructor of class ``CDocBuilder``.
                dictConfig[sKey] = dictRepositoryConfig[sKey]
          listofdictConfig.append(dictConfig)
 
-         # The meta information is also used in the title page of the resulting PDF document.
-         # For this purpose we separate the meta information here (additionally to this information also stored in listofdictConfig).
-         #
-         # To be considered: In every project the meta information should be defined only once. But within this code this is not a syntactical requirement.
-         # The user is responsible for keeping the meta information unique (= defined within only one single imported repository), but to make this code robust
-         # all identified meta informations (in case of more than one imported repository contains a meta information) will be handled as list - and this means
-         # all meta informations will be part of the resulting PDF documentation (even in case of this makes no sense).
-         #
-         # In the context of genmaindoc the desired intension behind the meta information handling is:
-         # - The name of the RobotFramework AIO bundle together with the version number and the release date of this bundle is defined in the meta information of
-         #   the testsuites management repository. Therefore it is required to import this repository in the maindoc_config.json.
-         # - This meta information is printed to the title page of the resulting PDF document.
-
-         if 'META_NAME' in dictRepositoryConfig:
-            META_NAME = dictRepositoryConfig['META_NAME'].replace('_',r'\_') # LaTeX requires this masking
-            if 'META_NAME' in self.__dictMainDocConfig:
-               self.__dictMainDocConfig['META_NAME'] = self.__dictMainDocConfig['META_NAME'] + ";" + META_NAME
-            else:
-               self.__dictMainDocConfig['META_NAME'] = META_NAME
-         if 'META_VERSION' in dictRepositoryConfig:
-            META_VERSION = dictRepositoryConfig['META_VERSION']
-            if 'META_VERSION' in self.__dictMainDocConfig:
-               self.__dictMainDocConfig['META_VERSION'] = self.__dictMainDocConfig['META_VERSION'] + ";" + META_VERSION
-            else:
-               self.__dictMainDocConfig['META_VERSION'] = META_VERSION
-         if 'META_VERSION_DATE' in dictRepositoryConfig:
-            META_VERSION_DATE = dictRepositoryConfig['META_VERSION_DATE']
-            if 'META_VERSION_DATE' in self.__dictMainDocConfig:
-               self.__dictMainDocConfig['META_VERSION_DATE'] = self.__dictMainDocConfig['META_VERSION_DATE'] + ";" + META_VERSION_DATE
-            else:
-               self.__dictMainDocConfig['META_VERSION_DATE'] = META_VERSION_DATE
       # eof for sConfigFile in listConfigFiles:
-
-      # error handling
-      if 'META_NAME' not in self.__dictMainDocConfig:
-         self.__dictMainDocConfig['META_NAME'] = "!!! Name unknown !!!"
-         self.__bPDFIsComplete = False
-      if 'META_VERSION' not in self.__dictMainDocConfig:
-         self.__dictMainDocConfig['META_VERSION'] = "!!! Version unknown !!!"
-         self.__bPDFIsComplete = False
-      if 'META_VERSION_DATE' not in self.__dictMainDocConfig:
-         self.__dictMainDocConfig['META_VERSION_DATE'] = "!!! Date unknown !!!"
-         self.__bPDFIsComplete = False
 
       nNrOfConfigs = len(listofdictConfig)
 
@@ -224,6 +179,11 @@ Constructor of class ``CDocBuilder``.
 
       # -- 1. LaTeX version
 
+      # get and prepare framework bundle information (values prepared for LaTeX output)
+      BUNDLE_NAME         = self.__dictMainDocConfig['BUNDLE_NAME'].replace('_',r'\_') # LaTeX requires this masking
+      BUNDLE_VERSION      = self.__dictMainDocConfig['BUNDLE_VERSION'].replace('_',r'\_') # LaTeX requires this masking
+      BUNDLE_VERSION_DATE = self.__dictMainDocConfig['BUNDLE_VERSION_DATE'].replace('_',r'\_') # LaTeX requires this masking
+
       sExternalDocFolder = self.__dictMainDocConfig['EXTERNALDOCFOLDER']
       sOverviewFileName_tex = "library_doc_overview.tex"
       sOverviewFile_tex = f"{sExternalDocFolder}/{sOverviewFileName_tex}"
@@ -233,52 +193,30 @@ Constructor of class ``CDocBuilder``.
       oOverviewFile_tex.Write()
       oOverviewFile_tex.Write(r"\chapter{Library documentation}")
       oOverviewFile_tex.Write()
-      oOverviewFile_tex.Write(r"The following sections contain the documentation of additional libraries that are part of the RobotFramework AIO.")
+      oOverviewFile_tex.Write(f"The following sections contain the documentation of additional libraries that are part of the {BUNDLE_NAME}.")
       oOverviewFile_tex.Write()
       oOverviewFile_tex.Write(r"\vspace{2ex}")
       oOverviewFile_tex.Write()
 
       oOverviewFile_tex.Write(r"\begin{center}")
 
-      oOverviewFile_tex.Write(r"{\Large\textbf{RobotFramework AIO bundle}}")
+      oOverviewFile_tex.Write(r"{\Large\textbf{" + BUNDLE_NAME + " bundle}}")
       oOverviewFile_tex.Write()
       oOverviewFile_tex.Write(r"\vspace{2ex}")
       oOverviewFile_tex.Write()
 
-      # -- search for meta information, print meta information at the top of the list of package informations (if available)
-      bMetaVersionAvailable = False
-      for dictConfig in listofdictConfig:
-         META_NAME         = None
-         META_VERSION      = None
-         META_VERSION_DATE = None
-         if "META_NAME" in dictConfig:
-            META_NAME = dictConfig['META_NAME'].replace('_',r'\_') # LaTeX requires this masking
-         if "META_VERSION" in dictConfig:
-            META_VERSION = dictConfig['META_VERSION']
-         if "META_VERSION_DATE" in dictConfig:
-            META_VERSION_DATE = dictConfig['META_VERSION_DATE']
+      # -- print bundle information at the top of the list of package informations
 
-         if ( (META_NAME is not None) and (META_VERSION is not None) and (META_VERSION_DATE is not None) ) :
-            # meta information available
-            bMetaVersionAvailable = True
-            oOverviewFile_tex.Write(r"\begin{tabular}{| m{44em} |}\hline")
-            oOverviewFile_tex.Write(r"   \textbf{" + META_NAME + r"}\\ \hline")
-            oOverviewFile_tex.Write(r"   Version " + dictConfig['META_VERSION'] + " (from " + dictConfig['META_VERSION_DATE'] + r")\\ \hline")
-            oOverviewFile_tex.Write(r"\end{tabular}")
-            oOverviewFile_tex.Write()
-            oOverviewFile_tex.Write(r"\vspace{2ex}")
-            oOverviewFile_tex.Write()
-      # eof for dictConfig in listofdictConfig:
-
-      if bMetaVersionAvailable is False:
-         self.__bPDFIsComplete = False
-         # meta information not available
-         oOverviewFile_tex.Write(r"\textcolor{red}{\textbf{\textit{RobotFramework AIO bundle information not available!}}}")
-         oOverviewFile_tex.Write()
-         oOverviewFile_tex.Write(r"\vspace{2ex}")
-         oOverviewFile_tex.Write()
+      oOverviewFile_tex.Write(r"\begin{tabular}{| m{44em} |}\hline")
+      oOverviewFile_tex.Write(r"   \textbf{" + BUNDLE_NAME + r"}\\ \hline")
+      oOverviewFile_tex.Write(r"   Version " + BUNDLE_VERSION + " (from " + BUNDLE_VERSION_DATE + r")\\ \hline")
+      oOverviewFile_tex.Write(r"\end{tabular}")
+      oOverviewFile_tex.Write()
+      oOverviewFile_tex.Write(r"\vspace{2ex}")
+      oOverviewFile_tex.Write()
 
       # -- print information about included packages
+
       oOverviewFile_tex.Write(r"{\Large\textbf{Included libraries}}")
       oOverviewFile_tex.Write()
       oOverviewFile_tex.Write(r"\vspace{2ex}")
@@ -304,43 +242,30 @@ Constructor of class ``CDocBuilder``.
 
       # -- 2. rst version
 
+      # get framework bundle information (again, but without LaTeX masking)
+      BUNDLE_NAME         = self.__dictMainDocConfig['BUNDLE_NAME']
+      BUNDLE_VERSION      = self.__dictMainDocConfig['BUNDLE_VERSION']
+      BUNDLE_VERSION_DATE = self.__dictMainDocConfig['BUNDLE_VERSION_DATE']
+
       sExternalDocFolder = self.__dictMainDocConfig['EXTERNALDOCFOLDER']
       sOverviewFileName_rst = "components.rst"
       sOverviewFile_rst = f"{sExternalDocFolder}/{sOverviewFileName_rst}"
       self.__dictMainDocConfig['OVERVIEWFILE_RST'] = sOverviewFile_rst
       oOverviewFile_rst = CFile(sOverviewFile_rst)
 
-      oOverviewFile_rst.Write(r"**RobotFramework AIO bundle**")
+      oOverviewFile_rst.Write(f"**{BUNDLE_NAME} bundle**")
       oOverviewFile_rst.Write()
 
-      bMetaVersionAvailable = False
-      for dictConfig in listofdictConfig:
-         META_NAME         = None
-         META_VERSION      = None
-         META_VERSION_DATE = None
-         if "META_NAME" in dictConfig:
-            META_NAME = dictConfig['META_NAME']
-         if "META_VERSION" in dictConfig:
-            META_VERSION = dictConfig['META_VERSION']
-         if "META_VERSION_DATE" in dictConfig:
-            META_VERSION_DATE = dictConfig['META_VERSION_DATE']
+      # -- print bundle information at the top of the list of package informations
 
-         if ( (META_NAME is not None) and (META_VERSION is not None) and (META_VERSION_DATE is not None) ) :
-            # meta information available
-            bMetaVersionAvailable = True
-            oOverviewFile_rst.Write(f"* ``{META_NAME}``")
-            oOverviewFile_rst.Write()
-            oOverviewFile_rst.Write(f"  Version: {dictConfig['META_VERSION']} (from {dictConfig['META_VERSION_DATE']})")
-            oOverviewFile_rst.Write()
-      # eof for dictConfig in listofdictConfig:
+      oOverviewFile_rst.Write(f"* ``{BUNDLE_NAME}``")
+      oOverviewFile_rst.Write()
+      oOverviewFile_rst.Write(f"  Version: {BUNDLE_VERSION} (from {BUNDLE_VERSION_DATE})")
+      oOverviewFile_rst.Write()
 
-      if bMetaVersionAvailable is False:
-         self.__bPDFIsComplete = False
-         # meta information not available
-         oOverviewFile_rst.Write(r"RobotFramework AIO bundle information not available!")
-         oOverviewFile_rst.Write()
+      # -- print information about included packages
 
-      oOverviewFile_rst.Write(r"**RobotFramework AIO components listing**")
+      oOverviewFile_rst.Write(f"**{BUNDLE_NAME} components listing**")
       oOverviewFile_rst.Write()
 
       for dictConfig in listofdictConfig:
@@ -464,7 +389,7 @@ Constructor of class ``CDocBuilder``.
             listCmdLineParts.append(f"--pdfdest=\"{sDestinationFolder}\"")
             listCmdLineParts.append(f"--configdest=\"{sDestinationFolder}\"")
             listCmdLineParts.append(f"--strict {bStrict}")
-            if self.__dictMainDocConfig['bSimulateOnly'] is True:
+            if self.__dictMainDocConfig['SIMULATE_ONLY'] is True:
                listCmdLineParts.append(f"--simulateonly")
             sCmdLine = " ".join(listCmdLineParts)
             del listCmdLineParts
@@ -499,7 +424,7 @@ Constructor of class ``CDocBuilder``.
                   sJsonFile = CString.NormalizePath(os.path.join(sDestinationFolder, sEntryName))
 
             # not available in simulation mode
-            if self.__dictMainDocConfig['bSimulateOnly'] is False:
+            if self.__dictMainDocConfig['SIMULATE_ONLY'] is False:
                if sPDFFile is None:
                   bSuccess = False
                   sResult  = f"PDF file not found within '{sDestinationFolder}'"
@@ -534,7 +459,7 @@ Constructor of class ``CDocBuilder``.
          oLibraryDocImportTexFile = CFile(sLibraryDocImportTexFile)
          oLibraryDocImportTexFile.Write(f"% Generated at {self.__dictMainDocConfig['NOW']}")
          oLibraryDocImportTexFile.Write("%")
-         oLibraryDocImportTexFile.Write("% This document imports the documentation of additional RobotFramework AIO libraries into the main documentation.")
+         oLibraryDocImportTexFile.Write("% This document imports the documentation of additional libraries into the main documentation.")
          oLibraryDocImportTexFile.Write("%")
          oLibraryDocImportTexFile.Write(r"% The split of the \includepdf for a single PDF file is a workaround to avoid a linebreak after the section heading")
          oLibraryDocImportTexFile.Write(r"% (one \newpage too much within pdfpages.sty).")
@@ -590,28 +515,10 @@ Constructor of class ``CDocBuilder``.
 
       # eof else - if bUpdateExternalDoc is True:
 
-      # -- Create another tex file containing the version and the date of the RobotFramework AIO bundle.
-      #    The values are part of the meta information (currently defined within the testsuites management).
-      #    This new tex file is imported in the main tex file (RobotFramework AIO reference) and makes it sure
-      #    that the main documentation contains in the title page a version number and a date that is up to date.
-
-      # PrettyPrint(self.__dictMainDocConfig)
-
-      META_NAME = "!!! Name unknown !!!"
-      if 'META_NAME' in self.__dictMainDocConfig:
-         META_NAME = self.__dictMainDocConfig['META_NAME']
-      else:
-         self.__bPDFIsComplete = False
-      META_VERSION = "!!! Version unknown !!!"
-      if 'META_VERSION' in self.__dictMainDocConfig:
-         META_VERSION = self.__dictMainDocConfig['META_VERSION']
-      else:
-         self.__bPDFIsComplete = False
-      META_VERSION_DATE = "!!! Date unknown !!!"
-      if 'META_VERSION_DATE' in self.__dictMainDocConfig:
-         META_VERSION_DATE = self.__dictMainDocConfig['META_VERSION_DATE']
-      else:
-         self.__bPDFIsComplete = False
+      # -- Create another tex file containing the version and the date of the entire framework bundle.
+      #    The values are part of the bundle information (currently defined within environment variables).
+      #    This new tex file is imported in the main tex file and ensures that that the main documentation
+      #    contains in the title page a version number and a date that is up to date.
 
       BOOKSOURCES = self.__dictMainDocConfig['BOOKSOURCES']
       sBundleVersionDateTeXFile = f"{BOOKSOURCES}/BundleVersionDate.tex"
@@ -624,23 +531,28 @@ Constructor of class ``CDocBuilder``.
          if COVERSHEETSUFFIX == "":
             COVERSHEETSUFFIX = None
 
+      # get and prepare framework bundle information (values prepared for LaTeX output)
+      BUNDLE_NAME         = self.__dictMainDocConfig['BUNDLE_NAME'].replace('_',r'\_') # LaTeX requires this masking
+      BUNDLE_VERSION      = self.__dictMainDocConfig['BUNDLE_VERSION'].replace('_',r'\_') # LaTeX requires this masking
+      BUNDLE_VERSION_DATE = self.__dictMainDocConfig['BUNDLE_VERSION_DATE'].replace('_',r'\_') # LaTeX requires this masking
+
       oBundleVersionDateTeXFile = CFile(sBundleVersionDateTeXFile)
       oBundleVersionDateTeXFile.Write(f"% Generated at {self.__dictMainDocConfig['NOW']}")
       oBundleVersionDateTeXFile.Write()
       oBundleVersionDateTeXFile.Write(r"\title{\textbf{Specification of \\")
       oBundleVersionDateTeXFile.Write(r"\vspace{2ex}")
-      oBundleVersionDateTeXFile.Write(f"{META_NAME} \\\\")
+      oBundleVersionDateTeXFile.Write(f"{BUNDLE_NAME} \\\\")
       oBundleVersionDateTeXFile.Write(r"\vspace{2ex}")
 
       if COVERSHEETSUFFIX is None:
-         oBundleVersionDateTeXFile.Write(f"v. {META_VERSION}" + "}}")
+         oBundleVersionDateTeXFile.Write(f"v. {BUNDLE_VERSION}" + "}}")
       else:
-         oBundleVersionDateTeXFile.Write(f"v. {META_VERSION} \\\\")
+         oBundleVersionDateTeXFile.Write(f"v. {BUNDLE_VERSION} \\\\")
          oBundleVersionDateTeXFile.Write(r"\vspace{2ex}")
          oBundleVersionDateTeXFile.Write(f"{COVERSHEETSUFFIX}" + "}}")
          oBundleVersionDateTeXFile.Write()
 
-      oBundleVersionDateTeXFile.Write(r"\date{\vspace{4ex}\textbf{" + META_VERSION_DATE + "}}")
+      oBundleVersionDateTeXFile.Write(r"\date{\vspace{4ex}\textbf{" + BUNDLE_VERSION_DATE + "}}")
       oBundleVersionDateTeXFile.Write()
       del oBundleVersionDateTeXFile
 
@@ -676,7 +588,7 @@ Constructor of class ``CDocBuilder``.
       # The code after the following if statement only belongs to the LaTeX compiler building the PDF.
       # In simulation mode we skip this part completely.
       # --------------------------------------------------------------------------------------------------------------
-      if self.__dictMainDocConfig['bSimulateOnly'] is True:
+      if self.__dictMainDocConfig['SIMULATE_ONLY'] is True:
          print()
          print(COLBY + "GenMainDoc is running in simulation mode.")
          print(COLBY + "Skipping call of LaTeX compiler. No new PDF output will be generated, already existing output will not be updated!")

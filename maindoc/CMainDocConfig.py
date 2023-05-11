@@ -20,7 +20,7 @@
 #
 # XC-CT/ECA3-Queckenstedt
 #
-# 30.01.2023
+# 11.05.2023
 #
 # --------------------------------------------------------------------------------------------------------------
 
@@ -96,27 +96,55 @@ Responsible for:
          self.__dictMainDocConfig[key] = value
 
       # get command line
-      self.GetCmdLine()
+      try:
+         self.GetCmdLine()
+      except Exception as reason:
+         bSuccess = None
+         sResult  = str(reason)
+         raise Exception(CString.FormatResult(sMethod, bSuccess, sResult))
 
       # read the documentation build configuration from separate json file, provided in command line
-      sMainDocConfigFile = self.__dictMainDocConfig['sMainDocConfigFile']
-      if sMainDocConfigFile is None:
+      MAINDOC_CONFIGFILE = self.__dictMainDocConfig['MAINDOC_CONFIGFILE']
+      if MAINDOC_CONFIGFILE is None:
          # --configfile missed in command line
          bSuccess = None
          sResult  = f"Maindoc configuration file not defined. Use '--configfile' in command line."
          raise Exception(CString.FormatResult(sMethod, bSuccess, sResult))
 
       # -- the absolute path that is reference for relative paths to configuration files in command line of genmaindoc.py
-      sReferencePathAbs_configfile = self.__dictMainDocConfig['PACKAGEDOC'] # set initially in repository config and already normalized
-      sMainDocConfigFile = CString.NormalizePath(sPath=sMainDocConfigFile, sReferencePathAbs=sReferencePathAbs_configfile)
-      self.__dictMainDocConfig['sMainDocConfigFile'] = sMainDocConfigFile # update config
-      if os.path.isfile(sMainDocConfigFile) is False:
+      sReferencePathAbs_configfile = self.__dictMainDocConfig['REFERENCEPATH'] # set initially in repository config and already normalized
+      MAINDOC_CONFIGFILE = CString.NormalizePath(sPath=MAINDOC_CONFIGFILE, sReferencePathAbs=sReferencePathAbs_configfile)
+      self.__dictMainDocConfig['MAINDOC_CONFIGFILE'] = MAINDOC_CONFIGFILE # update config
+      if os.path.isfile(MAINDOC_CONFIGFILE) is False:
          bSuccess = None
-         sResult  = f"Maindoc configuration file '{sMainDocConfigFile}' does not exist"
+         sResult  = f"Maindoc configuration file '{MAINDOC_CONFIGFILE}' does not exist"
          raise Exception(CString.FormatResult(sMethod, bSuccess, sResult))
 
-      print(COLNY + f"Maindoc configuration: '{sMainDocConfigFile}'")
+      print(COLNY + f"Maindoc configuration: '{MAINDOC_CONFIGFILE}'")
       print()
+
+      # -- check framework bundle information (but argparse already should have prevented missing parameters)
+
+      BUNDLE_NAME = self.__dictMainDocConfig['BUNDLE_NAME']
+      if ( (BUNDLE_NAME is None) or (BUNDLE_NAME == "") ):
+         # framework bundle_name missed in command line
+         bSuccess = None
+         sResult  = f"Framework bundle name not defined. Use '--bundle_name' in command line."
+         raise Exception(CString.FormatResult(sMethod, bSuccess, sResult))
+
+      BUNDLE_VERSION = self.__dictMainDocConfig['BUNDLE_VERSION']
+      if ( (BUNDLE_VERSION is None) or (BUNDLE_VERSION == "") ):
+         # framework bundle_version missed in command line
+         bSuccess = None
+         sResult  = f"Framework bundle version not defined. Use '--bundle_version' in command line."
+         raise Exception(CString.FormatResult(sMethod, bSuccess, sResult))
+
+      BUNDLE_VERSION_DATE = self.__dictMainDocConfig['BUNDLE_VERSION_DATE']
+      if ( (BUNDLE_VERSION_DATE is None) or (BUNDLE_VERSION_DATE == "") ):
+         # framework bundle_version_date missed in command line
+         bSuccess = None
+         sResult  = f"Framework bundle version date not defined. Use '--bundle_version_date' in command line."
+         raise Exception(CString.FormatResult(sMethod, bSuccess, sResult))
 
       # The json file may contain lines that are commented out by a '#' at the beginning of the line.
       # Therefore we read in this file in text format, remove the comments and save the cleaned file within the temp folder.
@@ -135,9 +163,8 @@ Responsible for:
 
       sJsonFileNameTmp = "maindoc_config_tmp.json" # any name of this file in tmp folder (the cleaned version)
       sJsonFileCleaned = f"{sTmpPath}/{sJsonFileNameTmp}"
-      # print(f"========== sJsonFileCleaned : '{sJsonFileCleaned}'")
 
-      oJsonFileSource = CFile(sMainDocConfigFile)
+      oJsonFileSource = CFile(MAINDOC_CONFIGFILE)
       listLines, bSuccess, sResult = oJsonFileSource.ReadLines(bSkipBlankLines=True, sComment='#')
       del oJsonFileSource
       if bSuccess is not True:
@@ -167,7 +194,7 @@ Responsible for:
 
       # For normalization of all relative paths inside JSON configuration files we need an absolute reference path.
       # The reference for all relative paths inside JSON configuration files is the position of the selected configuration file.
-      sReferencePathAbs = os.path.dirname(sMainDocConfigFile)
+      sReferencePathAbs = os.path.dirname(MAINDOC_CONFIGFILE)
 
       # normalize paths in 'IMPORTS' section
       listImports = []
@@ -189,6 +216,8 @@ Responsible for:
       # debug only
       # PrettyPrint(self.__dictMainDocConfig, sPrefix="Config")
 
+      self.PrintConfig()
+
    # eof def __init__(self, oRepositoryConfig=None):
 
    def __del__(self):
@@ -198,34 +227,77 @@ Responsible for:
       """
 Gets command line parameter.
       """
+
+      sMethod = "GetCmdLine"
+
       oCmdLineParser = argparse.ArgumentParser()
       oCmdLineParser.add_argument('--configfile', type=str, help='Path and name of maindoc configuration file')
+      oCmdLineParser.add_argument('--bundle_name', type=str, help='The name of the entire framework bundle')
+      oCmdLineParser.add_argument('--bundle_version', type=str, help='The version of the entire framework bundle')
+      oCmdLineParser.add_argument('--bundle_version_date', type=str, help='The version date of the entire framework bundle')
       oCmdLineParser.add_argument('--simulateonly', action='store_true', help='If True, the LaTeX compiler is switched off; a syntax check only remains in this case. Default: False')
 
-      oCmdLineArgs = oCmdLineParser.parse_args()
+      try:
+         oCmdLineArgs = oCmdLineParser.parse_args()
+      except SystemExit as reason:
+         # (nested exceptions here are a little bit long winded, but it's the only chance to print the argparse exception in red color to console)
+         bSuccess = None
+         sResult  = "Error in command line: " + str(reason) + "\n\n" + oCmdLineParser.format_help()
+         raise Exception(CString.FormatResult(sMethod, bSuccess, sResult))
 
-      sMainDocConfigFile = None
+      # check of command line parameters will be done in constructor (where this method is called), but not here immediately
+
+      MAINDOC_CONFIGFILE = None
       if oCmdLineArgs.configfile is not None:
-         sMainDocConfigFile = oCmdLineArgs.configfile
-      self.__dictMainDocConfig['sMainDocConfigFile'] = sMainDocConfigFile # here not yet normalized and checked
+         MAINDOC_CONFIGFILE = oCmdLineArgs.configfile
+         MAINDOC_CONFIGFILE = MAINDOC_CONFIGFILE.strip()
+      self.__dictMainDocConfig['MAINDOC_CONFIGFILE'] = MAINDOC_CONFIGFILE
 
-      bSimulateOnly = False
+      BUNDLE_NAME = None
+      if oCmdLineArgs.bundle_name is not None:
+         BUNDLE_NAME = oCmdLineArgs.bundle_name
+         BUNDLE_NAME = BUNDLE_NAME.strip()
+      self.__dictMainDocConfig['BUNDLE_NAME'] = BUNDLE_NAME
+
+      BUNDLE_VERSION = None
+      if oCmdLineArgs.bundle_version is not None:
+         BUNDLE_VERSION = oCmdLineArgs.bundle_version
+         BUNDLE_VERSION = BUNDLE_VERSION.strip()
+      self.__dictMainDocConfig['BUNDLE_VERSION'] = BUNDLE_VERSION
+
+      BUNDLE_VERSION_DATE = None
+      if oCmdLineArgs.bundle_version_date is not None:
+         BUNDLE_VERSION_DATE = oCmdLineArgs.bundle_version_date
+         BUNDLE_VERSION_DATE = BUNDLE_VERSION_DATE.strip()
+      self.__dictMainDocConfig['BUNDLE_VERSION_DATE'] = BUNDLE_VERSION_DATE
+
+      SIMULATE_ONLY = False
       if oCmdLineArgs.simulateonly is not None:
-         bSimulateOnly = oCmdLineArgs.simulateonly
-      self.__dictMainDocConfig['bSimulateOnly'] = bSimulateOnly
+         SIMULATE_ONLY = oCmdLineArgs.simulateonly
+      self.__dictMainDocConfig['SIMULATE_ONLY'] = SIMULATE_ONLY
 
    # eof def GetCmdLine(self):
 
-   def PrintConfig(self):
+   def PrintConfigDebug(self):
       """
-Prints all configuration values to console.
+Prints all configuration values to console (debug with PrettyPrint).
       """
       # -- printing configuration to console
       print()
       PrettyPrint(self.__dictMainDocConfig, sPrefix="MainDocConfig")
       print()
-   # eof def PrintConfig(self):
+   # eof def PrintConfigDebug(self):
 
+   def PrintConfig(self):
+      """
+Prints all configuration values to console.
+      """
+      nJust = 30
+      print()
+      for sKey in self.__dictMainDocConfig:
+         print(sKey.rjust(nJust, ' ') + " : " + str(self.__dictMainDocConfig[sKey]))
+      print()
+   # eof def PrintConfig(self):
 
    def PrintConfigKeys(self):
       """

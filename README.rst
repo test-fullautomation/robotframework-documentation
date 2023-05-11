@@ -44,12 +44,6 @@ Some preparations are necessary before ``genmaindoc.py`` or ``setup.py`` can be 
 
 3. Clone all repositories containing components that shall be part of the documentation, to your computer.
 
-   The code inside the repository ``robotframework-testsuitesmanagement`` contains a "meta information", that are the name, the version
-   and the date of the entire bundle that we call "RobotFramework AIO". This information is taken over to the title page of the resulting PDF.
-   Therefore including the repository ``robotframework-testsuitesmanagement`` is mandatory. The include of all other repositories is optional and
-   may depend on the audience or depend on the localization (e.g. if the document shall be released Bosch internal only or in the open source
-   community outside Bosch.
-
 4. Add relative paths to these repositories to the ``genmaindoc`` configuration files inside: ``maindoc/maindoc_configs``, section ``"IMPORTS"``:
 
    .. code::
@@ -58,25 +52,30 @@ Some preparations are necessary before ``genmaindoc.py`` or ``setup.py`` can be 
                    "../../../python-extensions-collection",
                    ...
 
-   Currently two configuration files are available: a Bosch internal version (``maindoc_config_BIOS.json``) and an open source version (``maindoc_config_OSS.json``).
+5. Prepare the ``genmaindoc.py`` command line
 
-   ``genmaindoc.py`` requires such a configuration file in command line, e.g. the BIOS version:
+   ``genmaindoc.py`` requires the following command line parameters:
+
+   * ``--configfile`` : Path and name of maindoc configuration file
+   * ``--bundle_name`` : The name of the entire framework bundle
+   * ``--bundle_version`` : The version of the entire framework bundle
+   * ``--bundle_version_date`` : The version date of the entire framework bundle
+
+   In case of ``genmaindoc.py`` is called by ``setup.py``, a direct way to define command line parameter for ``genmaindoc.py`` is not possible
+   (it's not intended to intermix genmaindoc and setuptools command lines).
+
+   Therefore ``setup.py`` requires for every single command line parameter a corresponding environment variable.
+
+   Under Windows the environment can be prepared e.g. in the following way:
 
    .. code::
 
-      "%RobotPythonPath%/python.exe" ./genmaindoc.py --configfile "./maindoc_configs/maindoc_config_BIOS.json"
+      set MAINDOC_CONFIGFILE=--configfile "./maindoc/maindoc_configs/maindoc_config_OSS.json"
+      set BUNDLE_NAME=--bundle_name "RobotFramework AIO"
+      set BUNDLE_VERSION=--bundle_version "0.7.0"
+      set BUNDLE_VERSION_DATE=--bundle_version_date "03.2023"
 
-
-5. Introduce an environment variable ``DOCBUILDER_ARGUMENTS`` containing the command line parameters for ``genmaindoc.py``.
-
-   ``setup.py`` is not prepared to provide any command line parameter to ``genmaindoc.py``. In case of the documentation build shall be triggered by ``setup.py``,
-   another possibility is required to provide mandatory command line parameters to ``genmaindoc.py``.
-
-   With the help of the environment variable ``DOCBUILDER_ARGUMENTS`` this can be done, e.g. like this:
-
-   .. code::
-
-      set DOCBUILDER_ARGUMENTS=--configfile "./maindoc_configs/maindoc_config_BIOS.json"
+   The values are taken over to the resulting PDF file (e.g. in the title page).
 
 6. Introduce an environment variable "``GENDOC_LATEXPATH``" containing the path to the LaTeX interpreter ``pdflatex.exe`` (Windows) / ``pdflatex`` (Linux).
 
@@ -100,6 +99,8 @@ Some preparations are necessary before ``genmaindoc.py`` or ``setup.py`` can be 
    .. code::
 
       RobotFrameworkAIO\RobotFrameworkAIO_Reference.pdf
+
+   The name of the PDF file is defined in the ``genmaindoc`` configuration.
 
 
 Feedback
