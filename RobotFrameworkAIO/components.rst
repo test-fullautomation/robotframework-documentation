@@ -2,37 +2,37 @@
 
 * ``RobotFramework AIO``
 
-  Version: 0.6.0 (from 01.2023)
+  Version: 0.7.0 (from 03.2023)
 
 **RobotFramework AIO components listing**
 
 * ``GenPackageDoc``
 
-  - Version: 0.39.0 (from 06.01.2023)
+  - Version: 0.40.0 (from 09.05.2023)
   - URL: https://github.com/test-fullautomation/python-genpackagedoc
   - *Documentation builder for Python packages*
 
 * ``PythonExtensionsCollection``
 
-  - Version: 0.11.4 (from 23.01.2023)
+  - Version: 0.14.0 (from 05.05.2023)
   - URL: https://github.com/test-fullautomation/python-extensions-collection
   - *Additional Python functions*
 
 * ``RobotframeworkExtensions``
 
-  - Version: 0.8.5 (from 21.11.2022)
+  - Version: 0.10.0 (from 06.04.2023)
   - URL: https://github.com/test-fullautomation/robotframework-extensions-collection
   - *Additional Robot Framework keywords*
 
 * ``JsonPreprocessor``
 
-  - Version: 0.1.4 (from 14.09.2022)
+  - Version: 0.2.3 (from 04.05.2023)
   - URL: https://github.com/test-fullautomation/python-jsonpreprocessor
   - *Preprocessor for json files*
 
 * ``RobotFramework_TestsuitesManagement``
 
-  - Version: 0.3.0 (from 13.01.2023)
+  - Version: 0.6.1 (from 28.04.2023)
   - URL: https://github.com/test-fullautomation/robotframework-testsuitesmanagement
   - *Functionality to manage RobotFramework testsuites*
 
@@ -50,13 +50,13 @@
 
 * ``RobotLog2DB``
 
-  - Version: 1.3.1 (from 09.01.2023)
+  - Version: 1.3.6 (from 05.04.2023)
   - URL: https://github.com/test-fullautomation/robotframework-robotlog2db
   - *Imports robot result(s) to TestResultWebApp database*
 
 * ``PyTestLog2DB``
 
-  - Version: 0.1.2 (from 01.12.2022)
+  - Version: 0.2.5 (from 04.05.2023)
   - URL: https://github.com/test-fullautomation/python-pytestlog2db
   - *Imports pytest result(s) to TestResultWebApp database*
 
