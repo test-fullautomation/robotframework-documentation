@@ -49,9 +49,7 @@
                 "../../../robotframework-robotlog2rqm",
                 "../../../robotframework-robotlog2db",
                 "../../../python-pytestlog2db",
-                "../../../testresultwebapp",
-                "../../../python-microservice-base",
-                "../../../python-microservice-cleware-switch"],
+                "../../../testresultwebapp"],
 
 
 # Section "BOOKSOURCES":
