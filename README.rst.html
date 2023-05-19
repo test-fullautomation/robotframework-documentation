@@ -1,0 +1,475 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+<title>RobotFramework AIO documentation</title>
+<style type="text/css">
+
+/*
+:Author: David Goodger (goodger@python.org)
+:Id: $Id: html4css1.css 8954 2022-01-20 10:10:25Z milde $
+:Copyright: This stylesheet has been placed in the public domain.
+
+Default cascading style sheet for the HTML output of Docutils.
+
+See https://docutils.sourceforge.io/docs/howto/html-stylesheets.html for how to
+customize this style sheet.
+*/
+
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
+.first {
+  /* Override more specific margin styles with "! important". */
+  margin-top: 0 ! important }
+
+.last, .with-subtitle {
+  margin-bottom: 0 ! important }
+
+.hidden {
+  display: none }
+
+.subscript {
+  vertical-align: sub;
+  font-size: smaller }
+
+.superscript {
+  vertical-align: super;
+  font-size: smaller }
+
+a.toc-backref {
+  text-decoration: none ;
+  color: black }
+
+blockquote.epigraph {
+  margin: 2em 5em ; }
+
+dl.docutils dd {
+  margin-bottom: 0.5em }
+
+object[type="image/svg+xml"], object[type="application/x-shockwave-flash"] {
+  overflow: hidden;
+}
+
+/* Uncomment (and remove this text!) to get bold-faced definition list terms
+dl.docutils dt {
+  font-weight: bold }
+*/
+
+div.abstract {
+  margin: 2em 5em }
+
+div.abstract p.topic-title {
+  font-weight: bold ;
+  text-align: center }
+
+div.admonition, div.attention, div.caution, div.danger, div.error,
+div.hint, div.important, div.note, div.tip, div.warning {
+  margin: 2em ;
+  border: medium outset ;
+  padding: 1em }
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title {
+  font-weight: bold ;
+  font-family: sans-serif }
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title, .code .error {
+  color: red ;
+  font-weight: bold ;
+  font-family: sans-serif }
+
+/* Uncomment (and remove this text!) to get reduced vertical space in
+   compound paragraphs.
+div.compound .compound-first, div.compound .compound-middle {
+  margin-bottom: 0.5em }
+
+div.compound .compound-last, div.compound .compound-middle {
+  margin-top: 0.5em }
+*/
+
+div.dedication {
+  margin: 2em 5em ;
+  text-align: center ;
+  font-style: italic }
+
+div.dedication p.topic-title {
+  font-weight: bold ;
+  font-style: normal }
+
+div.figure {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+div.footer, div.header {
+  clear: both;
+  font-size: smaller }
+
+div.line-block {
+  display: block ;
+  margin-top: 1em ;
+  margin-bottom: 1em }
+
+div.line-block div.line-block {
+  margin-top: 0 ;
+  margin-bottom: 0 ;
+  margin-left: 1.5em }
+
+div.sidebar {
+  margin: 0 0 0.5em 1em ;
+  border: medium outset ;
+  padding: 1em ;
+  background-color: #ffffee ;
+  width: 40% ;
+  float: right ;
+  clear: right }
+
+div.sidebar p.rubric {
+  font-family: sans-serif ;
+  font-size: medium }
+
+div.system-messages {
+  margin: 5em }
+
+div.system-messages h1 {
+  color: red }
+
+div.system-message {
+  border: medium outset ;
+  padding: 1em }
+
+div.system-message p.system-message-title {
+  color: red ;
+  font-weight: bold }
+
+div.topic {
+  margin: 2em }
+
+h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
+h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
+  margin-top: 0.4em }
+
+h1.title {
+  text-align: center }
+
+h2.subtitle {
+  text-align: center }
+
+hr.docutils {
+  width: 75% }
+
+img.align-left, .figure.align-left, object.align-left, table.align-left {
+  clear: left ;
+  float: left ;
+  margin-right: 1em }
+
+img.align-right, .figure.align-right, object.align-right, table.align-right {
+  clear: right ;
+  float: right ;
+  margin-left: 1em }
+
+img.align-center, .figure.align-center, object.align-center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+table.align-center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.align-left {
+  text-align: left }
+
+.align-center {
+  clear: both ;
+  text-align: center }
+
+.align-right {
+  text-align: right }
+
+/* reset inner alignment in figures */
+div.align-right {
+  text-align: inherit }
+
+/* div.align-center * { */
+/*   text-align: left } */
+
+.align-top    {
+  vertical-align: top }
+
+.align-middle {
+  vertical-align: middle }
+
+.align-bottom {
+  vertical-align: bottom }
+
+ol.simple, ul.simple {
+  margin-bottom: 1em }
+
+ol.arabic {
+  list-style: decimal }
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+p.attribution {
+  text-align: right ;
+  margin-left: 50% }
+
+p.caption {
+  font-style: italic }
+
+p.credits {
+  font-style: italic ;
+  font-size: smaller }
+
+p.label {
+  white-space: nowrap }
+
+p.rubric {
+  font-weight: bold ;
+  font-size: larger ;
+  color: maroon ;
+  text-align: center }
+
+p.sidebar-title {
+  font-family: sans-serif ;
+  font-weight: bold ;
+  font-size: larger }
+
+p.sidebar-subtitle {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+p.topic-title {
+  font-weight: bold }
+
+pre.address {
+  margin-bottom: 0 ;
+  margin-top: 0 ;
+  font: inherit }
+
+pre.literal-block, pre.doctest-block, pre.math, pre.code {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+pre.code .ln { color: grey; } /* line numbers */
+pre.code, code { background-color: #eeeeee }
+pre.code .comment, code .comment { color: #5C6576 }
+pre.code .keyword, code .keyword { color: #3B0D06; font-weight: bold }
+pre.code .literal.string, code .literal.string { color: #0C5404 }
+pre.code .name.builtin, code .name.builtin { color: #352B84 }
+pre.code .deleted, code .deleted { background-color: #DEB0A1}
+pre.code .inserted, code .inserted { background-color: #A3D289}
+
+span.classifier {
+  font-family: sans-serif ;
+  font-style: oblique }
+
+span.classifier-delimiter {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+span.interpreted {
+  font-family: sans-serif }
+
+span.option {
+  white-space: nowrap }
+
+span.pre {
+  white-space: pre }
+
+span.problematic {
+  color: red }
+
+span.section-subtitle {
+  /* font-size relative to parent (h1..h6 element) */
+  font-size: 80% }
+
+table.citation {
+  border-left: solid 1px gray;
+  margin-left: 1px }
+
+table.docinfo {
+  margin: 2em 4em }
+
+table.docutils {
+  margin-top: 0.5em ;
+  margin-bottom: 0.5em }
+
+table.footnote {
+  border-left: solid 1px black;
+  margin-left: 1px }
+
+table.docutils td, table.docutils th,
+table.docinfo td, table.docinfo th {
+  padding-left: 0.5em ;
+  padding-right: 0.5em ;
+  vertical-align: top }
+
+table.docutils th.field-name, table.docinfo th.docinfo-name {
+  font-weight: bold ;
+  text-align: left ;
+  white-space: nowrap ;
+  padding-left: 0 }
+
+/* "booktabs" style (no vertical lines) */
+table.docutils.booktabs {
+  border: 0px;
+  border-top: 2px solid;
+  border-bottom: 2px solid;
+  border-collapse: collapse;
+}
+table.docutils.booktabs * {
+  border: 0px;
+}
+table.docutils.booktabs th {
+  border-bottom: thin solid;
+  text-align: left;
+}
+
+h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
+h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
+  font-size: 100% }
+
+ul.auto-toc {
+  list-style-type: none }
+
+</style>
+</head>
+<body>
+<div class="document" id="robotframework-aio-documentation">
+<h1 class="title">RobotFramework AIO documentation</h1>
+
+<!-- Copyright 2020-2022 Robert Bosch GmbH -->
+<!-- Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at -->
+<!-- http://www.apache.org/licenses/LICENSE-2.0 -->
+<!-- Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License. -->
+<p>The RobotFramework AIO documentation is available as PDF file and can be found here:
+<a class="reference external" href="https://github.com/test-fullautomation/robotframework-documentation/blob/develop/RobotFrameworkAIO/RobotFrameworkAIO_Reference.pdf">RobotFrameworkAIO_Reference.pdf</a></p>
+<p>The documentation consists of two parts:</p>
+<ol class="arabic simple">
+<li>Common description</li>
+<li>Description of the interfaces of RobotFramework AIO components</li>
+</ol>
+<p>The RobotFramework AIO documentation can be build either with <tt class="docutils literal">genmaindoc.py</tt> immediately or with <tt class="docutils literal">setup.py</tt> indirectly. The difference is that <tt class="docutils literal">genmaindoc.py</tt>
+only builds the documentation, whereas <tt class="docutils literal">setup.py</tt> additionally installs the documentation in</p>
+<blockquote>
+<pre class="code literal-block">
+python39\Lib\site-packages\RobotFrameworkAIO
+</pre>
+</blockquote>
+<p>The execution of <tt class="docutils literal">setup.py</tt> includes the execution of <tt class="docutils literal">genmaindoc.py</tt>.</p>
+<p>Some preparations are necessary before <tt class="docutils literal">genmaindoc.py</tt> or <tt class="docutils literal">setup.py</tt> can be executed:</p>
+<ol class="arabic">
+<li><p class="first">Install a LaTeX compiler (full installation of Texlive recommended)</p>
+</li>
+<li><p class="first">Clone the <a class="reference external" href="https://github.com/test-fullautomation/robotframework-documentation">robotframework-documentation</a> repository to your computer.</p>
+<pre class="code literal-block">
+git clone https://github.com/test-fullautomation/robotframework-documentation.git
+</pre>
+</li>
+<li><p class="first">Clone all repositories containing components that shall be part of the documentation, to your computer.</p>
+<p>The code inside the repository <tt class="docutils literal"><span class="pre">robotframework-testsuitesmanagement</span></tt> contains a &quot;meta information&quot;, that are the name, the version
+and the date of the entire bundle that we call &quot;RobotFramework AIO&quot;. This information is taken over to the title page of the resulting PDF.
+Therefore including the repository <tt class="docutils literal"><span class="pre">robotframework-testsuitesmanagement</span></tt> is mandatory. The include of all other repositories is optional and
+may depend on the audience or depend on the localization (e.g. if the document shall be released Bosch internal only or in the open source
+community outside Bosch.</p>
+</li>
+<li><p class="first">Add relative paths to these repositories to the <tt class="docutils literal">genmaindoc</tt> configuration files inside: <tt class="docutils literal">maindoc/maindoc_configs</tt>, section <tt class="docutils literal">&quot;IMPORTS&quot;</tt>:</p>
+<pre class="code literal-block">
+&quot;IMPORTS&quot; : [&quot;../../../python-genpackagedoc&quot;,
+             &quot;../../../python-extensions-collection&quot;,
+             ...
+</pre>
+<p>Currently two configuration files are available: a Bosch internal version (<tt class="docutils literal">maindoc_config_BIOS.json</tt>) and an open source version (<tt class="docutils literal">maindoc_config_OSS.json</tt>).</p>
+<p><tt class="docutils literal">genmaindoc.py</tt> requires such a configuration file in command line, e.g. the BIOS version:</p>
+<pre class="code literal-block">
+&quot;%RobotPythonPath%/python.exe&quot; ./genmaindoc.py --configfile &quot;./maindoc_configs/maindoc_config_BIOS.json&quot;
+</pre>
+</li>
+<li><p class="first">Introduce an environment variable <tt class="docutils literal">DOCBUILDER_ARGUMENTS</tt> containing the command line parameters for <tt class="docutils literal">genmaindoc.py</tt>.</p>
+<p><tt class="docutils literal">setup.py</tt> is not prepared to provide any command line parameter to <tt class="docutils literal">genmaindoc.py</tt>. In case of the documentation build shall be triggered by <tt class="docutils literal">setup.py</tt>,
+another possibility is required to provide mandatory command line parameters to <tt class="docutils literal">genmaindoc.py</tt>.</p>
+<p>With the help of the environment variable <tt class="docutils literal">DOCBUILDER_ARGUMENTS</tt> this can be done, e.g. like this:</p>
+<pre class="code literal-block">
+set DOCBUILDER_ARGUMENTS=--configfile &quot;./maindoc_configs/maindoc_config_BIOS.json&quot;
+</pre>
+</li>
+<li><p class="first">Introduce an environment variable &quot;<tt class="docutils literal">GENDOC_LATEXPATH</tt>&quot; containing the path to the LaTeX interpreter <tt class="docutils literal">pdflatex.exe</tt> (Windows) / <tt class="docutils literal">pdflatex</tt> (Linux).</p>
+<p>This has to be configured in the <tt class="docutils literal">genmaindoc</tt> configuration, section <tt class="docutils literal">&quot;TEX&quot;</tt>:</p>
+<pre class="code literal-block">
+&quot;TEX&quot; : {
+         &quot;WINDOWS&quot; : &quot;%GENDOC_LATEXPATH%/pdflatex.exe&quot;,
+         &quot;LINUX&quot;   : &quot;${GENDOC_LATEXPATH}/pdflatex&quot;
+        }
+</pre>
+</li>
+<li><p class="first">Use the following command to build and install the documentation:</p>
+<pre class="code literal-block">
+setup.py install
+</pre>
+<p>The output can be found here:</p>
+<pre class="code literal-block">
+RobotFrameworkAIO\RobotFrameworkAIO_Reference.pdf
+</pre>
+</li>
+</ol>
+<div class="section" id="feedback">
+<h1>Feedback</h1>
+<p>To give us a feedback, you can send an email to <a class="reference external" href="mailto:Thomas.Pollerspoeck&#64;de.bosch.com">Thomas Pollerspöck</a></p>
+<p>In case you want to report a bug or request any interesting feature, please don't
+hesitate to raise a ticket.</p>
+</div>
+<div class="section" id="maintainers">
+<h1>Maintainers</h1>
+<p><a class="reference external" href="mailto:Thomas.Pollerspoeck&#64;de.bosch.com">Thomas Pollerspöck</a></p>
+</div>
+<div class="section" id="contributors">
+<h1>Contributors</h1>
+</div>
+<div class="section" id="license">
+<h1>License</h1>
+<p>Copyright 2020-2022 Robert Bosch GmbH</p>
+<p>Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at</p>
+<blockquote>
+<a class="reference external image-reference" href="http://www.apache.org/licenses/LICENSE-2.0.html"><object data="https://img.shields.io/pypi/l/robotframework.svg" type="image/svg+xml">License: Apache v2</object></a></blockquote>
+<p>Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.</p>
+</div>
+</div>
+</body>
+</html>
