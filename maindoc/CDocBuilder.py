@@ -20,7 +20,7 @@
 #
 # XC-CT/ECA3-Queckenstedt
 #
-# 19.05.2023
+# 22.05.2023
 #
 # --------------------------------------------------------------------------------------------------------------
 
@@ -260,7 +260,7 @@ Constructor of class ``CDocBuilder``.
 
       del oOverviewFile_tex
 
-      # -- 2. rst version
+      # -- 2. RST version
 
       # get framework bundle information (again, but without LaTeX masking)
       BUNDLE_NAME         = self.__dictMainDocConfig['BUNDLE_NAME']
@@ -268,7 +268,7 @@ Constructor of class ``CDocBuilder``.
       BUNDLE_VERSION_DATE = self.__dictMainDocConfig['BUNDLE_VERSION_DATE']
 
       sExternalDocFolder = self.__dictMainDocConfig['EXTERNALDOCFOLDER']
-      sOverviewFileName_rst = "components.rst"
+      sOverviewFileName_rst = "Components.rst"
       sOverviewFile_rst = f"{sExternalDocFolder}/{sOverviewFileName_rst}"
       self.__dictMainDocConfig['OVERVIEWFILE_RST'] = sOverviewFile_rst
       oOverviewFile_rst = CFile(sOverviewFile_rst)
@@ -313,8 +313,93 @@ Constructor of class ``CDocBuilder``.
 
       del oOverviewFile_rst
 
+      # -- 3. HTML version
+
+      # get framework bundle information (again, but without LaTeX masking)
+      BUNDLE_NAME         = self.__dictMainDocConfig['BUNDLE_NAME']
+      BUNDLE_VERSION      = self.__dictMainDocConfig['BUNDLE_VERSION']
+      BUNDLE_VERSION_DATE = self.__dictMainDocConfig['BUNDLE_VERSION_DATE']
+
+      ROBFWVERSION = self.__dictMainDocConfig['ROBFWVERSION']
+
+      sExternalDocFolder = self.__dictMainDocConfig['EXTERNALDOCFOLDER']
+      sOverviewFileName_html = "Components.html"
+      sOverviewFile_html = f"{sExternalDocFolder}/{sOverviewFileName_html}"
+      self.__dictMainDocConfig['OVERVIEWFILE_HTML'] = sOverviewFile_html
+      oOverviewFile_html = CFile(sOverviewFile_html)
+
+      sHeader = """<html><head>
+<meta http-equiv="content-type" content="text/html; charset=windows-1252">
+   <meta name="####BUNDLE_NAME####" content="Component Overview">
+   <title>####BUNDLE_NAME#### Component Overview</title>
+</head>
+<body vlink="#000000" text="#000000" link="#000000" bgcolor="#FFFFFF" alink="#000000">
+<hr width="100%" color="#FF8C00" align="center">
+<div align="center">
+<font size="6" face="Arial" color="#595959">
+<b>
+####BUNDLE_NAME####<br>Component Overview
+</b></font>
+</div>
+<hr width="100%" color="#FF8C00" align="center">
+
+<div>&nbsp;</div>
+
+<div align="center">
+
+<table frame="box" rules="all" valign="middle" width="1100" cellspacing="0" cellpadding="6" border="1" align="center">
+<colgroup>
+   <col width="30%" span="1">
+   <col width="70%" span="1">
+</colgroup>
+<tbody>
+"""
+
+      sFooter = """</tbody></table></div>
+<div>&nbsp;</div>
+<hr width="100%" color="#FF8C00" align="center">
+<div align="center"><font size="2" color="#27408B">Generated: ####TIMESTAMP####</font></div>
+<div>&nbsp;</div>
+</body></html>
+"""
+
+      COL1 = "#FFA07A"
+      COL2 = "#FFEFD5"
+      COL3 = "#F0FFF0"
+      COL4 = "#F0F8FF"
+
+      sHeader = sHeader.replace("####BUNDLE_NAME####", BUNDLE_NAME)
+      oOverviewFile_html.Write(sHeader)
+      oOverviewFile_html.Write()
+
+      oOverviewFile_html.Write(f"<tr bgcolor=\"{COL1}\"><td><font face=\"Arial\" color=\"#000000\" size=\"2\"><b>{BUNDLE_NAME} bundle</b></font></td><td><font face=\"Arial\" color=\"#000000\" size=\"2\"><b>Version: {BUNDLE_VERSION} (from {BUNDLE_VERSION_DATE})</b></font></td></tr>")
+      oOverviewFile_html.Write(f"<tr bgcolor=\"{COL2}\"><td><font face=\"Arial\" color=\"#000000\" size=\"2\"><b>Robot Framework core</b></font></td><td><font face=\"Arial\" color=\"#000000\" size=\"2\">{ROBFWVERSION}</font></td></tr>")
+
+      COL = COL3
+      for dictConfig in listofdictConfig:
+         PACKAGENAME    = dictConfig['PACKAGENAME']
+         PACKAGEVERSION = dictConfig['PACKAGEVERSION']
+         PACKAGEDATE    = dictConfig['PACKAGEDATE']
+         DESCRIPTION    = dictConfig['DESCRIPTION']
+         URL            = dictConfig['URL']
+         oOverviewFile_html.Write(f"<tr><td rowspan=\"3\" bgcolor=\"{COL}\"><font face=\"Arial\" color=\"#000000\" size=\"2\"><b>{PACKAGENAME}</b></font></td><td bgcolor=\"{COL}\"><font face=\"Arial\" color=\"#000000\" size=\"2\">Version: {PACKAGEVERSION} (from {PACKAGEDATE})</font></td></tr>")
+         oOverviewFile_html.Write(f"<tr><td bgcolor=\"{COL}\"><font face=\"Arial\" color=\"#000000\" size=\"2\"><i>{DESCRIPTION}</i></font></td></tr>")
+         oOverviewFile_html.Write(f"<tr><td bgcolor=\"{COL}\"><font face=\"Arial\" color=\"#0000FF\" size=\"2\"><a href = \"{URL}\" target=\"_blank\">{URL}</a></font></td></tr>")
+         oOverviewFile_html.Write()
+         if COL == COL3:
+            COL = COL4
+         else:
+            COL = COL3
+      # eof for dictConfig in listofdictConfig:
+
+      sFooter = sFooter.replace("####TIMESTAMP####", self.__dictMainDocConfig['NOW'])
+      oOverviewFile_html.Write(sFooter)
+      oOverviewFile_html.Write()
+
+      del oOverviewFile_html
+
       bSuccess = True
-      sResult  = f"Overview files written:\n* '{sOverviewFile_tex}'\n* '{sOverviewFile_rst}'"
+      sResult  = f"Overview files written:\n* '{sOverviewFile_tex}'\n* '{sOverviewFile_rst}'\n* '{sOverviewFile_html}'"
 
       return bSuccess, sResult
 
@@ -476,7 +561,7 @@ Constructor of class ``CDocBuilder``.
             print(sResult)
             print()
 
-         # prepare an overview file containing a summary of configuration values
+         # prepare some overview files containing some assorted configuration values taken out of the collected repository configurations
          bSuccess, sResult = self.__PrepareOverviewFiles(listofdictConfig)
          if bSuccess is not True:
             return self.__bPDFIsComplete, bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
@@ -722,6 +807,25 @@ Constructor of class ``CDocBuilder``.
          print(COLBY + f"* Overview: {sOverviewFile_dest}")
          print()
       # eof if "OVERVIEWFILE_RST" in self.__dictMainDocConfig:
+
+      if "OVERVIEWFILE_HTML" in self.__dictMainDocConfig:
+         # in case of "UPDATE_EXTERNAL_DOC" is false, "OVERVIEWFILE_HTML" is not available; therefore nothing to copy to the package folder
+         OVERVIEWFILE_HTML = self.__dictMainDocConfig['OVERVIEWFILE_HTML']
+         if os.path.isfile(OVERVIEWFILE_HTML) is False:
+            bSuccess = False
+            sResult  = f"Expected overview file '{OVERVIEWFILE_HTML}' not generated"
+            return self.__bPDFIsComplete, bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
+
+         sOverviewFileName = os.path.basename(OVERVIEWFILE_HTML)
+         sOverviewFile_dest = f"{sPackageFolder}/{sOverviewFileName}"
+         oOverviewFile = CFile(OVERVIEWFILE_HTML)
+         bSuccess, sResult = oOverviewFile.CopyTo(sOverviewFile_dest, bOverwrite=True)
+         del oOverviewFile
+         if bSuccess is not True:
+            return self.__bPDFIsComplete, bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
+         print(COLBY + f"* Overview: {sOverviewFile_dest}")
+         print()
+      # eof if "OVERVIEWFILE_HTML" in self.__dictMainDocConfig:
 
       bSuccess = True
 
