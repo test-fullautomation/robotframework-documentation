@@ -14,7 +14,7 @@
 
 * ``PythonExtensionsCollection``
 
-  - Version: 0.14.0 (from 05.05.2023)
+  - Version: 0.14.0 (from 12.05.2023)
   - URL: https://github.com/test-fullautomation/python-extensions-collection
   - *Additional Python functions*
 
@@ -65,3 +65,5 @@
   - Version: 0.1.3 (from 18.10.2022)
   - URL: https://github.com/test-fullautomation/testresultwebapp
   - *Web based display of test results*
+
+
