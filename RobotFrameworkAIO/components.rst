@@ -4,6 +4,10 @@
 
   Version: 0.7.0 (from 03.2023)
 
+* Underlying ``Robot Framework`` (core)
+
+  Robot Framework 6.0.2 (Python 3.9.16 on win32)
+
 **RobotFramework AIO components listing**
 
 * ``GenPackageDoc``

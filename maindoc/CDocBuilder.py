@@ -20,7 +20,7 @@
 #
 # XC-CT/ECA3-Queckenstedt
 #
-# 11.05.2023
+# 19.05.2023
 #
 # --------------------------------------------------------------------------------------------------------------
 
@@ -179,7 +179,10 @@ Constructor of class ``CDocBuilder``.
 
       # -- 1. LaTeX version
 
-      # get and prepare framework bundle information (values prepared for LaTeX output)
+      # -- get and prepare framework bundle information (values prepared for LaTeX output)
+
+      # BUNDLE_NAME, BUNDLE_VERSION and BUNDLE_VERSION_DATE taken from command line (and not from any config file or source file)
+
       BUNDLE_NAME         = self.__dictMainDocConfig['BUNDLE_NAME'].replace('_',r'\_') # LaTeX requires this masking
       BUNDLE_VERSION      = self.__dictMainDocConfig['BUNDLE_VERSION'].replace('_',r'\_') # LaTeX requires this masking
       BUNDLE_VERSION_DATE = self.__dictMainDocConfig['BUNDLE_VERSION_DATE'].replace('_',r'\_') # LaTeX requires this masking
@@ -200,22 +203,39 @@ Constructor of class ``CDocBuilder``.
 
       oOverviewFile_tex.Write(r"\begin{center}")
 
-      oOverviewFile_tex.Write(r"{\Large\textbf{" + BUNDLE_NAME + " bundle}}")
+      # -- print bundle information at the top of the list of package informations
+
+      oOverviewFile_tex.Write(r"{\Large\textbf{" + f"{BUNDLE_NAME}" + " bundle}}")
+      oOverviewFile_tex.Write()
+      oOverviewFile_tex.Write(r"\vspace{2ex}")
+      oOverviewFile_tex.Write()
+      oOverviewFile_tex.Write(r"\begin{tabular}{| m{44em} |}\hline")
+      oOverviewFile_tex.Write(f"   Version {BUNDLE_VERSION} (from {BUNDLE_VERSION_DATE})" + r"\\ \hline")
+      oOverviewFile_tex.Write(r"\end{tabular}")
       oOverviewFile_tex.Write()
       oOverviewFile_tex.Write(r"\vspace{2ex}")
       oOverviewFile_tex.Write()
 
-      # -- print bundle information at the top of the list of package informations
+      # -- print information about underlying Robot Framework (core)
 
+      ROBFWVERSION = self.__dictMainDocConfig['ROBFWVERSION']
+
+      oOverviewFile_tex.Write(r"\vspace{2ex}")
+
+      oOverviewFile_tex.Write(r"{\Large\textbf{Underlying Robot Framework (core)}}")
+      oOverviewFile_tex.Write()
+      oOverviewFile_tex.Write(r"\vspace{2ex}")
+      oOverviewFile_tex.Write()
       oOverviewFile_tex.Write(r"\begin{tabular}{| m{44em} |}\hline")
-      oOverviewFile_tex.Write(r"   \textbf{" + BUNDLE_NAME + r"}\\ \hline")
-      oOverviewFile_tex.Write(r"   Version " + BUNDLE_VERSION + " (from " + BUNDLE_VERSION_DATE + r")\\ \hline")
+      oOverviewFile_tex.Write(f"{ROBFWVERSION}" + r"\\ \hline")
       oOverviewFile_tex.Write(r"\end{tabular}")
       oOverviewFile_tex.Write()
       oOverviewFile_tex.Write(r"\vspace{2ex}")
       oOverviewFile_tex.Write()
 
       # -- print information about included packages
+
+      oOverviewFile_tex.Write(r"\vspace{2ex}")
 
       oOverviewFile_tex.Write(r"{\Large\textbf{Included libraries}}")
       oOverviewFile_tex.Write()
@@ -258,9 +278,19 @@ Constructor of class ``CDocBuilder``.
 
       # -- print bundle information at the top of the list of package informations
 
+      # BUNDLE_NAME, BUNDLE_VERSION and BUNDLE_VERSION_DATE taken from command line (and not from any config file or source file)
+
       oOverviewFile_rst.Write(f"* ``{BUNDLE_NAME}``")
       oOverviewFile_rst.Write()
       oOverviewFile_rst.Write(f"  Version: {BUNDLE_VERSION} (from {BUNDLE_VERSION_DATE})")
+      oOverviewFile_rst.Write()
+
+      # -- print information about underlying Robot Framework (core)
+
+      ROBFWVERSION = self.__dictMainDocConfig['ROBFWVERSION']
+      oOverviewFile_rst.Write(f"* Underlying ``Robot Framework`` (core)")
+      oOverviewFile_rst.Write()
+      oOverviewFile_rst.Write(f"  {ROBFWVERSION}")
       oOverviewFile_rst.Write()
 
       # -- print information about included packages
@@ -531,7 +561,10 @@ Constructor of class ``CDocBuilder``.
          if COVERSHEETSUFFIX == "":
             COVERSHEETSUFFIX = None
 
-      # get and prepare framework bundle information (values prepared for LaTeX output)
+      # -- get and prepare framework bundle information (values prepared for LaTeX output)
+
+      # BUNDLE_NAME, BUNDLE_VERSION and BUNDLE_VERSION_DATE taken from command line (and not from any config file or source file)
+
       BUNDLE_NAME         = self.__dictMainDocConfig['BUNDLE_NAME'].replace('_',r'\_') # LaTeX requires this masking
       BUNDLE_VERSION      = self.__dictMainDocConfig['BUNDLE_VERSION'].replace('_',r'\_') # LaTeX requires this masking
       BUNDLE_VERSION_DATE = self.__dictMainDocConfig['BUNDLE_VERSION_DATE'].replace('_',r'\_') # LaTeX requires this masking

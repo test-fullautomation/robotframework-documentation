@@ -20,7 +20,7 @@
 #
 # XC-CT/ECA3-Queckenstedt
 #
-# 11.05.2023
+# 19.05.2023
 #
 # --------------------------------------------------------------------------------------------------------------
 
@@ -33,6 +33,8 @@ This includes the repository configuration and command line values.
 
 import os, sys, time, platform, json, argparse
 import colorama as col
+
+from robot.version import get_full_version
 
 from PythonExtensionsCollection.String.CString import CString
 from PythonExtensionsCollection.File.CFile import CFile
@@ -125,6 +127,8 @@ Responsible for:
 
       # -- check framework bundle information (but argparse already should have prevented missing parameters)
 
+      # BUNDLE_NAME, BUNDLE_VERSION and BUNDLE_VERSION_DATE taken from command line (and not from any config file or source file)
+
       BUNDLE_NAME = self.__dictMainDocConfig['BUNDLE_NAME']
       if ( (BUNDLE_NAME is None) or (BUNDLE_NAME == "") ):
          # framework bundle_name missed in command line
@@ -212,6 +216,9 @@ Responsible for:
       if sKey in self.__dictMainDocConfig['TEX']:
          sLaTeXInterpreter = CString.NormalizePath(sPath=self.__dictMainDocConfig['TEX'][sKey], sReferencePathAbs=sReferencePathAbs)
       self.__dictMainDocConfig['LATEXINTERPRETER'] = sLaTeXInterpreter
+
+      # add version of underlying Robot Framework (core)
+      self.__dictMainDocConfig['ROBFWVERSION'] = get_full_version('Robot Framework')
 
       # debug only
       # PrettyPrint(self.__dictMainDocConfig, sPrefix="Config")
