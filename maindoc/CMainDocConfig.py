@@ -165,28 +165,23 @@ Responsible for:
          sResult  = f"Platform system '{sPlatformSystem}' is not supported"
          raise Exception(CString.FormatResult(sMethod, bSuccess, sResult))
 
-      sJsonFileNameTmp = "maindoc_config_tmp.json" # any name of this file in tmp folder (the cleaned version)
-      sJsonFileCleaned = f"{sTmpPath}/{sJsonFileNameTmp}"
-
       oJsonFileSource = CFile(MAINDOC_CONFIGFILE)
       listLines, bSuccess, sResult = oJsonFileSource.ReadLines(bSkipBlankLines=True, sComment='#')
       del oJsonFileSource
       if bSuccess is not True:
          raise Exception(CString.FormatResult(sMethod, bSuccess, sResult))
-      oJsonFileCleaned = CFile(sJsonFileCleaned)
-      bSuccess, sResult = oJsonFileCleaned.Write(listLines)
-      del oJsonFileCleaned
-      if bSuccess is not True:
-         raise Exception(CString.FormatResult(sMethod, bSuccess, sResult))
 
       dictJsonValues = None
       try:
-         hDocumentationProjectConfigFile = open(sJsonFileCleaned)
-         dictJsonValues = json.load(hDocumentationProjectConfigFile)
-         hDocumentationProjectConfigFile.close()
+         dictJsonValues = json.loads("\n".join(listLines))
       except Exception as reason:
          bSuccess = None
-         sResult  = str(reason) + "\nwhile loading the json configuration file"
+         sResult  = str(reason) + f" - while parsing JSON content of '{MAINDOC_CONFIGFILE}'"
+         raise Exception(CString.FormatResult(sMethod, bSuccess, sResult))
+
+      if dictJsonValues is None:
+         bSuccess = None
+         sResult  = "dictJsonValues is None"
          raise Exception(CString.FormatResult(sMethod, bSuccess, sResult))
 
       # take over keys and values from maindocumentation build configuration
