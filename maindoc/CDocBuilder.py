@@ -20,7 +20,7 @@
 #
 # XC-CT/ECA3-Queckenstedt
 #
-# 22.05.2023
+# 13.06.2023
 #
 # --------------------------------------------------------------------------------------------------------------
 
@@ -629,6 +629,38 @@ Constructor of class ``CDocBuilder``.
          del oLibraryDocImportTexFile
 
       # eof else - if bUpdateExternalDoc is True:
+
+      # -- Create another tex file containing a list of installed Python modules
+
+      sPythonModulesTexFile = f"{sExternalDocFolder}/python_modules_installed.tex"
+      oPythonModulesTexFile = CFile(sPythonModulesTexFile)
+      oPythonModulesTexFile.Write(f"% Generated at {self.__dictMainDocConfig['NOW']}")
+      oPythonModulesTexFile.Write("%")
+      oPythonModulesTexFile.Write(r"\chapter{Appendix}") # in case of more content is added to appendix, this headline should be moved to outside this tex file
+      oPythonModulesTexFile.Write(r"\section{Installed Python Modules}")
+      oPythonModulesTexFile.Write("This chapter contains a list of installed Python modules together with their version numbers.")
+      oPythonModulesTexFile.Write()
+      oPythonModulesTexFile.Write(r"\vspace{2ex}")
+      oPythonModulesTexFile.Write()
+      oPythonModulesTexFile.Write(f"Based on: Python {sys.version}")
+      oPythonModulesTexFile.Write()
+      oPythonModulesTexFile.Write(r"\vspace{2ex}")
+      oPythonModulesTexFile.Write()
+      listofTuplesPackages, bSuccess, sResult = CUtils.GetInstalledPackages()
+      oPythonModulesTexFile.Write(f"{sResult}")
+      if bSuccess is not True:
+         self.__bPDFIsComplete = False
+      else:
+         oPythonModulesTexFile.Write(r"\vspace{2ex}")
+         oPythonModulesTexFile.Write(r"\begin{multicols}{3}")
+         for tuplePackage in listofTuplesPackages:
+            sName    = tuplePackage[0]
+            sName    = sName.replace('_',r'\_') # LaTeX requires this masking
+            sVersion = tuplePackage[1]
+            oPythonModulesTexFile.Write(f"{sName} : {sVersion}" + r"\newline")
+         oPythonModulesTexFile.Write(r"\end{multicols}")
+      oPythonModulesTexFile.Write()
+      del oPythonModulesTexFile
 
       # -- Create another tex file containing the version and the date of the entire framework bundle.
       #    The values are part of the bundle information (currently defined within environment variables).
