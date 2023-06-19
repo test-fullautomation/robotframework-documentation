@@ -1,4 +1,4 @@
-%  Copyright 2020-2022 Robert Bosch GmbH
+%  Copyright 2020-2023 Robert Bosch GmbH
 %
 %  Licensed under the Apache License, Version 2.0 (the "License");
 %  you may not use this file except in compliance with the License.
@@ -22,14 +22,14 @@
 \usepackage{color}
 
 \usepackage{fancyhdr}
- 
+
 \usepackage[table]{xcolor}
 
 \usepackage{pifont}
 
 \usepackage{verbatim}
 
-\definecolor{heading}{rgb}{1,0,0} 
+\definecolor{heading}{rgb}{1,0,0}
 \pagestyle{fancy}
 \fancyhf{} %clear all headers/footers
 \fancyhead[RO]{\textsl{\rightmark}}
@@ -218,8 +218,8 @@
   colframe=black!30!white,
   breakable,
    }
-  
-  
+
+
 \NewDocumentEnvironment{boxsyn}{ m }
 {
 \begin{boxsyn_template}
@@ -350,13 +350,13 @@
       frame=single,
       framesep=5pt,
       breaklines=false,
-      captionpos=b 
+      captionpos=b
       moredelim=[is][\bfseries]{[*}{*]},
       morestring=[m][\color{red}]{'},
       morestring=[m][\color{red}]{"},
       stringstyle=\color{red},
       identifierstyle=\color{black},
-      keywordstyle=\color{darkblue},   
+      keywordstyle=\color{darkblue},
       morekeywords=[1]{PASS, passed},
       morekeywords=[2]{FAIL, failed},
       keywordstyle=[1]\color{green},
@@ -413,8 +413,8 @@
     \path[fill=red!70!white,draw=none] (interior.south west) rectangle node[white]{\Huge\bfseries \lightning} ([xshift=10mm]interior.north west);
     },
    , #1}
-  
-  
+
+
 \NewDocumentEnvironment{boxwarning}{ m m }
 {
 \begin{boxwarning_template}
@@ -445,8 +445,8 @@
     \path[fill=green!60!black,draw=none] (interior.south west) rectangle node[white]{\Huge\bfseries \checkmark} ([xshift=10mm]interior.north west);
     },
    , #1}
-  
-  
+
+
 \NewDocumentEnvironment{boxgoodpractice}{ m m }
 {
 \begin{boxgoodpractice_template}
@@ -477,8 +477,8 @@
     \path[fill=orange!80!white,draw=none] (interior.south west) rectangle node[white]{\Huge\bfseries i} ([xshift=10mm]interior.north west);
     },
    , #1}
-  
-  
+
+
 \NewDocumentEnvironment{boxinfo}{ m m }
 {
 \begin{boxinfo_template}

@@ -1,6 +1,6 @@
 # **************************************************************************************************************
 #
-#  Copyright 2020-2022 Robert Bosch GmbH
+#  Copyright 2020-2023 Robert Bosch GmbH
 #
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -528,7 +528,7 @@ Constructor of class ``CDocBuilder``.
 
             # We need to identify the name of some output files inside sDestinationFolder:
             # - PDF file (documentation of package in current repository)
-            # - JSON file (configuration values of current repository and documentation build process) 
+            # - JSON file (configuration values of current repository and documentation build process)
             sPDFFile = None
             sJsonFile = None
             listLocalEntries = os.listdir(sDestinationFolder)

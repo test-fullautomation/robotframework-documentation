@@ -1,4 +1,4 @@
-%  Copyright 2020-2022 Robert Bosch GmbH
+%  Copyright 2020-2023 Robert Bosch GmbH
 %
 %  Licensed under the Apache License, Version 2.0 (the "License");
 %  you may not use this file except in compliance with the License.
@@ -306,7 +306,7 @@ It is possible to give the listing a caption. It is also possible to highlight c
 of numbers of all lines, that shall be highlighted (\texttt{hlcode}):
 
 \begin{verbatim}
-\begin{robotcode}[caption=Robot code example, 
+\begin{robotcode}[caption=Robot code example,
                   linebackgroundcolor=\hlcode{1,4}]
 *** Test Cases ***
 Hello World
@@ -369,7 +369,7 @@ of numbers of all lines, that shall be highlighted (\texttt{hlcode}):
 \vspace{2ex}
 
 \begin{verbatim}
-\begin{pythoncode}[caption=Python code example, 
+\begin{pythoncode}[caption=Python code example,
                    linebackgroundcolor=\hlcode{1,3}]
 def print_pattern():
     values = ("A", "B", "C")
@@ -378,7 +378,7 @@ def print_pattern():
 \end{pythoncode}
 \end{verbatim}
 
-\begin{pythoncode}[caption=Python code example, 
+\begin{pythoncode}[caption=Python code example,
                    linebackgroundcolor=\hlcode{1,3}]
 def print_pattern():
     values = ("A", "B", "C")
@@ -451,7 +451,7 @@ of numbers of all lines, that shall be highlighted (\texttt{hllog}):
 \vspace{2ex}
 
 \begin{verbatim}
-\begin{robotlog}[caption=Robot log example, 
+\begin{robotlog}[caption=Robot log example,
                  linebackgroundcolor=\hllog{7,11}]
 ==============================================================================
 HelloWorld
@@ -469,7 +469,7 @@ Report:  C:\RobotTest\testcases\report.html
 
 \newpage
 
-\begin{robotlog}[caption=Robot log example, 
+\begin{robotlog}[caption=Robot log example,
                  linebackgroundcolor=\hllog{7,11}]
 ==============================================================================
 HelloWorld
@@ -567,7 +567,7 @@ of numbers of all lines, that shall be highlighted (\texttt{hllog}):
 \vspace{2ex}
 
 \begin{verbatim}
-\begin{pythonlog}[caption=Python log example, 
+\begin{pythonlog}[caption=Python log example,
                  linebackgroundcolor=\hllog{7,11}]
 ==============================================================================
 HelloWorld
@@ -585,7 +585,7 @@ Report:  C:\RobotTest\testcases\report.html
 
 \newpage
 
-\begin{pythonlog}[caption=Python log example, 
+\begin{pythonlog}[caption=Python log example,
                  linebackgroundcolor=\hllog{7,11}]
 ==============================================================================
 HelloWorld
@@ -664,7 +664,7 @@ For example it is a usecase to import parameters. In this case a headline like "
 
 \section{Check dependencies to \rfw}
 
-In case of a component is designed to be stand alone, you should not use the term "\rfw" any where in the documentation. 
+In case of a component is designed to be stand alone, you should not use the term "\rfw" any where in the documentation.
 Use the term "\rfwcore" instead. Additionally you should avoid to use the abbreviation "AIO" anywhere in the component code.
 
 In case of a component is used as part of the \rfw\ and in case of this circumstance does change anything, then the documentation

@@ -1,4 +1,4 @@
-.. Copyright 2020-2022 Robert Bosch GmbH
+.. Copyright 2020-2023 Robert Bosch GmbH
 
 .. Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ The documentation consists of two parts:
 2. Description of the interfaces of RobotFramework AIO components
 
 The RobotFramework AIO documentation can be build either with ``genmaindoc.py`` immediately or with ``setup.py`` indirectly. The difference is that ``genmaindoc.py``
-only builds the documentation, whereas ``setup.py`` additionally installs the documentation in 
+only builds the documentation, whereas ``setup.py`` additionally installs the documentation in
 
    .. code::
 
@@ -106,9 +106,9 @@ Some preparations are necessary before ``genmaindoc.py`` or ``setup.py`` can be 
 Feedback
 --------
 
-To give us a feedback, you can send an email to `Thomas Pollerspöck <mailto:Thomas.Pollerspoeck@de.bosch.com>`_ 
+To give us a feedback, you can send an email to `Thomas Pollerspöck <mailto:Thomas.Pollerspoeck@de.bosch.com>`_
 
-In case you want to report a bug or request any interesting feature, please don't 
+In case you want to report a bug or request any interesting feature, please don't
 hesitate to raise a ticket.
 
 Maintainers
@@ -123,7 +123,7 @@ Contributors
 License
 -------
 
-Copyright 2020-2022 Robert Bosch GmbH
+Copyright 2020-2023 Robert Bosch GmbH
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
