@@ -12,13 +12,13 @@
 
 * ``GenPackageDoc``
 
-  - Version: 0.40.0 (from 09.05.2023)
+  - Version: 0.40.3 (from 06.06.2023)
   - URL: https://github.com/test-fullautomation/python-genpackagedoc
   - *Documentation builder for Python packages*
 
 * ``PythonExtensionsCollection``
 
-  - Version: 0.14.0 (from 12.05.2023)
+  - Version: 0.15.0 (from 30.05.2023)
   - URL: https://github.com/test-fullautomation/python-extensions-collection
   - *Additional Python functions*
 
@@ -30,13 +30,13 @@
 
 * ``JsonPreprocessor``
 
-  - Version: 0.2.3 (from 04.05.2023)
+  - Version: 0.2.4 (from 08.06.2023)
   - URL: https://github.com/test-fullautomation/python-jsonpreprocessor
   - *Preprocessor for json files*
 
 * ``RobotFramework_TestsuitesManagement``
 
-  - Version: 0.6.1 (from 28.04.2023)
+  - Version: 0.7.1 (from 26.05.2023)
   - URL: https://github.com/test-fullautomation/robotframework-testsuitesmanagement
   - *Functionality to manage RobotFramework testsuites*
 
@@ -60,7 +60,7 @@
 
 * ``PyTestLog2DB``
 
-  - Version: 0.2.5 (from 04.05.2023)
+  - Version: 0.2.6 (from 08.05.2023)
   - URL: https://github.com/test-fullautomation/python-pytestlog2db
   - *Imports pytest result(s) to TestResultWebApp database*
 
