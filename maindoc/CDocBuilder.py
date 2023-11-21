@@ -20,7 +20,7 @@
 #
 # XC-CT/ECA3-Queckenstedt
 #
-# 13.06.2023
+# 21.11.2023
 #
 # --------------------------------------------------------------------------------------------------------------
 
@@ -660,6 +660,36 @@ Constructor of class ``CDocBuilder``.
             oPythonModulesTexFile.Write(f"{sName} : {sVersion}" + r"\newline")
          oPythonModulesTexFile.Write(r"\end{multicols}")
       oPythonModulesTexFile.Write()
+
+      sAdditionalInstallationHints = """\\vspace{2ex}
+
+Additionally required Python packages can be installed in this way:
+
+\\vspace{2ex}
+
+1. Windows:
+
+\\begin{pythoncode}
+"%RobotPythonPath%/python.exe" -m pip install --proxy <<proxy address>> <<package name>>
+\\end{pythoncode}
+
+\\vspace{2ex}
+
+2. Linux:
+
+\\begin{pythoncode}
+"${RobotPythonPath}/python3" -m pip install --proxy <<proxy address>> <<package name>>
+\\end{pythoncode}
+
+\\vspace{2ex}
+
+The full path and name of the Python interpreter is required in these command lines because the \\textbf{RobotFramework AIO} installer does not modify the environment of the computer (except the setup of some environment variables).
+
+The proxy address is an option and depends on the conditions under which your company grants the access to the internet.
+
+"""
+      oPythonModulesTexFile.Write(f"{sAdditionalInstallationHints}")
+
       del oPythonModulesTexFile
 
       # -- Create another tex file containing the version and the date of the entire framework bundle.
