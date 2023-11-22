@@ -2,7 +2,7 @@
 
 * ``RobotFramework AIO``
 
-  Version: 0.9.0 (from 10.2023)
+  Version: 0.9.2.0 (from 10.2023)
 
 * Underlying ``Robot Framework`` (core)
 
@@ -54,7 +54,7 @@
 
 * ``RobotLog2DB``
 
-  - Version: 1.3.9 (from 23.06.2023)
+  - Version: 1.4.0 (from 19.09.2023)
   - URL: https://github.com/test-fullautomation/robotframework-robotlog2db
   - *Imports robot result(s) to TestResultWebApp database*
 

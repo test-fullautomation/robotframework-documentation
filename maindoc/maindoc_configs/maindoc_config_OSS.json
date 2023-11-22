@@ -4,7 +4,7 @@
 #
 # OSS version
 #
-# 02.02.2023
+# 22.11.2023
 #
 # **************************************************************************************************************
 # Format: extended json format with the possibility to comment out lines (by '#' at the beginning of the line).
@@ -70,7 +70,7 @@
 
 
 # Section "JOBNAME":
-# --------------------------
+# ------------------
 # Defines the name of the pdflatex job.
 # The pdflatex job name is the name of all pdflatex output files - but without the extension of the respective output file.
 # Example: The name of the PDF file is: <JOBNAME>.pdf.
@@ -80,10 +80,18 @@
 
 
 # Section "COVERSHEETSUFFIX":
-# --------------------------
+# ---------------------------
 # Any string that is added to the cover sheet of the resulting PDF (optional).
 
    # "COVERSHEETSUFFIX" : "",
+
+
+# Section "PROXY":
+# ----------------
+# Installation hints provided within the documentation, may require a proxy address. In case of a concrete proxy address is not known,
+# (because a proxy is company specific) a replacement string has to be defined here:
+
+   "PROXY" : "<<proxy address>>",
 
 
 # Section "TEX":
