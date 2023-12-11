@@ -20,7 +20,7 @@
 #
 # XC-CT/ECA3-Queckenstedt
 #
-# 19.05.2023
+# 22.11.2023
 #
 # --------------------------------------------------------------------------------------------------------------
 
@@ -150,20 +150,21 @@ Responsible for:
          sResult  = f"Framework bundle version date not defined. Use '--bundle_version_date' in command line."
          raise Exception(CString.FormatResult(sMethod, bSuccess, sResult))
 
-      # The json file may contain lines that are commented out by a '#' at the beginning of the line.
-      # Therefore we read in this file in text format, remove the comments and save the cleaned file within the temp folder.
-      # Now it's a valid json file and we read the file from there.
-
-      sTmpPath = None
+      # -- platform check
       sPlatformSystem = platform.system()
       if sPlatformSystem == "Windows":
-         sTmpPath = CString.NormalizePath("%TMP%")
+         # currently nothing specific to do
+         pass
       elif sPlatformSystem == "Linux":
-         sTmpPath = "/tmp"
+         # currently nothing specific to do
+         pass
       else:
          bSuccess = None
          sResult  = f"Platform system '{sPlatformSystem}' is not supported"
          raise Exception(CString.FormatResult(sMethod, bSuccess, sResult))
+
+      # The json file may contain lines that are commented out by a '#' at the beginning of the line.
+      # Therefore we read in this file in text format, remove the comments and parse the result with json.loads().
 
       oJsonFileSource = CFile(MAINDOC_CONFIGFILE)
       listLines, bSuccess, sResult = oJsonFileSource.ReadLines(bSkipBlankLines=True, sComment='#')
@@ -187,6 +188,14 @@ Responsible for:
       # take over keys and values from maindocumentation build configuration
       for key, value in dictJsonValues.items():
          self.__dictMainDocConfig[key] = value
+
+      # -- check mandatory parameter from genmaindoc configuration file
+      listMandatoryParameters = ["CONTROL", "IMPORTS", "BOOKSOURCES", "MAINTEXFILENAME", "JOBNAME", "PROXY", "TEX"]
+      for sParameter in listMandatoryParameters:
+         if sParameter not in self.__dictMainDocConfig:
+            bSuccess = None
+            sResult  = f"Parameter '{sParameter}' is missing in configuration file '{MAINDOC_CONFIGFILE}'. Please add"
+            raise Exception(CString.FormatResult(sMethod, bSuccess, sResult))
 
       # add current timestamp
       self.__dictMainDocConfig['NOW'] = time.strftime('%d.%m.%Y - %H:%M:%S')

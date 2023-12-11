@@ -20,7 +20,7 @@
 #
 # XC-CT/ECA3-Queckenstedt
 #
-# 21.11.2023
+# 22.11.2023
 #
 # --------------------------------------------------------------------------------------------------------------
 
@@ -99,9 +99,6 @@ Constructor of class ``CDocBuilder``.
 
       listRepositories = []
       nNrOfRepositories = 0
-
-      # Intermediate solution: simply take the list from JSON file.
-      # Later we have to parse a configuration file within the build repository.
 
       listRepositories = self.__dictMainDocConfig['IMPORTS']
       nNrOfRepositories = len(listRepositories)
@@ -670,7 +667,7 @@ Additionally required Python packages can be installed in this way:
 1. Windows:
 
 \\begin{pythoncode}
-"%RobotPythonPath%/python.exe" -m pip install --proxy <<proxy address>> <<package name>>
+"%RobotPythonPath%/python.exe" -m pip install --proxy ###PROXY### <<packagename>>
 \\end{pythoncode}
 
 \\vspace{2ex}
@@ -678,7 +675,7 @@ Additionally required Python packages can be installed in this way:
 2. Linux:
 
 \\begin{pythoncode}
-"${RobotPythonPath}/python3" -m pip install --proxy <<proxy address>> <<package name>>
+"${RobotPythonPath}/python3" -m pip install --proxy ###PROXY### <<packagename>>
 \\end{pythoncode}
 
 \\vspace{2ex}
@@ -688,6 +685,10 @@ The full path and name of the Python interpreter is required in these command li
 The proxy address is an option and depends on the conditions under which your company grants the access to the internet.
 
 """
+
+      # take over the concrete proxy address defined in the genmaindoc configuration file
+      PROXY = self.__dictMainDocConfig['PROXY']
+      sAdditionalInstallationHints = sAdditionalInstallationHints.replace("###PROXY###", PROXY)
       oPythonModulesTexFile.Write(f"{sAdditionalInstallationHints}")
 
       del oPythonModulesTexFile
@@ -701,7 +702,7 @@ The proxy address is an option and depends on the conditions under which your co
       sBundleVersionDateTeXFile = f"{BOOKSOURCES}/BundleVersionDate.tex"
       self.__dictMainDocConfig['BUNDLEVERSIONDATETEXFILE'] = sBundleVersionDateTeXFile
 
-      COVERSHEETSUFFIX = None
+      COVERSHEETSUFFIX = None # is optional
       if "COVERSHEETSUFFIX" in self.__dictMainDocConfig:
          COVERSHEETSUFFIX = self.__dictMainDocConfig['COVERSHEETSUFFIX']
          COVERSHEETSUFFIX = COVERSHEETSUFFIX.strip()
