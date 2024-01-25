@@ -50,6 +50,7 @@
                 "../../../robotframework-dbus",
                 "../../../robotframework-robotlog2rqm",
                 "../../../robotframework-robotlog2db",
+                "../../../robotframework-doip",
                 "../../../python-pytestlog2db",
                 "../../../testresultwebapp"],
 
