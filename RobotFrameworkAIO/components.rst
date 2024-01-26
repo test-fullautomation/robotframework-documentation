@@ -2,7 +2,7 @@
 
 * ``RobotFramework AIO``
 
-  Version: 0.10.1.2 (from 11/2023)
+  Version: 0.10.0.5 (from 01.2024)
 
 * Underlying ``Robot Framework`` (core)
 
@@ -30,13 +30,13 @@
 
 * ``JsonPreprocessor``
 
-  - Version: 0.3.0 (from 19.09.2023)
+  - Version: 0.3.3 (from 23.01.2024)
   - URL: https://github.com/test-fullautomation/python-jsonpreprocessor
   - *Preprocessor for json files*
 
 * ``RobotFramework_TestsuitesManagement``
 
-  - Version: 0.7.4 (from 11.10.2023)
+  - Version: 0.7.4 (from 14.12.2023)
   - URL: https://github.com/test-fullautomation/robotframework-testsuitesmanagement
   - *Functionality to manage RobotFramework testsuites*
 
@@ -45,6 +45,18 @@
   - Version: 1.1.3 (from 06.06.2023)
   - URL: https://github.com/test-fullautomation/robotframework-qconnect-base
   - *Robot Framework test library for TCP, SSH, serial connection*
+
+* ``QConnectWinapp``
+
+  - Version: 1.0.3 (from 19.10.2023)
+  - URL: https://github.com/test-fullautomation/robotframework-qconnect-winapp
+  - *Robot Framework QConnect library extension for Winapp GUI testing*
+
+* ``RobotFramework_DBus``
+
+  - Version: 0.1.3 (from 19.10.2023)
+  - URL: https://github.com/test-fullautomation/robotframework-dbus
+  - *Robot Framework QConnect library extension for dbus testing*
 
 * ``RobotLog2RQM``
 
@@ -57,6 +69,12 @@
   - Version: 1.4.0 (from 19.09.2023)
   - URL: https://github.com/test-fullautomation/robotframework-robotlog2db
   - *Imports robot result(s) to TestResultWebApp database*
+
+* ``RobotFramework_DoIP``
+
+  - Version: 0.1.0 (from 20.09.2023)
+  - URL: https://github.com/test-fullautomation/robotframework-doip
+  - *RobotFramework for DoIP Client*
 
 * ``PyTestLog2DB``
 
