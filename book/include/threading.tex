@@ -1,0 +1,90 @@
+%  Copyright 2020-2024 Robert Bosch GmbH
+%
+%  Licensed under the Apache License, Version 2.0 (the "License");
+%  you may not use this file except in compliance with the License.
+%  You may obtain a copy of the License at
+%
+%      http://www.apache.org/licenses/LICENSE-2.0
+%
+%  Unless required by applicable law or agreed to in writing, software
+%  distributed under the License is distributed on an "AS IS" BASIS,
+%  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+%  See the License for the specific language governing permissions and
+%  limitations under the License.
+
+\chapter{Threading in Robot Framework}
+
+\section{Background}
+
+The Robot Framework core (\rfwcore) now includes advanced threading features. This enhancement enables the simulation of concurrent processes and interactions within test environments.
+
+\section{Threading Implementation}
+
+\textbf{Threading Syntax:}
+
+\begin{robotcode}
+THREAD    ${ThreadName}     ${IsDaemon}
+       [Thread's actions and keywords]
+END
+\end{robotcode}
+
+This syntax is used to define a thread in Robot Framework tests. Here's a breakdown of the parameters:
+
+\rcode{\$\{ThreadName\}}: This is a required parameter that specifies the name of the thread. It's used for identification and logging purposes. The thread name should be unique within the context of the test suite to avoid confusion.
+
+\rcode{\$\{IsDaemon\}}: This is an optional parameter that determines the nature of the thread. When set to true, the thread is treated as a daemon thread. Daemon threads are typically background tasks that exit when all non-daemon threads have completed. If not specified, the thread is considered a non-daemon thread by default.
+
+The use of named threads and the option to set them as daemon threads allow for precise control over the threading behavior in test cases, facilitating complex test scenarios.
+
+\section{New Threading Keywords}
+
+\subsection{Send Thread Notification Keyword}
+
+This keyword is utilized to send a notification from one thread to another, either to a specific thread or broadcasted to all threads.
+
+\textbf{Syntax:}
+
+\begin{robotcode}
+Send Thread Notification    notification_name    params=None     dst_thread=None
+\end{robotcode}
+
+\textbf{Parameters:}
+
+\rcode{notification\_name}: Mandatory. The unique name of the notification to be sent. This name is used by receiving threads to identify the notification.
+
+\rcode{params}: Optional. The payload of the notification. It can be a string or any structured data and is passed to the receiving thread along with the notification. Default is None, which means no payload is sent.
+
+\rcode{dst\_thread}: Optional. The specific target thread to which the notification should be sent. If not specified or set to None, the notification is broadcasted to all threads.
+
+\subsection{Wait Thread Notification Keyword}
+
+Allows a thread to wait for a specific notification, providing a mechanism for synchronization and response to inter-thread communication.
+
+\textbf{Syntax:}
+
+\begin{robotcode}
+Wait Thread Notification     notification_name    condition=None     timeout=5
+\end{robotcode}
+
+\textbf{Parameters:}
+
+\rcode{notification\_name}: Mandatory. The name of the notification the thread is waiting for. This should match the name given in Send Thread Notification.
+
+\rcode{condition}: Optional. This parameter allows specifying a Python expression as a condition that the notification's payload must satisfy for the notification to be acknowledged. The condition is written as a string and evaluated dynamically. Inside the condition, the variable payloads refers to the payload of the received notification.
+
+For example, setting condition="\$payloads=='test'" means that the thread will continue execution only if it receives a notification named \textbf{notification\_name} whose payload is equal to the string "test". This allows for selective synchronization based on the content of notifications.
+
+\textbf{Example:}
+
+In this example, the thread waits for a notification named "DataUpdate" and proceeds only if the payload of this notification is "test".
+
+\begin{robotcode}
+Wait Thread Notification      DataUpdate     condition=$payloads=='test'     timeout=10
+\end{robotcode}
+
+\rcode{timeout}: Optional. The maximum time in seconds to wait for the notification. If the notification is not received within this period, the keyword will fail. Default is 5 seconds.
+
+\section{Summary}
+
+With the introduction of threading and the new keywords \rcode{Send Thread Notification} and \rcode{Wait Thread Notification}, \rfw\ (Robot Framework) now offers advanced multi-threaded testing capabilities. These enhancements allow for more sophisticated, parallel testing scenarios and improve synchronization and communication between threads.
+
