@@ -20,6 +20,17 @@ The Robot Framework core (\rfwcore) now includes advanced threading features. Th
 
 \section{Threading Implementation}
 
+The threading functionality in Robot Framework introduces the THREAD keyword, which allows for the execution of parallel processes within tests. Here are some key aspects of how THREAD works:
+
+Keyword Usage:
+The THREAD keyword functions similarly to FOR, WHILE, or TRY keywords. It can be utilized within a test case or included in a User Defined Keyword. This flexibility allows for a wide range of multi-threaded test scenarios.
+
+Immediate Thread Start:
+A thread starts executing immediately after its declaration. This means that as soon as the line THREAD ${ThreadName} ${IsDaemon} is executed, the thread begins its operation. This immediate start is crucial for real-time testing and synchronization.
+
+Variable Scope in Threads:
+Each thread has its own variable scope. Variables declared or modified within a thread do not affect the variables in other threads or the main test flow. This separation ensures that threads operate independently and reduces the risk of data conflicts.
+
 \textbf{Threading Syntax:}
 
 \begin{robotcode}
@@ -30,7 +41,7 @@ END
 
 This syntax is used to define a thread in Robot Framework tests. Here's a breakdown of the parameters:
 
-\rcode{\$\{ThreadName\}}: This is a required parameter that specifies the name of the thread. It's used for identification and logging purposes. The thread name should be unique within the context of the test suite to avoid confusion.
+\rcode{\$\{ThreadName\}}: This is a required parameter that specifies the name of the thread. It's used for identification and logging purposes. The thread name should be unique within the context of the test suite to avoid confusion. Thread name is case-sensitive.
 
 \rcode{\$\{IsDaemon\}}: This is an optional parameter that determines the nature of the thread. When set to true, the thread is treated as a daemon thread. Daemon threads are typically background tasks that exit when all non-daemon threads have completed. If not specified, the thread is considered a non-daemon thread by default.
 
@@ -86,5 +97,12 @@ Wait Thread Notification      DataUpdate     condition=$payloads=='test'     tim
 
 \section{Summary}
 
-With the introduction of threading and the new keywords \rcode{Send Thread Notification} and \rcode{Wait Thread Notification}, \rfw\ (Robot Framework) now offers advanced multi-threaded testing capabilities. These enhancements allow for more sophisticated, parallel testing scenarios and improve synchronization and communication between threads.
-
+With the introduction of threading and the new keywords 
+\begin{robotcode}
+Send Thread Notification
+\end{robotcode}
+and 
+\begin{robotcode}
+Wait Thread Notification
+\end{robotcode}
+\rfw\ (Robot Framework) now offers advanced multi-threaded testing capabilities. These enhancements allow for more sophisticated, parallel testing scenarios and improve synchronization and communication between threads.
