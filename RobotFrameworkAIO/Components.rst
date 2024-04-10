@@ -2,11 +2,11 @@
 
 * ``RobotFramework AIO``
 
-  Version: 0.7.0 (from 03.2023)
+  Version: 0.11.0.2 (from 04.2024)
 
 * Underlying ``Robot Framework`` (core)
 
-  Robot Framework 6.1 (Python 3.9.16 on win32)
+  Robot Framework 7.0 (Python 3.9.2 on linux)
 
 **RobotFramework AIO components listing**
 
@@ -30,13 +30,13 @@
 
 * ``JsonPreprocessor``
 
-  - Version: 0.3.3 (from 23.01.2024)
+  - Version: 0.4.0 (from 15.03.2024)
   - URL: https://github.com/test-fullautomation/python-jsonpreprocessor
   - *Preprocessor for json files*
 
 * ``RobotFramework_TestsuitesManagement``
 
-  - Version: 0.7.4 (from 14.12.2023)
+  - Version: 0.7.6 (from 01.04.2024)
   - URL: https://github.com/test-fullautomation/robotframework-testsuitesmanagement
   - *Functionality to manage RobotFramework testsuites*
 
@@ -60,25 +60,25 @@
 
 * ``RobotLog2RQM``
 
-  - Version: 1.2.1 (from 14.06.2023)
+  - Version: 1.2.3 (from 14.03.2024)
   - URL: https://github.com/test-fullautomation/robotframework-robotlog2rqm
   - *Imports robot result(s) to IBM Rational Quality Manager (RQM)*
 
 * ``RobotLog2DB``
 
-  - Version: 1.4.0 (from 19.09.2023)
+  - Version: 1.4.1 (from 15.03.2024)
   - URL: https://github.com/test-fullautomation/robotframework-robotlog2db
   - *Imports robot result(s) to TestResultWebApp database*
 
 * ``RobotFramework_DoIP``
 
-  - Version: 0.1.0 (from 20.09.2023)
+  - Version: 0.1.2 (from 08.04.2024)
   - URL: https://github.com/test-fullautomation/robotframework-doip
   - *RobotFramework for DoIP Client*
 
 * ``PyTestLog2DB``
 
-  - Version: 0.2.7 (from 14.06.2023)
+  - Version: 0.2.8 (from 14.12.2023)
   - URL: https://github.com/test-fullautomation/python-pytestlog2db
   - *Imports pytest result(s) to TestResultWebApp database*
 
