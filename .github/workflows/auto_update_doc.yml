@@ -21,7 +21,7 @@ jobs:
       
       - name: Create pull request
         run: |
-          doc_branch=htv3hc/feat/auto-update-doc
+          doc_branch=automation/task/update-rfw-documents
 
           echo "Create pull request to merge documents"
           pr_exists=$(gh pr list --state open | grep -qw "Auto-updated documents" && echo "found" || echo "not found")          
