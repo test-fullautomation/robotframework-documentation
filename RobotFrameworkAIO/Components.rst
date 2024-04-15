@@ -2,7 +2,7 @@
 
 * ``RobotFramework AIO``
 
-  Version: 0.11.0.3 (from 04.2024)
+  Version: 0.11.0.4 (from 04.2024)
 
 * Underlying ``Robot Framework`` (core)
 
@@ -72,7 +72,7 @@
 
 * ``RobotFramework_DoIP``
 
-  - Version: 0.1.3 (from 10.04.2024)
+  - Version: 0.1.4 (from 12.04.2024)
   - URL: https://github.com/test-fullautomation/robotframework-doip
   - *RobotFramework for DoIP Client*
 
