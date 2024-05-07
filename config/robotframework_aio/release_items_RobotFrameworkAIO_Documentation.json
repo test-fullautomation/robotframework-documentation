@@ -45,9 +45,8 @@
 # ------------------------------------------
 
    "RELEASES"  : {
-                   "0.x.y" : [
-                               "0.x.y",
-                               "0.x.y"
+                   "0.12." : [
+                               "Added documentation of **TestResultDBAccess** package"
                              ]
                  }
 }
