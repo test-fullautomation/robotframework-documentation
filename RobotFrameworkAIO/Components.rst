@@ -2,7 +2,7 @@
 
 * ``RobotFramework AIO``
 
-  Version: 0.11.1.0 (from 05.2024)
+  Version: 0.11.1.2 (from 05.2024)
 
 * Underlying ``Robot Framework`` (core)
 
@@ -30,13 +30,13 @@
 
 * ``JsonPreprocessor``
 
-  - Version: 0.5.0 (from 10.04.2024)
+  - Version: 0.6.0 (from 14.05.2024)
   - URL: https://github.com/test-fullautomation/python-jsonpreprocessor
   - *Preprocessor for json files*
 
 * ``RobotFramework_TestsuitesManagement``
 
-  - Version: 0.7.7 (from 10.04.2024)
+  - Version: 0.7.8 (from 14.05.2024)
   - URL: https://github.com/test-fullautomation/robotframework-testsuitesmanagement
   - *Functionality to manage RobotFramework testsuites*
 
