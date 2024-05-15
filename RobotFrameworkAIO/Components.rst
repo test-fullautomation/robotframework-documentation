@@ -2,7 +2,7 @@
 
 * ``RobotFramework AIO``
 
-  Version: 0.11.1.2 (from 05.2024)
+  Version: 0.12.0.0 (from 05.2024)
 
 * Underlying ``Robot Framework`` (core)
 
@@ -30,7 +30,7 @@
 
 * ``JsonPreprocessor``
 
-  - Version: 0.6.0 (from 14.05.2024)
+  - Version: 0.6.1 (from 14.05.2024)
   - URL: https://github.com/test-fullautomation/python-jsonpreprocessor
   - *Preprocessor for json files*
 
