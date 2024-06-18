@@ -2,11 +2,11 @@
 
 * ``RobotFramework AIO``
 
-  Version: 0.12.0.4 (from 05.2024)
+  Version: 0.12.1.1 (from 06.2024)
 
 * Underlying ``Robot Framework`` (core)
 
-  Robot Framework 7.0 (Python 3.9.2 on linux)
+  Robot Framework 7.0.1 (Python 3.9.2 on linux)
 
 **RobotFramework AIO components listing**
 
@@ -30,7 +30,7 @@
 
 * ``JsonPreprocessor``
 
-  - Version: 0.6.1 (from 14.05.2024)
+  - Version: 0.7.0 (from 18.06.2024)
   - URL: https://github.com/test-fullautomation/python-jsonpreprocessor
   - *Preprocessor for json files*
 
@@ -58,9 +58,15 @@
   - URL: https://github.com/test-fullautomation/robotframework-dbus
   - *Robot Framework QConnect library extension for dbus testing*
 
+* ``PrometheusInterface``
+
+  - Version: 0.6.1 (from 17.06.2024)
+  - URL: https://github.com/test-fullautomation/robotframework-prometheus
+  - *Additional Robot Framework keywords*
+
 * ``RobotLog2RQM``
 
-  - Version: 1.2.3 (from 14.03.2024)
+  - Version: 1.2.4 (from 11.06.2024)
   - URL: https://github.com/test-fullautomation/robotframework-robotlog2rqm
   - *Imports robot result(s) to IBM Rational Quality Manager (RQM)*
 
