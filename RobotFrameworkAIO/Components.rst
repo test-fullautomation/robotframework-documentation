@@ -2,7 +2,7 @@
 
 * ``RobotFramework AIO``
 
-  Version: 0.12.1.1 (from 06.2024)
+  Version: 0.12.1.2 (from 06.2024)
 
 * Underlying ``Robot Framework`` (core)
 
@@ -36,7 +36,7 @@
 
 * ``RobotFramework_TestsuitesManagement``
 
-  - Version: 0.7.8 (from 14.05.2024)
+  - Version: 0.7.9 (from 18.06.2024)
   - URL: https://github.com/test-fullautomation/robotframework-testsuitesmanagement
   - *Functionality to manage RobotFramework testsuites*
 
