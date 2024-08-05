@@ -2,7 +2,7 @@
 
 * ``RobotFramework AIO``
 
-  Version: 0.13.0.0 (from 06.2024)
+  Version: 0.13.0.0 (from 08.2024)
 
 * Underlying ``Robot Framework`` (core)
 
@@ -66,19 +66,19 @@
 
 * ``RobotLog2RQM``
 
-  - Version: 1.2.4 (from 11.06.2024)
+  - Version: 1.4.0 (from 24.07.2024)
   - URL: https://github.com/test-fullautomation/robotframework-robotlog2rqm
   - *Imports robot result(s) to IBM Rational Quality Manager (RQM)*
 
 * ``TestResultDBAccess``
 
-  - Version: 0.1.3 (from 17.05.2024)
+  - Version: 0.1.4 (from 01.08.2024)
   - URL: https://github.com/test-fullautomation/python-testresultdbaccess
   - *Interfaces to access TestResultWebApp database*
 
 * ``RobotLog2DB``
 
-  - Version: 1.5.1 (from 14.06.2024)
+  - Version: 1.5.2 (from 28.06.2024)
   - URL: https://github.com/test-fullautomation/robotframework-robotlog2db
   - *Imports robot result(s) to TestResultWebApp database*
 
@@ -90,7 +90,7 @@
 
 * ``PyTestLog2DB``
 
-  - Version: 0.3.1 (from 20.05.2024)
+  - Version: 0.3.4 (from 02.08.2024)
   - URL: https://github.com/test-fullautomation/python-pytestlog2db
   - *Imports pytest result(s) to TestResultWebApp database*
 
