@@ -4,7 +4,7 @@
 #
 # OSS version
 #
-# 27.05.2024
+# 26.08.2024
 #
 # **************************************************************************************************************
 # Format: extended json format with the possibility to comment out lines (by '#' at the beginning of the line).
@@ -49,6 +49,7 @@
                 "../../../robotframework-qconnect-winapp",
                 "../../../robotframework-dbus",
                 "../../../robotframework-prometheus",
+                "../../../robotframework-uds",
                 "../../../robotframework-robotlog2rqm",
                 "../../../python-testresultdbaccess",
                 "../../../robotframework-robotlog2db",
