@@ -2,7 +2,7 @@
 
 * ``RobotFramework AIO``
 
-  Version: 0.13.0.10 (from 08.2024)
+  Version: 0.13.0.14 (from 08.2024)
 
 * Underlying ``Robot Framework`` (core)
 
@@ -63,6 +63,12 @@
   - Version: 0.6.1 (from 17.06.2024)
   - URL: https://github.com/test-fullautomation/robotframework-prometheus
   - *Additional Robot Framework keywords*
+
+* ``RobotFramework_UDS``
+
+  - Version: 0.1.0 (from 23.08.2024)
+  - URL: https://github.com/test-fullautomation/robotframework-uds
+  - *TODO*
 
 * ``RobotLog2RQM``
 
