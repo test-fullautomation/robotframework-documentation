@@ -2,7 +2,7 @@
 
 * ``RobotFramework AIO``
 
-  Version: 0.13.0.20 (from 09.2024)
+  Version: 0.13.0.21 (from 09.2024)
 
 * Underlying ``Robot Framework`` (core)
 
