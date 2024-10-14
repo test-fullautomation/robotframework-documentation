@@ -2,7 +2,7 @@
 
 * ``RobotFramework AIO``
 
-  Version: 0.13.0.22 (from 09.2024)
+  Version: 0.13.0.23 (from 10.2024)
 
 * Underlying ``Robot Framework`` (core)
 
@@ -72,7 +72,7 @@
 
 * ``RobotLog2RQM``
 
-  - Version: 1.4.0 (from 24.07.2024)
+  - Version: 1.4.1 (from 20.09.2024)
   - URL: https://github.com/test-fullautomation/robotframework-robotlog2rqm
   - *Imports robot result(s) to IBM Rational Quality Manager (RQM)*
 
