@@ -47,7 +47,7 @@ This syntax is used to define a thread in Robot Framework tests. Here's a breakd
 
 The use of named threads and the option to set them as daemon threads allow for precise control over the threading behavior in test cases, facilitating complex test scenarios.
 
-\section{New Threading Keywords}
+\section{Threading Keywords}
 
 \subsection{Send Thread Notification Keyword}
 
@@ -79,11 +79,12 @@ Wait Thread Notification     notification_name    condition=None     timeout=5
 
 \textbf{Parameters:}
 
-\rcode{notification\_name}: Mandatory. The name of the notification the thread is waiting for. This should match the name given in Send Thread Notification.
+\rcode{notification\_name}: Mandatory. The name of the notification the thread is waiting for. This should match the name given in \rcode{Send Thread Notification}.
 
-\rcode{condition}: Optional. This parameter allows specifying a Python expression as a condition that the notification's payload must satisfy for the notification to be acknowledged. The condition is written as a string and evaluated dynamically. Inside the condition, the variable payloads refers to the payload of the received notification.
+\rcode{condition}: Optional. This parameter allows specifying a Python expression that acts as a condition the notification's payload must meet for the notification to be acknowledged. The condition is provided as a Python expression and evaluated at runtime. In this context, the variable \rcode{payloads} refers to the payload of the received notification, and it can be used within the condition to apply filters or checks based on the content of the notification.
 
-For example, setting condition="\$payloads=='test'" means that the thread will continue execution only if it receives a notification named \textbf{notification\_name} whose payload is equal to the string "test". This allows for selective synchronization based on the content of notifications.
+
+For example, setting condition=\$payloads=='test' means that the thread will continue execution only if it receives a notification named \textbf{notification\_name} whose payload is equal to the string "test". This allows for selective synchronization based on the content of notifications.
 
 \textbf{Example:}
 
@@ -94,6 +95,59 @@ Wait Thread Notification      DataUpdate     condition=$payloads=='test'     tim
 \end{robotcode}
 
 \rcode{timeout}: Optional. The maximum time in seconds to wait for the notification. If the notification is not received within this period, the keyword will fail. Default is 5 seconds.
+
+\subsection{Thread RLock Acquire Keyword}
+
+This keyword allows a thread to acquire a re-entrant lock (RLock) with a specified name, providing a mechanism for thread synchronization with optional blocking and timeout features.
+
+\textbf{Syntax:}
+
+\begin{robotcode}
+Thread RLock Acquire    rlock_name    blocking=True    timeout=-1
+\end{robotcode}
+
+\textbf{Parameters:}
+
+\rcode{rlock\_name}: Mandatory. The name of the re-entrant lock to be acquired.
+
+\rcode{blocking}: Optional. Determines whether the thread should wait for the lock to become available if it's currently held by another thread. Default is \textbf{True}, meaning the thread will wait.
+
+\rcode{timeout}: Optional. The maximum time in seconds to wait for the lock if blocking is set to \textbf{True}. The default value is \textbf{-1}, meaning the thread will wait indefinitely.
+
+This keyword will fail if the lock could not be acquired within the specified timeout or if \textbf{blocking} is set to \textbf{False} and the lock is already held by another thread.
+
+\textbf{Examples:}
+
+\begin{robotcode}
+Thread RLock Acquire    MyLock
+Thread RLock Acquire    MyLock    blocking=False
+Thread RLock Acquire    MyLock    blocking=True    timeout=5
+\end{robotcode}
+
+\subsection{Thread RLock Release Keyword}
+
+This keyword releases a previously acquired re-entrant lock (RLock) specified by the given lock name.
+
+\textbf{Syntax:}
+
+\begin{robotcode}
+Thread RLock Release    rlock_name
+\end{robotcode}
+
+\textbf{Parameters:}
+
+\rcode{rlock\_name}: Mandatory. The name of the re-entrant lock to be released.
+
+The lock must have been acquired by the same thread attempting to release it. Releasing a lock not held by the current thread will result in an error.
+
+\textbf{Examples:}
+
+\begin{robotcode}
+Thread RLock Release    MyLock
+\end{robotcode}
+
+This keyword will fail if the lock cannot be released, such as when the current thread did not acquire the lock or if the lock was never acquired in the first place.
+
 
 \section{Summary}
 
@@ -106,3 +160,15 @@ and
 Wait Thread Notification
 \end{robotcode}
 \rfw\ (Robot Framework) now offers advanced multi-threaded testing capabilities. These enhancements allow for more sophisticated, parallel testing scenarios and improve synchronization and communication between threads.
+
+In addition, the keywords 
+\begin{robotcode}
+Thread RLock Acquire
+\end{robotcode}
+and 
+\begin{robotcode}
+Thread RLock Release
+\end{robotcode}
+provide powerful mechanisms for controlling shared resources between threads using re-entrant locks (RLocks). These keywords enable precise control over concurrent access to resources, ensuring that test cases can safely handle critical sections without risking race conditions or data conflicts.
+
+Together, these new threading features give users the ability to design complex, real-world testing scenarios involving multiple threads, inter-thread communication, and synchronization. This brings greater flexibility and robustness to automated testing in \rfw, making it well-suited for environments where concurrency and parallel execution are required.
