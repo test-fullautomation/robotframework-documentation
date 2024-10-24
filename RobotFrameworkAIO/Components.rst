@@ -2,11 +2,11 @@
 
 * ``RobotFramework AIO``
 
-  Version: 0.13.0.23 (from 10.2024)
+  Version: 0.13.1.5 (from 10.2024)
 
 * Underlying ``Robot Framework`` (core)
 
-  Robot Framework 7.1 (Python 3.9.2 on linux)
+  Robot Framework 7.1.1 (Python 3.9.2 on linux)
 
 **RobotFramework AIO components listing**
 
@@ -60,13 +60,13 @@
 
 * ``PrometheusInterface``
 
-  - Version: 0.6.1 (from 17.06.2024)
+  - Version: 0.8.0 (from 21.10.2024)
   - URL: https://github.com/test-fullautomation/robotframework-prometheus
   - *Additional Robot Framework keywords*
 
 * ``RobotFramework_UDS``
 
-  - Version: 0.1.3 (from 05.09.2024)
+  - Version: 0.1.8 (from 18.10.2024)
   - URL: https://github.com/test-fullautomation/robotframework-uds
   - *Robot Framework keywords for UDS (Unified Diagnostic Services) communication*
 
