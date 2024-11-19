@@ -1,17 +1,17 @@
 # **************************************************************************************************************
 #
-# Main doc configuration file
+# Configuration file for RobotFramework AIO main documentation
 #
-# OSS version
+# OSS version (for original Robot Framework core)
 #
-# 26.08.2024
+# 19.11.2024
 #
 # **************************************************************************************************************
 # Format: extended json format with the possibility to comment out lines (by '#' at the beginning of the line).
 # The reference for relative paths inside this file is the position of this file.
 # --------------------------------------------------------------------------------------------------------------
 # This file has to be referenced in command line in this way:
-#    "%RobotPythonPath%/python.exe" ./genmaindoc.py --configfile "./maindoc_configs/maindoc_config_OSS.json"
+#    "%RobotPythonPath%/python.exe" ./genmaindoc.py --configfile "./maindoc_configs/maindoc_config_OSS_original.json"
 # Reference for the relative path to --configfile is the position of the 'maindoc' folder like defined
 # in repository configuration 'config/repository_config.json' in this way:
 #    "PACKAGEDOC" : "./maindoc"
@@ -72,7 +72,7 @@
 # Defines the name of the main tex file, that has to be executed by the LaTeX compiler.
 # It is expected that this file is present within "BOOKSOURCES".
 
-   "MAINTEXFILENAME" : "RobotFrameworkAIO_Reference_OSS.tex",
+   "MAINTEXFILENAME" : "RobotFrameworkAIO_Reference_OSS_original.tex",
 
 
 # Section "JOBNAME":
@@ -89,7 +89,7 @@
 # ---------------------------
 # Any string that is added to the cover sheet of the resulting PDF (optional).
 
-   # "COVERSHEETSUFFIX" : "",
+   "COVERSHEETSUFFIX" : "(original core)",
 
 
 # Section "PROXY":

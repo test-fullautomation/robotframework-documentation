@@ -708,6 +708,12 @@ The proxy address is an option and depends on the conditions under which your co
          COVERSHEETSUFFIX = COVERSHEETSUFFIX.strip()
          if COVERSHEETSUFFIX == "":
             COVERSHEETSUFFIX = None
+      if COVERSHEETSUFFIX is not None:
+         listCoverSheetSuffixes_splitted = COVERSHEETSUFFIX.split(';')
+         listCoverSheetSuffixes_final = []
+         for sCoverSheetSuffix in listCoverSheetSuffixes_splitted:
+            listCoverSheetSuffixes_final.append(sCoverSheetSuffix.strip() + "\\\\")
+         COVERSHEETSUFFIX = r"\vspace{2ex}".join(listCoverSheetSuffixes_final)
 
       # -- get and prepare framework bundle information (values prepared for LaTeX output)
 
