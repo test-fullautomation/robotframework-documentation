@@ -82,7 +82,7 @@
 # Example: The name of the PDF file is: <JOBNAME>.pdf.
 # All pdflatex output files are generated within "BOOKSOURCES".
 
-   "JOBNAME" : "RobotFrameworkAIO_Reference",
+   "JOBNAME" : "RobotFrameworkAIO_Reference_extended",
 
 
 # Section "COVERSHEETSUFFIX":
