@@ -2,11 +2,11 @@
 
 * ``RobotFramework AIO``
 
-  Version: 0.13.1.6 (from 10.2024)
+  Version: 0.13.1.15 (from 11.2024)
 
 * Underlying ``Robot Framework`` (core)
 
-  Robot Framework 7.1.1 (Python 3.9.2 on linux)
+  Robot Framework 6.1 (Python 3.9.2 on linux)
 
 **RobotFramework AIO components listing**
 
@@ -30,13 +30,13 @@
 
 * ``JsonPreprocessor``
 
-  - Version: 0.8.0 (from 12.08.2024)
+  - Version: 0.8.3 (from 25.11.2024)
   - URL: https://github.com/test-fullautomation/python-jsonpreprocessor
   - *Preprocessor for json files*
 
 * ``RobotFramework_TestsuitesManagement``
 
-  - Version: 0.7.10 (from 12.08.2024)
+  - Version: 0.7.11 (from 28.10.2024)
   - URL: https://github.com/test-fullautomation/robotframework-testsuitesmanagement
   - *Functionality to manage RobotFramework testsuites*
 
@@ -66,7 +66,7 @@
 
 * ``RobotFramework_UDS``
 
-  - Version: 0.1.8 (from 18.10.2024)
+  - Version: 0.1.10 (from 1.11.2024)
   - URL: https://github.com/test-fullautomation/robotframework-uds
   - *Robot Framework keywords for UDS (Unified Diagnostic Services) communication*
 
@@ -84,13 +84,13 @@
 
 * ``RobotLog2DB``
 
-  - Version: 1.5.2 (from 28.06.2024)
+  - Version: 1.5.3 (from 21.11.2024)
   - URL: https://github.com/test-fullautomation/robotframework-robotlog2db
   - *Imports robot result(s) to TestResultWebApp database*
 
 * ``RobotFramework_DoIP``
 
-  - Version: 0.1.4 (from 12.04.2024)
+  - Version: 0.1.5 (from 15.10.2024)
   - URL: https://github.com/test-fullautomation/robotframework-doip
   - *RobotFramework for DoIP Client*
 
