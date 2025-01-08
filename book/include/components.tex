@@ -160,6 +160,18 @@ Features:
    \item Static code analysis by Robocop, that is an also included static code checker
 \end{itemize}
 
+\begin{boxhint}{Notice}
+   If you are working behind a company proxy, you need to configure the proxy settings in VScodium to access the extension marketplace. 
+   Without proper proxy configuration, VScodium may fail to connect to the marketplace and download extensions.
 
+   To set the proxy:
+   \begin{enumerate}
+      \item Open your \rcode{settings.json} file in VScodium.
+      \item Add or update the following entry with your company's proxy information:
+\begin{pythoncode}
+   "http.proxy": "http://your-proxy-address:port"
+\end{pythoncode}
+   \end{enumerate}
+\end{boxhint}
 
 
