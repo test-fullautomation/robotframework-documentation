@@ -2,7 +2,7 @@
 
 * ``RobotFramework AIO``
 
-  Version: 0.13.1.20 (from 01.2025)
+  Version: 0.13.2.0 (from 02.2025)
 
 * Underlying ``Robot Framework`` (core)
 
@@ -18,7 +18,7 @@
 
 * ``PythonExtensionsCollection``
 
-  - Version: 0.15.1 (from 19.10.2023)
+  - Version: 0.16.0 (from 29.01.2025)
   - URL: https://github.com/test-fullautomation/python-extensions-collection
   - *Additional Python functions*
 
