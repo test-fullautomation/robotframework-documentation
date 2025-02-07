@@ -18,12 +18,19 @@ The usual test results \rcode{PASS} and \rcode{FAIL} are statements about the \e
 is a proper test execution. For some reasons this is not possible:
 \begin{enumerate}
    \item The preconditions of a test cannot be fulfilled.
+   \item Libraries that cannot be loaded.
    \item Errors in the code of the test itself.
    \item Broken connection to the \emph{sytem under test}.
 \end{enumerate}
 
 The impact in this case is: A conclusive statement about the \emph{system under test} is not possible.
 The test itself is the one who has the issue. This is announced by an additional test result \rcode{UNKNOWN}.
+This enhances the expressiveness and accuracy of Robot Framework’s test results by clearly indicating, that an error
+prevented the test.
+
+This additional precision will not only help clarify the nature of issues encountered but also prevent unnecessary
+analyzing and debugging of features that weren't even tested due to unmet preconditions.
+Finally it brings clarity and saves time and money.
 
 \vspace{2ex}
 
@@ -70,6 +77,8 @@ ExampleTest
 
     UNKNOWN
 \end{robotcode}
+
+\newpage
 
 It's possible to add a message:
 
