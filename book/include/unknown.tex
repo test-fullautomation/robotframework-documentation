@@ -1,0 +1,113 @@
+%  Copyright 2020-2025 Robert Bosch GmbH
+%
+%  Licensed under the Apache License, Version 2.0 (the "License");
+%  you may not use this file except in compliance with the License.
+%  You may obtain a copy of the License at
+%
+%      http://www.apache.org/licenses/LICENSE-2.0
+%
+%  Unless required by applicable law or agreed to in writing, software
+%  distributed under the License is distributed on an "AS IS" BASIS,
+%  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+%  See the License for the specific language governing permissions and
+%  limitations under the License.
+
+\chapter{Test result 'UNKNOWN'}
+
+The usual test results \rcode{PASS} and \rcode{FAIL} are statements about the \emph{sytem under test}. The precondition for such test results
+is a proper test execution. For some reasons this is not possible:
+\begin{enumerate}
+   \item The preconditions of a test cannot be fulfilled.
+   \item Libraries that cannot be loaded.
+   \item Errors in the code of the test itself.
+   \item Broken connection to the \emph{sytem under test}.
+\end{enumerate}
+
+The impact in this case is: A conclusive statement about the \emph{system under test} is not possible.
+The test itself is the one who has the issue. This is announced by an additional test result \rcode{UNKNOWN}.
+This enhances the expressiveness and accuracy of Robot Framework’s test results by clearly indicating, that an error
+prevented the test.
+
+This additional precision will not only help clarify the nature of issues encountered but also prevent unnecessary
+analyzing and debugging of features that weren't even tested due to unmet preconditions.
+Finally it brings clarity and saves time and money.
+
+\vspace{2ex}
+
+The test result \rcode{UNKNOWN} can be caused by the following events:
+
+\vspace{2ex}
+
+\textbf{Syntax error in robot code (\textit{typing mistake}):}
+
+\begin{robotcode}
+ExampleTest
+
+    Lo**g    ${PORT}
+\end{robotcode}
+
+The result in console is:
+
+\begin{robotlog}
+ExampleTest                                      | UNKNOWN |
+No keyword with name 'Lo**g' found. Did you mean:
+    BuiltIn.Log
+\end{robotlog}
+
+\vspace{2ex}
+
+\textbf{Syntax error in keyword library (\textit{missing bracket}):}
+
+\begin{pythoncode}
+@keyword
+def went_wrong(self):
+    BuiltIn().log(f"This went wrong", "INFO"
+\end{pythoncode}
+
+\vspace{2ex}
+
+Additionally to unexpected events, the test result \rcode{UNKNOWN} can also be forced explicitly.
+
+\vspace{2ex}
+
+\textbf{In robot code by keyword} \rcode{UNKNOWN}\textbf{:}
+
+\begin{robotcode}
+ExampleTest
+
+    UNKNOWN
+\end{robotcode}
+
+\newpage
+
+It's possible to add a message:
+
+\begin{robotcode}
+ExampleTest
+
+    UNKNOWN    "This went wrong"
+\end{robotcode}
+
+\newpage
+
+The result in console is:
+
+\begin{robotlog}
+ExampleTest       | UNKNOWN |
+"This went wrong"
+\end{robotlog}
+
+\vspace{2ex}
+
+\textbf{Raise an exception in keyword library:}
+
+\begin{pythoncode}
+    @keyword
+    def went_wrong(self):
+        raise Exception("This went wrong")
+\end{pythoncode}
+
+Raised exceptions within Python code are mapped to test result \rcode{UNKNOWN} internally.
+
+
+
