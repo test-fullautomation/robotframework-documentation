@@ -2,7 +2,7 @@
 
 * ``RobotFramework AIO``
 
-  Version: 0.13.2.2 (from 02.2025)
+  Version: 0.13.2.3 (from 02.2025)
 
 * Underlying ``Robot Framework`` (core)
 
@@ -66,7 +66,7 @@
 
 * ``RobotFramework_UDS``
 
-  - Version: 0.1.10 (from 1.11.2024)
+  - Version: 0.1.12 (from 10.02.2024)
   - URL: https://github.com/test-fullautomation/robotframework-uds
   - *Robot Framework keywords for UDS (Unified Diagnostic Services) communication*
 
