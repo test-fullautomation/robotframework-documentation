@@ -2,11 +2,11 @@
 
 * ``RobotFramework AIO``
 
-  Version: 0.13.2.5 (from 02.2025)
+  Version: 0.13.2.6 (from 02.2025)
 
 * Underlying ``Robot Framework`` (core)
 
-  Robot Framework 6.1 (Python 3.9.2 on linux)
+  Robot Framework 7.1.1 (Python 3.9.2 on linux)
 
 **RobotFramework AIO components listing**
 
