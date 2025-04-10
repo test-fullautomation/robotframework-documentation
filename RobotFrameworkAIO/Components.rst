@@ -2,7 +2,7 @@
 
 * ``RobotFramework AIO``
 
-  Version: 0.14.1.6 (from 04.2025)
+  Version: 0.14.1.7 (from 04.2025)
 
 * Underlying ``Robot Framework`` (core)
 
@@ -78,7 +78,7 @@
 
 * ``TestResultDBAccess``
 
-  - Version: 0.1.4 (from 01.08.2024)
+  - Version: 0.1.5 (from 10.04.2025)
   - URL: https://github.com/test-fullautomation/python-testresultdbaccess
   - *Interfaces to access TestResultWebApp database*
 
