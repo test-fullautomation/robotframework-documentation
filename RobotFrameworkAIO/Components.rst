@@ -2,11 +2,11 @@
 
 * ``RobotFramework AIO``
 
-  Version: 0.13.1.15 (from 11.2024)
+  Version: 0.14.1.9 (from 04.2025)
 
 * Underlying ``Robot Framework`` (core)
 
-  Robot Framework 6.1 (Python 3.9.2 on linux)
+  Robot Framework 6.1 (Python 3.13.2 on linux)
 
 **RobotFramework AIO components listing**
 
@@ -18,7 +18,7 @@
 
 * ``PythonExtensionsCollection``
 
-  - Version: 0.15.1 (from 19.10.2023)
+  - Version: 0.16.0 (from 29.01.2025)
   - URL: https://github.com/test-fullautomation/python-extensions-collection
   - *Additional Python functions*
 
@@ -30,13 +30,13 @@
 
 * ``JsonPreprocessor``
 
-  - Version: 0.8.3 (from 25.11.2024)
+  - Version: 0.9.0 (from 14.3.2025)
   - URL: https://github.com/test-fullautomation/python-jsonpreprocessor
   - *Preprocessor for json files*
 
 * ``RobotFramework_TestsuitesManagement``
 
-  - Version: 0.7.11 (from 28.10.2024)
+  - Version: 0.8.0 (from 14.3.2025)
   - URL: https://github.com/test-fullautomation/robotframework-testsuitesmanagement
   - *Functionality to manage RobotFramework testsuites*
 
@@ -66,31 +66,31 @@
 
 * ``RobotFramework_UDS``
 
-  - Version: 0.1.10 (from 1.11.2024)
+  - Version: 0.1.14 (from 27.03.2024)
   - URL: https://github.com/test-fullautomation/robotframework-uds
   - *Robot Framework keywords for UDS (Unified Diagnostic Services) communication*
 
 * ``RobotLog2RQM``
 
-  - Version: 1.4.1 (from 20.09.2024)
+  - Version: 1.4.2 (from 18.02.2025)
   - URL: https://github.com/test-fullautomation/robotframework-robotlog2rqm
   - *Imports robot result(s) to IBM Rational Quality Manager (RQM)*
 
 * ``TestResultDBAccess``
 
-  - Version: 0.1.4 (from 01.08.2024)
+  - Version: 0.1.6 (from 11.04.2025)
   - URL: https://github.com/test-fullautomation/python-testresultdbaccess
   - *Interfaces to access TestResultWebApp database*
 
 * ``RobotLog2DB``
 
-  - Version: 1.5.3 (from 21.11.2024)
+  - Version: 1.5.4 (from 04.02.2025)
   - URL: https://github.com/test-fullautomation/robotframework-robotlog2db
   - *Imports robot result(s) to TestResultWebApp database*
 
 * ``RobotFramework_DoIP``
 
-  - Version: 0.1.5 (from 15.10.2024)
+  - Version: 0.1.6 (from 21.3.2025)
   - URL: https://github.com/test-fullautomation/robotframework-doip
   - *RobotFramework for DoIP Client*
 
