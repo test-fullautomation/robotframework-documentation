@@ -20,7 +20,7 @@
 #
 # XC-HWP/ESW3-Queckenstedt
 #
-# 22.11.2023
+# 07.05.2025
 #
 # --------------------------------------------------------------------------------------------------------------
 
@@ -124,6 +124,17 @@ Responsible for:
 
       print(COLNY + f"Maindoc configuration: '{MAINDOC_CONFIGFILE}'")
       print()
+
+      # Currently the maindoc configuration file can either belong to to the 'original' Robot Framework core
+      # or to the 'extended' core. This information is part of the file names only - but not a separate configuration
+      # parameter. Therefore we extract this information out of the file names here (even if this is not really
+      # elegant).
+      ROBOTFRAMEWORK_CORE = "UNKNOWN"
+      if "_original" in MAINDOC_CONFIGFILE:
+         ROBOTFRAMEWORK_CORE = "original"
+      elif "_extended" in MAINDOC_CONFIGFILE:
+         ROBOTFRAMEWORK_CORE = "extended"
+      self.__dictMainDocConfig['ROBOTFRAMEWORK_CORE'] = ROBOTFRAMEWORK_CORE # update config
 
       # -- check framework bundle information (but argparse already should have prevented missing parameters)
 

@@ -20,7 +20,7 @@
 #
 # XC-HWP/ESW3-Queckenstedt
 #
-# 22.11.2023
+# 07.05.2025
 #
 # --------------------------------------------------------------------------------------------------------------
 
@@ -263,9 +263,10 @@ Constructor of class ``CDocBuilder``.
       BUNDLE_NAME         = self.__dictMainDocConfig['BUNDLE_NAME']
       BUNDLE_VERSION      = self.__dictMainDocConfig['BUNDLE_VERSION']
       BUNDLE_VERSION_DATE = self.__dictMainDocConfig['BUNDLE_VERSION_DATE']
+      ROBOTFRAMEWORK_CORE = self.__dictMainDocConfig['ROBOTFRAMEWORK_CORE']
 
       sExternalDocFolder = self.__dictMainDocConfig['EXTERNALDOCFOLDER']
-      sOverviewFileName_rst = "Components.rst"
+      sOverviewFileName_rst = f"Components_{ROBOTFRAMEWORK_CORE}.rst"
       sOverviewFile_rst = f"{sExternalDocFolder}/{sOverviewFileName_rst}"
       self.__dictMainDocConfig['OVERVIEWFILE_RST'] = sOverviewFile_rst
       oOverviewFile_rst = CFile(sOverviewFile_rst)
@@ -316,11 +317,12 @@ Constructor of class ``CDocBuilder``.
       BUNDLE_NAME         = self.__dictMainDocConfig['BUNDLE_NAME']
       BUNDLE_VERSION      = self.__dictMainDocConfig['BUNDLE_VERSION']
       BUNDLE_VERSION_DATE = self.__dictMainDocConfig['BUNDLE_VERSION_DATE']
+      ROBOTFRAMEWORK_CORE = self.__dictMainDocConfig['ROBOTFRAMEWORK_CORE']
 
       ROBFWVERSION = self.__dictMainDocConfig['ROBFWVERSION']
 
       sExternalDocFolder = self.__dictMainDocConfig['EXTERNALDOCFOLDER']
-      sOverviewFileName_html = "Components.html"
+      sOverviewFileName_html = f"Components_{ROBOTFRAMEWORK_CORE}.html"
       sOverviewFile_html = f"{sExternalDocFolder}/{sOverviewFileName_html}"
       self.__dictMainDocConfig['OVERVIEWFILE_HTML'] = sOverviewFile_html
       oOverviewFile_html = CFile(sOverviewFile_html)
@@ -618,7 +620,7 @@ Constructor of class ``CDocBuilder``.
          oLibraryDocImportTexFile = CFile(sLibraryDocImportTexFile)
          oLibraryDocImportTexFile.Write(f"% Generated at {self.__dictMainDocConfig['NOW']}")
          oLibraryDocImportTexFile.Write()
-         oLibraryDocImportTexFile.Write("\chapter{Imports not available}")
+         oLibraryDocImportTexFile.Write(r"\chapter{Imports not available}")
          oLibraryDocImportTexFile.Write()
          sOutputMessage = r"{\Large\textcolor{red}{\textbf{\textit{Import of external documentations is deactivated}}}}"
          oLibraryDocImportTexFile.Write(sOutputMessage)
