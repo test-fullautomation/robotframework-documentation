@@ -2,7 +2,7 @@
 
 The RobotFramework AIO documentation is available as PDF file and can be
 found here:
-[RobotFrameworkAIO_Reference.pdf](https://github.com/test-fullautomation/robotframework-documentation/blob/develop/RobotFrameworkAIO/RobotFrameworkAIO_Reference.pdf)
+[RobotFrameworkAIO_Reference.pdf](https://github.com/test-fullautomation/robotframework-documentation/blob/develop/RobotFrameworkAIO/RobotFrameworkAIO_Reference_extended.pdf)
 
 The documentation consists of two parts:
 
