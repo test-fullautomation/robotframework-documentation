@@ -20,7 +20,7 @@
 %
 % Defines commands used by Pandoc when computing code directives in rst sources
 %
-% 29.06.2022
+% 15.08.2025
 %
 % --------------------------------------------------------------------------------------------------------------
 
@@ -68,5 +68,20 @@
 % further Pancoc specific adaptions
 % see: https://tex.stackexchange.com/questions/257418/error-tightlist-converting-md-file-into-pdf-using-pandoc
 \def\tightlist{}
+
+% 15.08.2025
+% Currently this is a try only to solve the new "Undefined control sequence: \pandocbounded" error
+% that is most probably caused by a new pandoc version with modified LaTeX template handling.
+  
+\newcommand{\pandocbounded}[1]{%
+  \begingroup
+    \setlength{\fboxsep}{0pt}%
+    \setlength{\fboxrule}{0pt}%
+    \fbox{\parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule}{#1}}%
+  \endgroup
+}
+
+% In case of more is necessary, further templates can be found here:
+% https://github.com/jgm/pandoc-templates
 
 % --------------------------------------------------------------------------------------------------------------
