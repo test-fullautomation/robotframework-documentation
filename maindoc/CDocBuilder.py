@@ -668,8 +668,16 @@ Additionally required Python packages can be installed in this way:
 
 1. Windows:
 
+Use the following command in \\textbf{Command Prompt}:
+
 \\begin{pythoncode}
 "%RobotPythonPath%/python.exe" -m pip install --proxy ###PROXY### <<packagename>>
+\\end{pythoncode}
+
+Or, in \\textbf{Windows PowerShell}:
+
+\\begin{pythoncode}
+& "$env:RobotPythonPath/python.exe" -m pip install --proxy ###PROXY### <<packagename>>
 \\end{pythoncode}
 
 \\vspace{2ex}
