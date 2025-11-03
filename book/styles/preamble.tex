@@ -1,6 +1,6 @@
 % --------------------------------------------------------------------------------------------------------------
 %
-% Copyright 2020-2024 Robert Bosch GmbH
+% Copyright 2020-2025 Robert Bosch GmbH
 
 % Licensed under the Apache License, Version 2.0 (the "License");
 % you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@
 %
 % Common preamble for tex files (used for both: GenPackageDoc and GenMainDoc)
 %
-% 27.07.2022
+% 30.10.2025
 %
 % --------------------------------------------------------------------------------------------------------------
 %
@@ -87,3 +87,13 @@
 \setlength{\parindent}{0em}
 \setlength{\parskip}{1ex}
 
+
+% TOC number box enlargement
+% (was too small in case of some chapter/section/subsection numbers consist of more than 1 digit)
+\makeatletter
+% Syntax: {level}{indentation}{number width}
+\renewcommand{\l@section}{\@dottedtocline{1}{1.5em}{3em}}
+% \renewcommand{\l@subsection}{\@dottedtocline{2}{3.8em}{4em}}
+\renewcommand{\l@subsection}{\@dottedtocline{2}{4.4em}{4em}}
+% currently not required % \renewcommand{\l@subsubsection}{\@dottedtocline{3}{7.4em}{4em}}
+\makeatother
