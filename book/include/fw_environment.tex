@@ -14,6 +14,7 @@
 
 \chapter{Environment}
 
+\section{Paths and Variables for Framework Setup}
 During an installation of the \rfw\ all content is placed at two different main locations:
 
 \begin{itemize}
@@ -73,3 +74,25 @@ to refer to locations inside these folders.
          Location: \rlog{<root>/RobotFramework/devtools/Windows/nodejs}
 
 \end{itemize}
+
+\section{Proxy configuration}\label{fw-environment-environment-proxy-configuration}
+
+To configure the proxy settings in VSCodium, follow these steps:
+
+\begin{enumerate}
+   \item Open the \rcode{settings.json} file in VSCodium. You can do this by:
+   \begin{itemize}
+      \item Pressing \rcode{Ctrl + ,} (or \rcode{Cmd + ,} on macOS) to open the settings UI.
+      \item Clicking on the \textbf{Open Settings (JSON)} icon in the top-right corner of the settings UI.
+   \end{itemize}
+
+   \item Locate the \rcode{http.proxy} setting. If it does not exist, add the following entry with your company's proxy information:\begin{pythoncode}
+"http.proxy": "http://your-proxy-address:port"\end{pythoncode}
+
+   \item If your proxy requires authentication, include the username and password in the URL:\begin{pythoncode}
+"http.proxy": "http://username:password@your-proxy-address:port"\end{pythoncode}
+
+   \item Save the changes to the \rcode{settings.json} file.
+
+   \item Restart VSCodium to apply the changes.
+\end{enumerate}
