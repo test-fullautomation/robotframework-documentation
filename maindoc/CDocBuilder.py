@@ -328,7 +328,7 @@ Constructor of class ``CDocBuilder``.
       oOverviewFile_html = CFile(sOverviewFile_html)
 
       sHeader = """<html><head>
-<meta http-equiv="content-type" content="text/html; charset=windows-1252">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
    <meta name="####BUNDLE_NAME####" content="Component Overview">
    <title>####BUNDLE_NAME#### Component Overview</title>
 </head>
