@@ -1,6 +1,6 @@
 % --------------------------------------------------------------------------------------------------------------
 %
-% Copyright 2020-2025 Robert Bosch GmbH
+% Copyright 2020-2026 Robert Bosch GmbH
 
 % Licensed under the Apache License, Version 2.0 (the "License");
 % you may not use this file except in compliance with the License.
@@ -18,9 +18,9 @@
 %
 % preamble.tex
 %
-% Common preamble for tex files (used for both: GenPackageDoc and GenMainDoc)
+% Common preamble for tex files
 %
-% 30.10.2025
+% 12.01.2026
 %
 % --------------------------------------------------------------------------------------------------------------
 %
@@ -53,6 +53,7 @@
 
 \usepackage{graphicx}
 \usepackage{longtable}
+\usepackage{ltcaption}
 \usepackage{multirow}
 \usepackage{multicol}
 \usepackage{array}
@@ -69,8 +70,11 @@
 \usepackage{grffile}
 \usepackage{pdfpages}
 
+\usepackage[T1]{fontenc} % extends the LaTeX default charset
+
+% docutils (used for conversion of RST to LaTeX)
+\usepackage{styles/docutils}
 \usepackage{styles/admonitions}
-\usepackage{styles/pandoc}
 \usepackage{styles/robotframeworkaio}
 \usepackage{styles/common}
 

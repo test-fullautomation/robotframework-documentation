@@ -1,6 +1,6 @@
 % --------------------------------------------------------------------------------------------------------------
 %
-% Copyright 2020-2024 Robert Bosch GmbH
+% Copyright 2020-2026 Robert Bosch GmbH
 
 % Licensed under the Apache License, Version 2.0 (the "License");
 % you may not use this file except in compliance with the License.
@@ -20,8 +20,9 @@
 %
 % includes:
 % - common commands like support for history.tex
+% - quoting
 %
-% 27.07.2022
+% 12.01.2026
 %
 % --------------------------------------------------------------------------------------------------------------
 
@@ -32,11 +33,19 @@
 \newcommand{\historyversiondate}[2]{\textcolor{Red}{\textbf{#1}} & \textcolor{Blue}{#2}\\ \hline}
 \newcommand{\historychange}[1]{\multicolumn{2}{|p{34em}|}{\textit{#1}}\\ \hline}
 
+%
+% more common
+%
 
+% ease quoting
+\newcommand{\q}[1]{``#1''}
 
+% nice horizontal separator line
+\newcommand{\hsepline}{\noindent\centerline{\rule{0.2\linewidth}{0.4pt} \large $\star$ \normalsize \rule{0.2\linewidth}{0.4pt}}}
 
-
-
-
-
+% enable compatibility with previously used Pandoc (since GenPackageDoc v. 0.42.0 replaced by docutils)
+% - \tightlist is Pandoc specific and still used in some documentation tex files
+% - \tightlist reduces vertical distances between items when used within LaTeX list environments (itemize, enumerate)
+% Let's keep this style to avoid to much layout changes:
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 
