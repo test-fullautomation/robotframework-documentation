@@ -50,6 +50,9 @@
                              ],
                    "0.13.1.;0.14.0." : [
                                "Separated documentation in an *internal* and an *extended* version (regarding the code of Robot Framework core)"
+                             ],
+                   "0.14.4.;0.15.0." : [
+                               "Added documentation of **Roo Code** extension"
                              ]
                  }
 }
