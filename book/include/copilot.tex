@@ -1,0 +1,93 @@
+%  Copyright 2020-2026 Robert Bosch GmbH
+%
+%  Licensed under the Apache License, Version 2.0 (the "License");
+%  you may not use this file except in compliance with the License.
+%  You may obtain a copy of the License at
+%
+%      http://www.apache.org/licenses/LICENSE-2.0
+%
+%  Unless required by applicable law or agreed to in writing, software
+%  distributed under the License is distributed on an "AS IS" BASIS,
+%  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+%  See the License for the specific language governing permissions and
+%  limitations under the License.
+\chapter{GitHub Copilot Extension}
+\label{chap:copilot}
+
+\section{Introduction}
+GitHub Copilot is an AI-powered code completion tool that helps you write code
+faster by suggesting whole lines or blocks of code as you type.
+
+Bosch GitHub Copilot integrates seamlessly with
+\textbf{VSCodium For RobotFramework}, providing intelligent code suggestions
+and enhancing your coding experience.
+
+\section{Installation}
+Due to licensing restrictions, GitHub Copilot Extension cannot be pre-installed
+in the \textbf{Robot Framework AIO} package.
+
+You need to install it manually by executing the provided script as the
+instruction in the post-installation of RobotFramework AIO setup as follows:
+
+\includegraphics[width=0.5\textwidth]{./include/graphics/copilot/aio_post_installation_windows.png}
+
+In case you missed above instruction during the setup, you can still install
+the GitHub Copilot extension later by following these steps:
+
+Open a terminal (\textbf{Windows Powershell} for Windows or Linux Terminal)
+and run the appropriate script to install the GitHub Copilot extension in your
+\textbf{VSCodium For RobotFramework}.
+\begin{itemize}
+   \item Windows Powershell:
+\begin{pythonlog}
+& "$env:RobotVsCode\install-github-copilot-exts.ps1" --proxy <\textless{}>your-proxy-address:port<\textgreater{}> --proxy-auth
+\end{pythonlog}
+   \item Linux Terminal:
+\begin{pythonlog}
+$RobotVsCode/install-github-copilot-exts.sh --proxy <\textless{}>your-proxy-address:port<\textgreater{}> --proxy-auth
+\end{pythonlog}
+\end{itemize}
+
+The installation script will download and install the GitHub Copilot extension
+in your \textbf{VSCodium For RobotFramework} environment as below:
+
+\includegraphics[width=0.9\textwidth]{./include/graphics/copilot/installation_windows.png}
+
+\section{Configuration}
+Before using GitHub Copilot, you need to sign in with your GitHub account
+and enable the extension.
+To do this, follow these steps:
+\begin{itemize}
+   \item Click on the \textbf{GitHub Copilot} icon in the Activity Bar.
+   \item Then Click on the \textbf{Sign in} button of
+         \textbf{GitHub Copilot Cloud Agent} section as below:
+
+         \includegraphics[width=0.9\textwidth]{./include/graphics/copilot/configuration_step_1_signin.png}
+
+   \item The pop-up will appear to ask the permission for
+         \textbf{GitHub Copilot Chat} extension.
+
+         \includegraphics[width=0.5\textwidth]{./include/graphics/copilot/configuration_step_2_allow.png}
+
+         Click \textbf{Allow} to move to next step:
+
+   \item The authentication code will be displayed in the pop-up window as below:
+
+         \includegraphics[width=0.5\textwidth]{./include/graphics/copilot/configuration_step_3_auth_code.png}
+
+         Click \textbf{Copy \& Continue to Github} button
+         then click \textbf{Open} the GitHub sign-in page in your web browser.
+
+         \includegraphics[width=0.5\textwidth]{./include/graphics/copilot/configuration_step_4_open_browser.png}
+
+   \item In the GitHub sign-in page, paste the authentication code and click \textbf{Continue} button.
+   \item Then, the last confirmation page will appear as below:
+
+         \includegraphics[width=0.9\textwidth]{./include/graphics/copilot/configuration_step_5_confirm.png}
+
+         Click \textbf{Authorize Visual Studio Code} button to complete the sign-in process.
+   \item Now back to \textbf{VSCodium For RobotFramework}, the GitHub Copilot extension is enabled and ready to use.
+\end{itemize}
+
+With GitHub Copilot enabled, you can enhance your coding experience
+and boost your productivity in \textbf{VSCodium For RobotFramework}.
