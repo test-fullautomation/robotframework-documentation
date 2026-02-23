@@ -11,47 +11,6 @@
 %  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 %  See the License for the specific language governing permissions and
 %  limitations under the License.
-\chapter{GitHub Copilot Extension}
-\label{chap:copilot}
-
-\section{Introduction}
-GitHub Copilot is an AI-powered code completion tool that helps you write code
-faster by suggesting whole lines or blocks of code as you type.
-
-Bosch GitHub Copilot integrates seamlessly with
-\textbf{VSCodium For RobotFramework}, providing intelligent code suggestions
-and enhancing your coding experience.
-
-\section{Installation}
-Due to licensing restrictions, GitHub Copilot Extension cannot be pre-installed
-in the \textbf{Robot Framework AIO} package.
-
-You need to install it manually by executing the provided script as the
-instruction in the post-installation of RobotFramework AIO setup as follows:
-
-\includegraphics[width=0.5\textwidth]{./include/graphics/copilot/aio_post_installation_windows.png}
-
-In case you missed above instruction during the setup, you can still install
-the GitHub Copilot extension later by following these steps:
-
-Open a terminal (\textbf{Windows Powershell} for Windows or Linux Terminal)
-and run the appropriate script to install the GitHub Copilot extension in your
-\textbf{VSCodium For RobotFramework}.
-\begin{itemize}
-   \item Windows Powershell:
-\begin{pythonlog}
-& "$env:RobotVsCode\install-github-copilot-exts.ps1" --proxy <\textless{}>your-proxy-address:port<\textgreater{}> --proxy-auth
-\end{pythonlog}
-   \item Linux Terminal:
-\begin{pythonlog}
-$RobotVsCode/install-github-copilot-exts.sh --proxy <\textless{}>your-proxy-address:port<\textgreater{}> --proxy-auth
-\end{pythonlog}
-\end{itemize}
-
-The installation script will download and install the GitHub Copilot extension
-in your \textbf{VSCodium For RobotFramework} environment as below:
-
-\includegraphics[width=0.9\textwidth]{./include/graphics/copilot/installation_windows.png}
 
 \newpage
 \section{Configuration}
@@ -79,7 +38,19 @@ to reveal the \textbf{Sign in} button.
 
          \includegraphics[width=0.5\textwidth]{./include/graphics/copilot/configuration_step_2_allow.png}
 
-         Click \textbf{Allow} to move to next step:
+         Click \textbf{Allow} to move to next step.
+
+\begin{boxhint}{Warning}
+If the below pop-up appears instead:
+
+\includegraphics[width=0.5\textwidth]{./include/graphics/copilot/internet_access_issue.png}
+
+It may indicate that the internet access is not available for GitHub Copilot extension,
+please check your network connection and proxy settings if applicable.
+
+Details about how to configure proxy for \textbf{VsCodium For RobotFramework} can be found
+\hyperref[fw-environment-environment-proxy-configuration]{here}.
+\end{boxhint}
 
    \item The authentication code will be displayed in the pop-up window as below:
 
