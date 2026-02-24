@@ -145,8 +145,12 @@ following benchmarks:
 
 \subsection{LLM Selection Strategy}
 
-Based on current benchmarks (SWE-bench Verified and LiveBench, \textbf{February 2026}),
-the following models are leading for agentic software development:
+Based on current benchmarks (SWE-bench Verified and LiveCodeBench, \textbf{February 2026}),
+the following models are leading for agentic software development.
+Scores are taken from the SWE-bench Bash-Only leaderboard\footnote{SWE-bench Bash-Only
+leaderboard, snapshot \textbf{2026-02-17},
+\url{https://www.swebench.com}, evaluated with mini-SWE-agent v2.0.0 on
+SWE-bench Verified (500 instances).}:
 
 \begin{table}[h!]
 \centering
@@ -165,7 +169,7 @@ the following models are leading for agentic software development:
       \textit{Mini model — not recommended} \\
    \bottomrule
 \end{tabular}
-\caption{LLM ranking for agentic software development (SWE-bench Verified, February 2026)}
+\caption{LLM ranking for agentic software development — SWE-bench Verified scores, snapshot 2026-02-17 (source: swebench.com)}
 \label{tab:llm-ranking}
 \end{table}
 
@@ -181,8 +185,9 @@ the following models are leading for agentic software development:
 \end{itemize}
 
 \begin{boxwarning}{Mini models are not suitable for agentic tasks}
-For reference, \rcode{GPT-5 Mini} scores only 56.2\% on SWE-bench Verified —
-more than 20 percentage points behind the top models.
+For reference, \rcode{GPT-5 Mini} scores only 56.2\% on SWE-bench Verified
+(snapshot 2026-02-17, see table source above) — more than 20 percentage points
+behind the top models.
 Mini models are optimized for speed and cost, not for the complex multi-step
 reasoning that agentic development requires.
 \end{boxwarning}

@@ -44,17 +44,17 @@ Refer to the images below for guidance:
 \begin{itemize}
    \item Welcome screen for first time use:
 
-         \includegraphics{./include/graphics/roocode/GitHubCopilotLLM_GetStart.png}
+         \includegraphics{./include/graphics/roocode/GithubCopilotLLM_GetStart.png}
 
    \item Settings screen for already configured users:
 
-         \includegraphics{./include/graphics/roocode/GitHubCopilotLLM.png}
+         \includegraphics{./include/graphics/roocode/GithubCopilotLLM.png}
 
 \end{itemize}
 
 \section{Which LLM to Use}
 
-As configuration in previous chapters, Roo Code uses \textbf{Bosch GitHub Copilot}
+As configured in previous chapters, Roo Code uses \textbf{Bosch GitHub Copilot}
 as its AI backend.
 
 Bosch GitHub Copilot provides access to a range of powerful LLMs, each with
@@ -90,7 +90,7 @@ ordered by their suitability for agentic development:
    Grok Code Fast 1          & xAI       & Very fast & Code-focused tasks, fast iteration \\
    \midrule
    Claude Haiku 4.5          & Anthropic & Very fast & \textit{Simple tasks only — not recommended for agentic use} \\
-   GPT-5 mini                & OpenAI    & Very fast & \textit{Simple tasks only — not recommended for agentic use} \\
+   GPT-5 Mini                & OpenAI    & Very fast & \textit{Simple tasks only — not recommended for agentic use} \\
    GPT-4.1                   & OpenAI    & Very fast & \textit{Simple tasks only — not recommended for agentic use} \\
    \bottomrule
 \end{tabular}
@@ -104,7 +104,7 @@ ordered by their suitability for agentic development:
    \item \textbf{Maximum Accuracy} (complex architecture, deep multi-file
       reasoning, autonomous debugging across large codebases):
       Use \textit{Claude Opus 4.6} — the highest-accuracy model available
-      via Copilot (76.8\% on SWE-bench Verified). \textit{Claude Opus 4.5}
+      via Copilot. \textit{Claude Opus 4.5}
       is a close alternative.
    \item \textbf{High Accuracy + Speed} (demanding agentic tasks where response
       time matters):
@@ -116,12 +116,12 @@ ordered by their suitability for agentic development:
       or \textit{Claude Sonnet 4.6} — these deliver strong accuracy
       at fast response times.
    \item \textbf{Simple / Read-only Tasks} (asking questions, explaining code,
-      quick lookups): \textit{GPT-4.1} or \textit{GPT-5 mini} respond
+      quick lookups): \textit{GPT-4.1} or \textit{GPT-5 Mini} respond
       instantly and are sufficient for non-agentic interactions.
 \end{itemize}
 
 \begin{boxwarning}{Do not use mini or lightweight models for agentic tasks}
-Models such as \rcode{GPT-5 mini}, \rcode{GPT-4.1}, and
+Models such as \rcode{GPT-5 Mini}, \rcode{GPT-4.1}, and
 \rcode{Claude Haiku 4.5} are optimized for instant responses on simple
 queries — \textbf{not} for the complex multi-step reasoning, multi-file
 editing, and tool use that agentic development requires.
