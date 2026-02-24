@@ -62,7 +62,7 @@ Running local models requires significant RAM/GPU resources.
       \item Download and install Ollama from
          \href{https://ollama.com/download}{Download Ollama}
       \item Use Ollama CLI to pull a coding model:
-         \texttt{ollama pull deepseek-v3.1} or \texttt{ollama pull qwen3-coder}.
+         \rcode{ollama pull deepseek-v3.1} or \rcode{ollama pull qwen3-coder}.
          You can find other models provided by Ollama at
          \href{https://ollama.com/library}{Ollama Library}.
       \item Ensure Ollama and pulled models are running locally on your machine.
@@ -81,7 +81,7 @@ Steps to configure Roo Code with \textbf{Ollama}:
          Or click the \textbf{Settings (gear icon)} at the top of the Roo Code panel (Already configured).
    \item In the \textbf{API Provider} option, select \textbf{Ollama}
       as the provider.
-   \item Ensure the Base URL is set (usually \texttt{http://localhost:11434}).
+   \item Ensure the Base URL is set (usually \rcode{http://localhost:11434}).
    \item Choose the local model you pulled earlier.
    \item Click \textbf{Done}.
 \end{enumerate}
@@ -119,3 +119,81 @@ Steps to configure Roo Code with \textbf{GitHub}:
 Refer to the image below for guidance:
 
 \includegraphics{./include/graphics/roocode/GitHubCopilotLLM.png}
+
+\section{Which LLM to Use}
+
+Choosing the right LLM is \textbf{crucial} when working with Roo Code.
+Agentic software development — where the AI autonomously edits multiple files,
+executes terminal commands, reasons about test failures, and orchestrates complex
+tasks — is one of the most demanding use cases for any language model.
+
+\subsection{What Makes a Model Suitable for Agentic Development?}
+
+When choosing a model for Roo Code, prioritize models that score well on the
+following benchmarks:
+\begin{itemize}
+   \item \textbf{SWE-bench Verified:} Measures the ability to resolve
+      real-world GitHub issues autonomously — the closest benchmark to what
+      Roo Code does in practice.
+   \item \textbf{LiveCodeBench:} Evaluates coding performance on recent,
+      unseen problems, testing true generalization rather than memorization.
+   \item \textbf{Tool Use / Function Calling:} Essential for Roo Code to
+      reliably interact with your file system and terminal.
+   \item \textbf{Long Context Handling:} Large codebases require a model that
+      can maintain coherent reasoning over many thousands of tokens.
+\end{itemize}
+
+\subsection{LLM Selection Strategy}
+
+Based on current benchmarks (SWE-bench Verified and LiveBench, \textbf{February 2026}),
+the following models are leading for agentic software development:
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{clllp{5cm}}
+   \toprule
+   \textbf{Rank} & \textbf{Model} & \textbf{Provider} &
+   \textbf{SWE-bench} & \textbf{Notes} \\
+   \midrule
+   1 & Claude 4.5 Opus  & Anthropic & 76.8\% & Top performer for complex agentic tasks \\
+   2 & Claude Opus 4.6  & Anthropic & 75.6\% & Strong reasoning and code generation \\
+   3 & GPT-5.2          & OpenAI    & 72.8\% & Excellent tool use and long-context handling \\
+   4 & Claude 4.5 Sonnet & Anthropic & 71.4\% & Best cost-to-performance ratio \\
+   5 & DeepSeek V3.2    & DeepSeek  & 70.0\% & Best open-weight option for local (Ollama) use \\
+   \midrule
+   \multicolumn{2}{l}{\textit{GPT-5 Mini (reference)}} & OpenAI & 56.2\% &
+      \textit{Mini model — not recommended} \\
+   \bottomrule
+\end{tabular}
+\caption{LLM ranking for agentic software development (SWE-bench Verified, February 2026)}
+\label{tab:llm-ranking}
+\end{table}
+
+\textbf{Recommended Strategy:}
+\begin{itemize}
+   \item \textbf{Complex Agentic Tasks} (refactoring, architecture, debugging,
+      multi-file generation): Use \textit{Claude 4.5 Opus}, \textit{Claude Opus 4.6},
+      or \textit{GPT-5.2}.
+   \item \textbf{Balanced Tasks} (feature implementation, test generation):
+      \textit{Claude 4.5 Sonnet} offers the best cost-to-capability balance.
+   \item \textbf{Private / Offline Tasks}: \textit{DeepSeek V3.2} via Ollama
+      is the strongest local option.
+\end{itemize}
+
+\begin{boxwarning}{Mini models are not suitable for agentic tasks}
+For reference, \rcode{GPT-5 Mini} scores only 56.2\% on SWE-bench Verified —
+more than 20 percentage points behind the top models.
+Mini models are optimized for speed and cost, not for the complex multi-step
+reasoning that agentic development requires.
+\end{boxwarning}
+
+\begin{boxhint}{The LLM landscape changes rapidly}
+New models are released frequently and rankings shift — the best model today
+may be superseded in just a few months.
+Rather than relying on a fixed recommendation in this document,
+ask an up-to-date AI assistant directly using the prompt below:
+
+\medskip
+\textit{"Which LLM models are particularly suitable for agentic software
+development? Please provide a ranking."}
+\end{boxhint}
