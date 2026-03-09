@@ -53,6 +53,14 @@
                              ],
                    "0.14.4.;0.15.0." : [
                                "Added documentation of **Roo Code** extension"
-                             ]
+                             ],
+                   "1.0.0.;1.1.0." : [
+"
+* Usage of **Setuptools** replaced by usage of **PIP/TOML/Setuptools**.
+
+  Details about how to install the component with PIP, can be found in the `README <https://github.com/test-fullautomation/robotframework-documentation/blob/develop/README.rst>`__
+"
+                   ]
+
                  }
 }

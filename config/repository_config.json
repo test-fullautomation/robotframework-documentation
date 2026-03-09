@@ -1,21 +1,4 @@
 {
-   "REPOSITORYNAME" : "robotframework-documentation",
-   "PACKAGENAME" : "RobotFrameworkAIO",
-   "VERSION" : "0.38.0",
-   "VERSION_DATE" : "12.01.2026",
-   "AUTHOR" : "Thomas Pollerspöck",
-   "AUTHOREMAIL" : "Thomas.Pollerspoeck@de.bosch.com",
-   "DESCRIPTION" : "Documentation for RobotFramework AIO",
-   "LONGDESCRIPTIONCONTENTTYPE" : "text/markdown",
-   "URL" : "https://github.com/test-fullautomation/robotframework-documentation",
-   "PROGRAMMINGLANGUAGE" : "Programming Language :: Python :: 3",
-   "LICENCE" : "License :: OSI Approved :: Apache Software License",
-   "OPERATINGSYSTEM" : "Operating System :: OS Independent",
-   "PYTHONREQUIRES" : ">=3.0",
-   "DEVELOPMENTSTATUS" : "Development Status :: 3 - Alpha",
-   "INTENDEDAUDIENCE" : "Intended Audience :: Developers",
-   "TOPIC" : "Topic :: Software Development",
-   "INSTALLREQUIRES" : ["pypandoc","colorama","GenPackageDoc","PythonExtensionsCollection"],
-   "PACKAGEDATA" : ["*.pdf","*.rst"],
-   "PACKAGEDOC" : "./maindoc"
+    "REPOSITORYNAME" : "robotframework-documentation",
+    "PACKAGEDOC"     : "./maindoc"
 }

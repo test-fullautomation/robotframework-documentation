@@ -1,6 +1,6 @@
 # **************************************************************************************************************
 #
-#  Copyright 2020-2024 Robert Bosch GmbH
+#  Copyright 2020-2026 Robert Bosch GmbH
 #
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@
 #
 # XC-HWP/ESW3-Queckenstedt
 #
-# 07.05.2025
+# 09.03.2026
 #
 # --------------------------------------------------------------------------------------------------------------
 
@@ -775,7 +775,7 @@ The proxy address is an option and depends on the conditions under which your co
       oFinalSummaryFile.Write(r"\begin{tabular}{m{16em}}\hline")
       oFinalSummaryFile.Write(r"   \multicolumn{1}{c}{\textbf{" + f"{sPDFFileName_masked}" + r"}}\\")
       oFinalSummaryFile.Write(r"   \multicolumn{1}{c}{\textit{Created at " + self.__dictMainDocConfig['NOW'] + r"}}\\")
-      oFinalSummaryFile.Write(r"   \multicolumn{1}{c}{\textit{by genmaindoc v. " + self.__dictMainDocConfig['VERSION'] + r"}}\\ \hline")
+      oFinalSummaryFile.Write(r"   \multicolumn{1}{c}{\textit{by genmaindoc v. " + self.__dictMainDocConfig['PACKAGEVERSION'] + r"}}\\ \hline")
       oFinalSummaryFile.Write(r"\end{tabular}")
       oFinalSummaryFile.Write(r"\end{center}")
       oFinalSummaryFile.Write()
