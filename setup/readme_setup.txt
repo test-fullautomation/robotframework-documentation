@@ -1,7 +1,7 @@
 Setups
 ======
 
-20.02.2026
+10.03.2026
 
 --------------------------------------------------------------------------------------------------------------
 
@@ -11,7 +11,7 @@ running setup processes) to generate a build or install the component.
 "PROXYSETTINGS" and "PYTHON" are placeholders for the proxy settings (if needed) and for the Python interpreter.
 These placeholders are not defined in the JSON file and must be resolved by the process that computes the JSON file.
 
-In "setup_steps", the keys "CLEANUP", "GENPACKAGEDOC", "INSTALL", and "BUILD" are placeholders that define
+In "setup_steps", the keys "CLEANUP", "GENMAINDOC", "INSTALL", and "BUILD" are placeholders that define
 individual setup steps.
 
 In "setup_type", the required setup steps are listed for each type.

@@ -32,7 +32,7 @@ The **RobotFramework AIO** documentation can be rendered with ``genmaindoc.py``.
 * A PyPi package ``GenPackageDoc``
 * A LaTeX installation
 
-All details about the steps that are required for all installations cen be found here:
+All details about the steps that are required for all installations can be found here:
 `README.rst <https://github.com/test-fullautomation/python-genpackagedoc/blob/develop/README.rst>`_
 
 **In detail:**
@@ -77,7 +77,7 @@ All details about the steps that are required for all installations cen be found
                "LINUX"   : "${GENDOC_LATEXPATH}/pdflatex"
               }
 
-7. Optionally it is possible to install the documentation unter ``site-packages``.
+7. Optionally it is possible to install the documentation under ``site-packages``.
 
    .. code::
 

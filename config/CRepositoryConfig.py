@@ -33,7 +33,7 @@
 #
 # --------------------------------------------------------------------------------------------------------------
 
-import os, sys, site, platform, shlex, subprocess, json
+import os, sys, site, platform, json
 import colorama as col
 import tomllib
 
