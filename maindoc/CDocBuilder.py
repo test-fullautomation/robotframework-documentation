@@ -20,7 +20,7 @@
 #
 # XC-HWP/ESW3-Queckenstedt
 #
-# 09.03.2026
+# 10.04.2026
 #
 # --------------------------------------------------------------------------------------------------------------
 
@@ -239,13 +239,16 @@ Constructor of class ``CDocBuilder``.
       oOverviewFile_tex.Write(r"\vspace{2ex}")
       oOverviewFile_tex.Write()
       for dictConfig in listofdictConfig:
-         PACKAGENAME = dictConfig['PACKAGENAME'].replace('_',r'\_') # LaTeX requires this masking
-         DESCRIPTION = dictConfig['DESCRIPTION'].replace('_',r'\_') # LaTeX requires this masking
+         PACKAGENAME    = dictConfig['PACKAGENAME'].replace('_',r'\_')    # LaTeX requires this masking
+         DESCRIPTION    = dictConfig['DESCRIPTION'].replace('_',r'\_')    # LaTeX requires this masking
+         PACKAGEVERSION = dictConfig['PACKAGEVERSION'].replace('_',r'\_') # LaTeX requires this masking
+         PACKAGEDATE    = dictConfig['PACKAGEDATE'].replace('_',r'\_')    # LaTeX requires this masking
+         URL            = dictConfig['URL'].replace('_',r'\_')            # LaTeX requires this masking
          oOverviewFile_tex.Write(r"\begin{tabular}{| m{44em} |}\hline")
-         oOverviewFile_tex.Write(r"   \textbf{" + PACKAGENAME + r"}\\ \hline")
-         oOverviewFile_tex.Write(r"   Version " + dictConfig['PACKAGEVERSION'] + " (from " + dictConfig['PACKAGEDATE'] + r")\\ \hline")
-         oOverviewFile_tex.Write(r"   " + dictConfig['URL'] + r"\\ \hline")
-         oOverviewFile_tex.Write(r"   \textit{" + DESCRIPTION + r"}\\ \hline")
+         oOverviewFile_tex.Write(r"   \textbf{" + PACKAGENAME    + r"}\\ \hline")
+         oOverviewFile_tex.Write(r"   Version " + PACKAGEVERSION + r" (from "     + PACKAGEDATE + r")\\ \hline")
+         oOverviewFile_tex.Write(r"   "         + URL            + r"\\ \hline")
+         oOverviewFile_tex.Write(r"   \textit{" + DESCRIPTION    + r"}\\ \hline")
          oOverviewFile_tex.Write(r"\end{tabular}")
          oOverviewFile_tex.Write()
          oOverviewFile_tex.Write(r"\vspace{2ex}")
