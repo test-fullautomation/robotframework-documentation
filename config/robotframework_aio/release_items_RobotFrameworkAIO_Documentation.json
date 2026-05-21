@@ -1,6 +1,6 @@
 # **************************************************************************************************************
 #
-# Copyright 2020-2024 Robert Bosch GmbH
+# Copyright 2020-2026 Robert Bosch GmbH
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,13 +18,9 @@
 #
 # ========== Release Items for component 'RobotFrameworkAIO_Documentation' ==========
 #
-# Basically this component is stand-alone, but can also be used as part of an automation framework called
-# RobotFramework AIO. More information about this framework you can find here:
+# More information about this framework you can find here:
 #
 # https://github.com/test-fullautomation/RobotFramework_AIO
-#
-# This JSON file contains component specific release information for the RobotFramework AIO.
-# In case you use the component stand-alone only, you can ignore this file.
 #
 # --------------------------------------------------------------------------------------------------------------
 #
@@ -53,6 +49,13 @@
                              ],
                    "0.14.4.;0.15.0." : [
                                "Added documentation of **Roo Code** extension"
-                             ]
+                             ],
+                   "1.0.0.;1.1.0." : [
+"
+* Usage of **Setuptools** replaced by usage of **PIP/TOML/Setuptools**.
+
+  Details about how to install the component with PIP, can be found in the `README <https://github.com/test-fullautomation/robotframework-documentation/blob/develop/README.rst>`__
+"
+                   ]
                  }
 }

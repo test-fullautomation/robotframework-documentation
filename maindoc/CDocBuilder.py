@@ -20,7 +20,7 @@
 #
 # XC-HWP/ESW3-Queckenstedt
 #
-# 10.04.2026
+# 23.04.2026
 #
 # --------------------------------------------------------------------------------------------------------------
 
@@ -138,6 +138,7 @@ Constructor of class ``CDocBuilder``.
       listSupportedKeys.append('URL')
       listSupportedKeys.append('PACKAGEVERSION')
       listSupportedKeys.append('PACKAGEDATE')
+      listSupportedKeys.append('INDEX_HTMLFILE')
 
       for sConfigFile in listConfigFiles:
 
@@ -260,7 +261,7 @@ Constructor of class ``CDocBuilder``.
 
       del oOverviewFile_tex
 
-      # -- 2. RST version
+      # -- 2. RST version of information about included packages
 
       # get framework bundle information (again, but without LaTeX masking)
       BUNDLE_NAME         = self.__dictMainDocConfig['BUNDLE_NAME']
@@ -314,7 +315,7 @@ Constructor of class ``CDocBuilder``.
 
       del oOverviewFile_rst
 
-      # -- 3. HTML version
+      # -- 3. HTML version of information about included packages
 
       # get framework bundle information (again, but without LaTeX masking)
       BUNDLE_NAME         = self.__dictMainDocConfig['BUNDLE_NAME']
@@ -400,8 +401,23 @@ Constructor of class ``CDocBuilder``.
 
       del oOverviewFile_html
 
+      # -- 4. TOC file for HTML documentation (dict with index.html files)
+      dict_index_html_files = {}
+      for dictConfig in listofdictConfig:
+         package_name = None
+         if dictConfig['PACKAGENAME']:
+            package_name = dictConfig['PACKAGENAME']
+         index_file   = None
+         if dictConfig['INDEX_HTMLFILE']:
+            index_file = dictConfig['INDEX_HTMLFILE']
+         if package_name and index_file:
+            dict_index_html_files[package_name] = index_file
+      doc_toc_file = f"{self.__dictMainDocConfig['EXTERNALDOCFOLDER']}/doc_toc.json"
+      with open(doc_toc_file, "w", encoding="utf-8") as file:
+        json.dump(dict_index_html_files, file, indent=2, ensure_ascii=False)
+
       bSuccess = True
-      sResult  = f"Overview files written:\n* '{sOverviewFile_tex}'\n* '{sOverviewFile_rst}'\n* '{sOverviewFile_html}'"
+      sResult  = f"Overview files written:\n* '{sOverviewFile_tex}'\n* '{sOverviewFile_rst}'\n* '{sOverviewFile_html}'\n* '{doc_toc_file}'"
 
       return bSuccess, sResult
 
@@ -505,6 +521,7 @@ Constructor of class ``CDocBuilder``.
             listCmdLineParts.append(f"\"{sDocumentationBuilder}\"")
             listCmdLineParts.append(f"--pdfdest=\"{sDestinationFolder}\"")
             listCmdLineParts.append(f"--configdest=\"{sDestinationFolder}\"")
+            listCmdLineParts.append(f"--htmldest=\"{sDestinationFolder}/html_doc\"")
             listCmdLineParts.append(f"--strict {bStrict}")
             if self.__dictMainDocConfig['SIMULATE_ONLY'] is True:
                listCmdLineParts.append(f"--simulateonly")
@@ -778,7 +795,7 @@ The proxy address is an option and depends on the conditions under which your co
       oFinalSummaryFile.Write(r"\begin{tabular}{m{16em}}\hline")
       oFinalSummaryFile.Write(r"   \multicolumn{1}{c}{\textbf{" + f"{sPDFFileName_masked}" + r"}}\\")
       oFinalSummaryFile.Write(r"   \multicolumn{1}{c}{\textit{Created at " + self.__dictMainDocConfig['NOW'] + r"}}\\")
-      oFinalSummaryFile.Write(r"   \multicolumn{1}{c}{\textit{by genmaindoc v. " + self.__dictMainDocConfig['VERSION'] + r"}}\\ \hline")
+      oFinalSummaryFile.Write(r"   \multicolumn{1}{c}{\textit{by genmaindoc v. " + self.__dictMainDocConfig['PACKAGEVERSION'] + r"}}\\ \hline")
       oFinalSummaryFile.Write(r"\end{tabular}")
       oFinalSummaryFile.Write(r"\end{center}")
       oFinalSummaryFile.Write()
