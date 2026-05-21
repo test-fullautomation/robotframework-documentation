@@ -1,4 +1,4 @@
-.. Copyright 2020-2024 Robert Bosch GmbH
+.. Copyright 2020-2026 Robert Bosch GmbH
 
 .. Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -23,16 +23,19 @@ The documentation consists of two parts:
 1. Common description
 2. Description of the interfaces of RobotFramework AIO components
 
-The RobotFramework AIO documentation can be build either with ``genmaindoc.py`` immediately or with ``setup.py`` indirectly. The difference is that ``genmaindoc.py``
-only builds the documentation, whereas ``setup.py`` additionally installs the documentation in
+How to render
+-------------
 
-   .. code::
+The **RobotFramework AIO** documentation can be rendered with ``genmaindoc.py``. This requires:
 
-      python39\Lib\site-packages\RobotFrameworkAIO
+* A Python installation
+* A PyPi package ``GenPackageDoc``
+* A LaTeX installation
 
-The execution of ``setup.py`` includes the execution of ``genmaindoc.py``.
+All details about the steps that are required for all installations can be found here:
+`README.rst <https://github.com/test-fullautomation/python-genpackagedoc/blob/develop/README.rst>`_
 
-Some preparations are necessary before ``genmaindoc.py`` or ``setup.py`` can be executed:
+**In detail:**
 
 1. Install a LaTeX compiler (full installation of Texlive recommended)
 
@@ -61,20 +64,6 @@ Some preparations are necessary before ``genmaindoc.py`` or ``setup.py`` can be 
    * ``--bundle_version`` : The version of the entire framework bundle
    * ``--bundle_version_date`` : The version date of the entire framework bundle
 
-   In case of ``genmaindoc.py`` is called by ``setup.py``, a direct way to define command line parameter for ``genmaindoc.py`` is not possible
-   (it's not intended to intermix genmaindoc and setuptools command lines).
-
-   Therefore ``setup.py`` requires for every single command line parameter a corresponding environment variable.
-
-   Under Windows the environment can be prepared e.g. in the following way:
-
-   .. code::
-
-      set MAINDOC_CONFIGFILE=--configfile "./maindoc/maindoc_configs/maindoc_config_OSS.json"
-      set BUNDLE_NAME=--bundle_name "RobotFramework AIO"
-      set BUNDLE_VERSION=--bundle_version "0.7.0"
-      set BUNDLE_VERSION_DATE=--bundle_version_date "03.2023"
-
    The values are taken over to the resulting PDF file (e.g. in the title page).
 
 6. Introduce an environment variable "``GENDOC_LATEXPATH``" containing the path to the LaTeX interpreter ``pdflatex.exe`` (Windows) / ``pdflatex`` (Linux).
@@ -88,11 +77,11 @@ Some preparations are necessary before ``genmaindoc.py`` or ``setup.py`` can be 
                "LINUX"   : "${GENDOC_LATEXPATH}/pdflatex"
               }
 
-7. Use the following command to build and install the documentation:
+7. Optionally it is possible to install the documentation under ``site-packages``.
 
    .. code::
 
-      setup.py install
+      python -m pip install .
 
    The output can be found here:
 
@@ -123,7 +112,7 @@ Contributors
 License
 -------
 
-Copyright 2020-2024 Robert Bosch GmbH
+Copyright 2020-2026 Robert Bosch GmbH
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
