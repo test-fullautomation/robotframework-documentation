@@ -4,7 +4,7 @@
 #
 # OSS version (for extended Robot Framework core)
 #
-# 19.11.2024
+# 05.03.2026
 #
 # **************************************************************************************************************
 # Format: extended json format with the possibility to comment out lines (by '#' at the beginning of the line).
@@ -55,7 +55,9 @@
                 "../../../robotframework-robotlog2db",
                 "../../../robotframework-doip",
                 "../../../python-pytestlog2db",
-                "../../../testresultwebapp"],
+                "../../../testresultwebapp",
+                "../../../vscode-welcome",
+                "../../../vscode-jsonp"],
 
 
 # Section "BOOKSOURCES":
