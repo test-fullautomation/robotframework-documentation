@@ -105,7 +105,7 @@ Responsible for:
          sResult  = str(reason)
          raise Exception(CString.FormatResult(sMethod, bSuccess, sResult))
 
-      # read the documentation build configuration from separate json file, provided in command line
+      # read the documentation build configuration from separate json file, provided in command line or by environment variable
       MAINDOC_CONFIGFILE = self.__dictMainDocConfig['MAINDOC_CONFIGFILE']
       if not MAINDOC_CONFIGFILE:
          # --configfile missed in command line
