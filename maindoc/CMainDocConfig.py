@@ -279,7 +279,7 @@ Gets command line parameter.
 
       BUNDLE_NAME = os.environ.get('BUNDLE_NAME')
       if oCmdLineArgs.bundle_name is not None:
-          BUNDLE_NAME = oCmdLineArgs.bundle_name
+         BUNDLE_NAME = oCmdLineArgs.bundle_name
       self.__dictMainDocConfig['BUNDLE_NAME'] = BUNDLE_NAME.strip()
 
       BUNDLE_VERSION = os.environ.get('BUNDLE_VERSION')
