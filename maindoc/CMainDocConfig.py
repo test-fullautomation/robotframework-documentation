@@ -108,12 +108,11 @@ Responsible for:
       # read the documentation build configuration from separate json file, provided in command line or by environment variable
       MAINDOC_CONFIGFILE = self.__dictMainDocConfig['MAINDOC_CONFIGFILE']
       if not MAINDOC_CONFIGFILE:
-         # --configfile missed in command line
          bSuccess = None
          sResult  = f"Maindoc configuration file not defined. Use '--configfile' in command line or define 'MAINDOC_CONFIGFILE'."
          raise Exception(CString.FormatResult(sMethod, bSuccess, sResult))
 
-      # -- the absolute path that is reference for relative paths to configuration files in command line of genmaindoc.py
+      # The absolute path that is reference for relative paths to configuration files in command line of genmaindoc.py
       sReferencePathAbs_configfile = self.__dictMainDocConfig['REFERENCEPATH'] # set initially in repository config and already normalized
       MAINDOC_CONFIGFILE = CString.NormalizePath(sPath=MAINDOC_CONFIGFILE, sReferencePathAbs=sReferencePathAbs_configfile)
       self.__dictMainDocConfig['MAINDOC_CONFIGFILE'] = MAINDOC_CONFIGFILE # update config
