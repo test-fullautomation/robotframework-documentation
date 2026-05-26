@@ -20,7 +20,7 @@
 #
 # XC-HWP/ESW3-Queckenstedt
 #
-# 23.04.2026
+# 26.05.2026
 #
 # --------------------------------------------------------------------------------------------------------------
 
@@ -629,7 +629,7 @@ Constructor of class ``CDocBuilder``.
          oOverviewFile = CFile(sOverviewFile)
          oOverviewFile.Write(f"% Generated at {self.__dictMainDocConfig['NOW']}")
          oOverviewFile.Write()
-         oOverviewFile.Write("\chapter{Overview not available}")
+         oOverviewFile.Write(r"\chapter{Overview not available}")
          oOverviewFile.Write()
          sOutputMessage = r"{\Large\textcolor{red}{\textbf{\textit{Overview of external documentations is deactivated}}}}"
          oOverviewFile.Write(sOutputMessage)
@@ -680,37 +680,37 @@ Constructor of class ``CDocBuilder``.
          oPythonModulesTexFile.Write(r"\end{multicols}")
       oPythonModulesTexFile.Write()
 
-      sAdditionalInstallationHints = """\\vspace{2ex}
+      sAdditionalInstallationHints = r"""\vspace{2ex}
 
 Additionally required Python packages can be installed in this way:
 
-\\vspace{2ex}
+\vspace{2ex}
 
 1. Windows:
 
-Use the following command in \\textbf{Command Prompt}:
+Use the following command in \textbf{Command Prompt}:
 
-\\begin{pythoncode}
+\begin{pythoncode}
 "%RobotPythonPath%\python.exe" -m pip install --proxy ###PROXY### <<packagename>>
-\\end{pythoncode}
+\end{pythoncode}
 
-Or, in \\textbf{Windows PowerShell}:
+Or, in \textbf{Windows PowerShell}:
 
-\\begin{pythoncode}
+\begin{pythoncode}
 & "$env:RobotPythonPath\python.exe" -m pip install --proxy ###PROXY### <<packagename>>
-\\end{pythoncode}
+\end{pythoncode}
 
-\\vspace{2ex}
+\vspace{2ex}
 
 2. Linux:
 
-\\begin{pythoncode}
+\begin{pythoncode}
 "${RobotPythonPath}/python3" -m pip install --proxy ###PROXY### <<packagename>>
-\\end{pythoncode}
+\end{pythoncode}
 
-\\vspace{2ex}
+\vspace{2ex}
 
-The full path and name of the Python interpreter is required in these command lines because the \\textbf{RobotFramework AIO} installer does not modify the environment of the computer (except the setup of some environment variables).
+The full path and name of the Python interpreter is required in these command lines because the \textbf{RobotFramework AIO} installer does not modify the environment of the computer (except the setup of some environment variables).
 
 The proxy address is an option and depends on the conditions under which your company grants the access to the internet.
 

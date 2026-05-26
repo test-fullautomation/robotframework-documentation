@@ -18,7 +18,7 @@
 #
 # TOML file used for component installation
 #
-# Version 0.1.0 / 09.03.2026
+# Version 0.1.1 / 26.05.2026
 #
 # --------------------------------------------------------------------------------------------------------------
 #
@@ -46,7 +46,7 @@ backend-path  = ["."] # the repository main folder
 [project]
 name            = "RobotFrameworkAIO" # the official PyPi package name (must be unique worldwide), not necessarily the import name
 description     = "Documentation of RobotFramework AIO"
-version         = "0.39.0"
+version         = "0.39.1"
 # corresponding version date under: [tool.RobotFrameworkAIO]
 requires-python = ">=3.11"
 authors         = [{name = "Thomas Pollerspöck", email = "Thomas.Pollerspoeck@de.bosch.com"}]
@@ -116,6 +116,6 @@ packages = [
 "RobotFrameworkAIO" = ["*.pdf", "*.rst", "*.html"]
 
 [tool.RobotFrameworkAIO]
-released = "09.03.2026"
+released = "26.05.2026"
 # corresponding version number under: [project]
 
