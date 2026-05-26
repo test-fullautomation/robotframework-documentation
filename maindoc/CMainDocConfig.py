@@ -107,7 +107,7 @@ Responsible for:
 
       # read the documentation build configuration from separate json file, provided in command line
       MAINDOC_CONFIGFILE = self.__dictMainDocConfig['MAINDOC_CONFIGFILE']
-      if MAINDOC_CONFIGFILE is None:
+      if not MAINDOC_CONFIGFILE:
          # --configfile missed in command line
          bSuccess = None
          sResult  = f"Maindoc configuration file not defined. Use '--configfile' in command line or define 'MAINDOC_CONFIGFILE'."
@@ -141,21 +141,21 @@ Responsible for:
       # BUNDLE_NAME, BUNDLE_VERSION and BUNDLE_VERSION_DATE taken from command line or environment variable - and not from any config file
 
       BUNDLE_NAME = self.__dictMainDocConfig['BUNDLE_NAME']
-      if ( (BUNDLE_NAME is None) or (BUNDLE_NAME == "") ):
+      if not BUNDLE_NAME:
          # framework bundle_name missed
          bSuccess = None
          sResult  = f"Framework bundle name not defined. Use '--bundle_name' in command line or define 'BUNDLE_NAME'."
          raise Exception(CString.FormatResult(sMethod, bSuccess, sResult))
 
       BUNDLE_VERSION = self.__dictMainDocConfig['BUNDLE_VERSION']
-      if ( (BUNDLE_VERSION is None) or (BUNDLE_VERSION == "") ):
+      if not BUNDLE_VERSION:
          # framework bundle_version missed
          bSuccess = None
          sResult  = f"Framework bundle version not defined. Use '--bundle_version' in command line or define 'BUNDLE_VERSION'."
          raise Exception(CString.FormatResult(sMethod, bSuccess, sResult))
 
       BUNDLE_VERSION_DATE = self.__dictMainDocConfig['BUNDLE_VERSION_DATE']
-      if ( (BUNDLE_VERSION_DATE is None) or (BUNDLE_VERSION_DATE == "") ):
+      if not BUNDLE_VERSION_DATE:
          # framework bundle_version_date missed
          bSuccess = None
          sResult  = f"Framework bundle version date not defined. Use '--bundle_version_date' in command line or define 'BUNDLE_VERSION_DATE'."
@@ -274,23 +274,23 @@ Gets command line parameter.
 
       MAINDOC_CONFIGFILE = os.environ.get('MAINDOC_CONFIGFILE')
       if oCmdLineArgs.configfile is not None:
-         MAINDOC_CONFIGFILE = oCmdLineArgs.configfile.strip()
-      self.__dictMainDocConfig['MAINDOC_CONFIGFILE'] = MAINDOC_CONFIGFILE
+         MAINDOC_CONFIGFILE = oCmdLineArgs.configfile
+      self.__dictMainDocConfig['MAINDOC_CONFIGFILE'] = MAINDOC_CONFIGFILE.strip()
 
       BUNDLE_NAME = os.environ.get('BUNDLE_NAME')
       if oCmdLineArgs.bundle_name is not None:
-          BUNDLE_NAME = oCmdLineArgs.bundle_name.strip()
-      self.__dictMainDocConfig['BUNDLE_NAME'] = BUNDLE_NAME
+          BUNDLE_NAME = oCmdLineArgs.bundle_name
+      self.__dictMainDocConfig['BUNDLE_NAME'] = BUNDLE_NAME.strip()
 
       BUNDLE_VERSION = os.environ.get('BUNDLE_VERSION')
       if oCmdLineArgs.bundle_version is not None:
-         BUNDLE_VERSION = oCmdLineArgs.bundle_version.strip()
-      self.__dictMainDocConfig['BUNDLE_VERSION'] = BUNDLE_VERSION
+         BUNDLE_VERSION = oCmdLineArgs.bundle_version
+      self.__dictMainDocConfig['BUNDLE_VERSION'] = BUNDLE_VERSION.strip()
 
       BUNDLE_VERSION_DATE = os.environ.get('BUNDLE_VERSION_DATE')
       if oCmdLineArgs.bundle_version_date is not None:
-         BUNDLE_VERSION_DATE = oCmdLineArgs.bundle_version_date.strip()
-      self.__dictMainDocConfig['BUNDLE_VERSION_DATE'] = BUNDLE_VERSION_DATE
+         BUNDLE_VERSION_DATE = oCmdLineArgs.bundle_version_date
+      self.__dictMainDocConfig['BUNDLE_VERSION_DATE'] = BUNDLE_VERSION_DATE.strip()
 
       SIMULATE_ONLY = False
       if oCmdLineArgs.simulateonly is not None:
