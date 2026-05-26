@@ -275,22 +275,30 @@ Gets command line parameter.
       MAINDOC_CONFIGFILE = os.environ.get('MAINDOC_CONFIGFILE')
       if oCmdLineArgs.configfile is not None:
          MAINDOC_CONFIGFILE = oCmdLineArgs.configfile
-      self.__dictMainDocConfig['MAINDOC_CONFIGFILE'] = MAINDOC_CONFIGFILE.strip()
+      if MAINDOC_CONFIGFILE is not None:
+         MAINDOC_CONFIGFILE = MAINDOC_CONFIGFILE.strip()
+      self.__dictMainDocConfig['MAINDOC_CONFIGFILE'] = MAINDOC_CONFIGFILE
 
       BUNDLE_NAME = os.environ.get('BUNDLE_NAME')
       if oCmdLineArgs.bundle_name is not None:
          BUNDLE_NAME = oCmdLineArgs.bundle_name
-      self.__dictMainDocConfig['BUNDLE_NAME'] = BUNDLE_NAME.strip()
+      if BUNDLE_NAME is not None:
+         BUNDLE_NAME = BUNDLE_NAME.strip()
+      self.__dictMainDocConfig['BUNDLE_NAME'] = BUNDLE_NAME
 
       BUNDLE_VERSION = os.environ.get('BUNDLE_VERSION')
       if oCmdLineArgs.bundle_version is not None:
          BUNDLE_VERSION = oCmdLineArgs.bundle_version
-      self.__dictMainDocConfig['BUNDLE_VERSION'] = BUNDLE_VERSION.strip()
+      if BUNDLE_VERSION is not None:
+         BUNDLE_VERSION = BUNDLE_VERSION.strip()
+      self.__dictMainDocConfig['BUNDLE_VERSION'] = BUNDLE_VERSION
 
       BUNDLE_VERSION_DATE = os.environ.get('BUNDLE_VERSION_DATE')
       if oCmdLineArgs.bundle_version_date is not None:
          BUNDLE_VERSION_DATE = oCmdLineArgs.bundle_version_date
-      self.__dictMainDocConfig['BUNDLE_VERSION_DATE'] = BUNDLE_VERSION_DATE.strip()
+      if BUNDLE_VERSION_DATE is not None:
+         BUNDLE_VERSION_DATE = BUNDLE_VERSION_DATE.strip()
+      self.__dictMainDocConfig['BUNDLE_VERSION_DATE'] = BUNDLE_VERSION_DATE
 
       SIMULATE_ONLY = False
       if oCmdLineArgs.simulateonly is not None:
