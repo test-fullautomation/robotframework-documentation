@@ -20,7 +20,7 @@
 #
 # XC-HWP/ESW3-Queckenstedt
 #
-# 07.05.2025
+# 26.05.2026
 #
 # --------------------------------------------------------------------------------------------------------------
 
@@ -105,15 +105,14 @@ Responsible for:
          sResult  = str(reason)
          raise Exception(CString.FormatResult(sMethod, bSuccess, sResult))
 
-      # read the documentation build configuration from separate json file, provided in command line
+      # read the documentation build configuration from separate json file, provided in command line or by environment variable
       MAINDOC_CONFIGFILE = self.__dictMainDocConfig['MAINDOC_CONFIGFILE']
-      if MAINDOC_CONFIGFILE is None:
-         # --configfile missed in command line
+      if not MAINDOC_CONFIGFILE:
          bSuccess = None
-         sResult  = f"Maindoc configuration file not defined. Use '--configfile' in command line."
+         sResult  = f"Maindoc configuration file not defined. Use '--configfile' in command line or define 'MAINDOC_CONFIGFILE'."
          raise Exception(CString.FormatResult(sMethod, bSuccess, sResult))
 
-      # -- the absolute path that is reference for relative paths to configuration files in command line of genmaindoc.py
+      # The absolute path that is reference for relative paths to configuration files in command line of genmaindoc.py
       sReferencePathAbs_configfile = self.__dictMainDocConfig['REFERENCEPATH'] # set initially in repository config and already normalized
       MAINDOC_CONFIGFILE = CString.NormalizePath(sPath=MAINDOC_CONFIGFILE, sReferencePathAbs=sReferencePathAbs_configfile)
       self.__dictMainDocConfig['MAINDOC_CONFIGFILE'] = MAINDOC_CONFIGFILE # update config
@@ -138,27 +137,27 @@ Responsible for:
 
       # -- check framework bundle information (but argparse already should have prevented missing parameters)
 
-      # BUNDLE_NAME, BUNDLE_VERSION and BUNDLE_VERSION_DATE taken from command line (and not from any config file or source file)
+      # BUNDLE_NAME, BUNDLE_VERSION and BUNDLE_VERSION_DATE taken from command line or environment variable - and not from any config file
 
       BUNDLE_NAME = self.__dictMainDocConfig['BUNDLE_NAME']
-      if ( (BUNDLE_NAME is None) or (BUNDLE_NAME == "") ):
-         # framework bundle_name missed in command line
+      if not BUNDLE_NAME:
+         # framework bundle_name missed
          bSuccess = None
-         sResult  = f"Framework bundle name not defined. Use '--bundle_name' in command line."
+         sResult  = f"Framework bundle name not defined. Use '--bundle_name' in command line or define 'BUNDLE_NAME'."
          raise Exception(CString.FormatResult(sMethod, bSuccess, sResult))
 
       BUNDLE_VERSION = self.__dictMainDocConfig['BUNDLE_VERSION']
-      if ( (BUNDLE_VERSION is None) or (BUNDLE_VERSION == "") ):
-         # framework bundle_version missed in command line
+      if not BUNDLE_VERSION:
+         # framework bundle_version missed
          bSuccess = None
-         sResult  = f"Framework bundle version not defined. Use '--bundle_version' in command line."
+         sResult  = f"Framework bundle version not defined. Use '--bundle_version' in command line or define 'BUNDLE_VERSION'."
          raise Exception(CString.FormatResult(sMethod, bSuccess, sResult))
 
       BUNDLE_VERSION_DATE = self.__dictMainDocConfig['BUNDLE_VERSION_DATE']
-      if ( (BUNDLE_VERSION_DATE is None) or (BUNDLE_VERSION_DATE == "") ):
-         # framework bundle_version_date missed in command line
+      if not BUNDLE_VERSION_DATE:
+         # framework bundle_version_date missed
          bSuccess = None
-         sResult  = f"Framework bundle version date not defined. Use '--bundle_version_date' in command line."
+         sResult  = f"Framework bundle version date not defined. Use '--bundle_version_date' in command line or define 'BUNDLE_VERSION_DATE'."
          raise Exception(CString.FormatResult(sMethod, bSuccess, sResult))
 
       # -- platform check
@@ -245,6 +244,7 @@ Responsible for:
    def __del__(self):
       del self.__dictMainDocConfig
 
+
    def GetCmdLine(self):
       """
 Gets command line parameter.
@@ -267,29 +267,35 @@ Gets command line parameter.
          sResult  = "Error in command line: " + str(reason) + "\n\n" + oCmdLineParser.format_help()
          raise Exception(CString.FormatResult(sMethod, bSuccess, sResult))
 
-      # check of command line parameters will be done in constructor (where this method is called), but not here immediately
+      # Check of command line parameters will be done in constructor (where this method is called), but not here immediately.
 
-      MAINDOC_CONFIGFILE = None
+      # Values can be defined by environment variables or in command line. Command line overrules environment variables.
+
+      MAINDOC_CONFIGFILE = os.environ.get('MAINDOC_CONFIGFILE')
       if oCmdLineArgs.configfile is not None:
          MAINDOC_CONFIGFILE = oCmdLineArgs.configfile
+      if MAINDOC_CONFIGFILE is not None:
          MAINDOC_CONFIGFILE = MAINDOC_CONFIGFILE.strip()
       self.__dictMainDocConfig['MAINDOC_CONFIGFILE'] = MAINDOC_CONFIGFILE
 
-      BUNDLE_NAME = None
+      BUNDLE_NAME = os.environ.get('BUNDLE_NAME')
       if oCmdLineArgs.bundle_name is not None:
          BUNDLE_NAME = oCmdLineArgs.bundle_name
+      if BUNDLE_NAME is not None:
          BUNDLE_NAME = BUNDLE_NAME.strip()
       self.__dictMainDocConfig['BUNDLE_NAME'] = BUNDLE_NAME
 
-      BUNDLE_VERSION = None
+      BUNDLE_VERSION = os.environ.get('BUNDLE_VERSION')
       if oCmdLineArgs.bundle_version is not None:
          BUNDLE_VERSION = oCmdLineArgs.bundle_version
+      if BUNDLE_VERSION is not None:
          BUNDLE_VERSION = BUNDLE_VERSION.strip()
       self.__dictMainDocConfig['BUNDLE_VERSION'] = BUNDLE_VERSION
 
-      BUNDLE_VERSION_DATE = None
+      BUNDLE_VERSION_DATE = os.environ.get('BUNDLE_VERSION_DATE')
       if oCmdLineArgs.bundle_version_date is not None:
          BUNDLE_VERSION_DATE = oCmdLineArgs.bundle_version_date
+      if BUNDLE_VERSION_DATE is not None:
          BUNDLE_VERSION_DATE = BUNDLE_VERSION_DATE.strip()
       self.__dictMainDocConfig['BUNDLE_VERSION_DATE'] = BUNDLE_VERSION_DATE
 
